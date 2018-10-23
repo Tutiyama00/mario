@@ -1,14 +1,14 @@
 20
 BBBBBBBBBBBBBBBBBBBB
-B                   
-B                   
-B                   
-B                   
-B             B     
-B           B       
-B         B         
-B       B           
-B     B             
-B   BB              
-B M                 
+B                  B
+B                  B
+B                  B
+B                  B
+B             B    B
+B           B      B
+B         B        B
+B       B          B
+B     B            B
+B   BB             B
+B M                B
 BBBBBBBBBBBBBBBBBBBB
