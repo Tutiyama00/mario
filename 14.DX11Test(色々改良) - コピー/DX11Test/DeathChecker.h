@@ -14,4 +14,7 @@ public:
 	//---RenderObj---
 	void ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
 	void ThisObjCreateBuffer(ID3D11Device* pDevice);
+
+private:
+	void Abstract() {};
 };

@@ -5,6 +5,7 @@
 #include"Block.h"
 #include"Title.h"
 #include<vector>
+#include"DeathChecker.h"
 
 CharacterManager::CharacterManager(Object* stageArray, int stageHeight, int stageWidth, ID3D11Device* pDevice)
 {
@@ -15,6 +16,7 @@ CharacterManager::CharacterManager(Object* stageArray, int stageHeight, int stag
 	m_pCharacters_Block->ThisObjCreateBuffer(pDevice);
 	m_pPlayer->ThisObjCreateBuffer(pDevice);
 	m_pTitle->ThisObjCreateBuffer(pDevice);
+	m_pDeathChecker->ThisObjCreateBuffer(pDevice);
 }
 
 CharacterManager::~CharacterManager()
@@ -53,4 +55,6 @@ void CharacterManager::CharacterMake(Object* stageArray, int stageHeight, int st
 
 	//タイトル用オブジェクトの生成
 	m_pTitle = new Title(0.0f, 0.0f, m_StandardZpos, 1.5, 1.3, pDevice);
+
+	m_pDeathChecker = new DeathChecker(1.0f, 0.0f, m_StandardZpos, m_StandardSize, m_StandardSize, pDevice);
 }

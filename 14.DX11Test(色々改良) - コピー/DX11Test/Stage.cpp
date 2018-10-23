@@ -13,7 +13,7 @@ using namespace std;
 /// <param name="stageName">ステージ名</param>
 /// <param name="stageH">ステージの高さ</param>
 /// <param name="stageW">ステージの幅</param>
-Stage::Stage(const char* stageName, HWND hwnd)
+Stage::Stage(const char* stageName)
 {
 	//ファイルのデータを一時格納するローカル変数
 	char* loadStageData = nullptr;
@@ -26,7 +26,7 @@ Stage::Stage(const char* stageName, HWND hwnd)
 
 	if (ifs.fail())
 	{
-		MessageBox(hwnd, "ファイルのオープンに失敗しました。", "ERROR", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, "ファイルのオープンに失敗しました。", "ERROR", MB_OK | MB_ICONERROR);
 	}
 
 	//ファイルの先頭位置
@@ -45,12 +45,12 @@ Stage::Stage(const char* stageName, HWND hwnd)
 	loadStageData = new char[m_StageSize];
 	if (loadStageData == nullptr)
 	{
-		MessageBox(hwnd, "loadStageDataのメモリを確保できませんでした。", "ERROR", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, "loadStageDataのメモリを確保できませんでした。", "ERROR", MB_OK | MB_ICONERROR);
 	}
 	m_pStageDataArray = new Object[m_StageSize];
 	if (m_pStageDataArray == nullptr)
 	{
-		MessageBox(hwnd, "mStageDataのメモリを確保できませんでした。", "ERROR", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, "mStageDataのメモリを確保できませんでした。", "ERROR", MB_OK | MB_ICONERROR);
 	}
 
 	//ステージデータの読み込み

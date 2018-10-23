@@ -10,13 +10,14 @@
 #include"Camera.h"
 #include"CharacterManager.h"
 #include"Characters.h"
+#include"DeathChecker.h"
 
 GameManager::GameManager(HWND hwnd)
 {
 	m_pFlag     = new InputFlag();
 	m_pDx11     = new Dx11();
 	m_pDsound   = new Dsound(hwnd);
-	m_pStage    = new Stage("STAGE_1.txt", hwnd);
+	m_pStage    = new Stage("STAGE_1.txt");
 	m_GameState = GameState::TITLE;
 
 	m_pDx11->Create(hwnd);
@@ -55,6 +56,11 @@ void GameManager::UpDateGame()
 
 	case GameState::PLAY:
 	
+		if (m_pCharacterManager->m_pPlayer->m_MoveObjState == MoveObjState::DEATH)
+		{
+			m_GameState = GameState::GAMEOVER;
+		}
+
 		//ブロック群のプレイヤーに対して衝突判定
 		for (int i = 0; i < m_pCharacterManager->m_pCharacters_Block->m_ObjectVector.size(); i++)
 		{
@@ -63,6 +69,12 @@ void GameManager::UpDateGame()
 
 		//プレイヤー移動
 		m_pCharacterManager->m_pPlayer->Move(m_pFlag);
+
+		if (m_pCharacterManager->m_pDeathChecker->DeathCheck(m_pCharacterManager->m_pPlayer))
+		{
+			m_pCharacterManager->m_pPlayer->m_MoveObjState = MoveObjState::DEATH;
+		}
+
 		break;
 
 	case GameState::GAMEOVER:
@@ -70,6 +82,14 @@ void GameManager::UpDateGame()
 		//スペースボタンでタイトルに戻る
 		if (m_pFlag->Check(InputFlagCode::INPUT_SPACE))
 		{
+			delete m_pCharacterManager;
+			m_pCharacterManager = nullptr;
+			delete m_pStage;
+			m_pStage = nullptr;
+
+			m_pStage = new Stage("STAGE_1.txt");
+			m_pCharacterManager = new CharacterManager(m_pStage->m_pStageDataArray, m_pStage->GetStageHeight(), m_pStage->GetStageWidth(), m_pDx11->m_pDevice);
+	
 			m_GameState = GameState::TITLE;
 		}
 		break;

@@ -7,6 +7,7 @@ class Player;
 class Block;
 class Title;
 enum class Object : unsigned char;
+class DeathChecker;
 
 class CharacterManager
 {
@@ -18,6 +19,7 @@ public:
 	Characters<Block>* m_pCharacters_Block = nullptr;
 	Player* m_pPlayer = nullptr;
 	Title*  m_pTitle  = nullptr;
+	DeathChecker* m_pDeathChecker = nullptr;
 
 private:
 	void CharacterMake(Object* stageArray, int stageHeight, int stageWidth, ID3D11Device* pDevice);

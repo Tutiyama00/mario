@@ -16,16 +16,16 @@ void Player::Abstract() {}
 
 void Player::Move(InputFlag* inputFlag)
 {
-	switch (m_PlayerState)
+	switch (m_MoveObjState)
 	{
 	case MoveObjState::CHECK_GROUND:
-		m_PlayerState = MoveObjState::FALL;
+		m_MoveObjState = MoveObjState::FALL;
 
 	case MoveObjState::ON_THE_GROUND:
 
-		if (m_JumpLevelCount != M_MAX_JUMP_LEVEL)
+		if (m_JumpLevelCount != m_MaxJumpLevel)
 		{
-			m_JumpLevelCount = M_MAX_JUMP_LEVEL;
+			m_JumpLevelCount = m_MaxJumpLevel;
 		}
 
 		if (inputFlag->Check(InputFlagCode::INPUT_SPACE))
@@ -33,7 +33,7 @@ void Player::Move(InputFlag* inputFlag)
 			if (m_JumpFlag)
 			{
 				Jump();
-				m_PlayerState = MoveObjState::JUMP;
+				m_MoveObjState = MoveObjState::JUMP;
 				break;
 			}
 		}
@@ -48,7 +48,7 @@ void Player::Move(InputFlag* inputFlag)
 		if (!inputFlag->Check(InputFlagCode::INPUT_SPACE) || !Jump())
 		{
 			m_JumpFlag = false;
-			m_PlayerState = MoveObjState::FALL;
+			m_MoveObjState = MoveObjState::FALL;
 		}
 
 		break;
@@ -67,9 +67,9 @@ void Player::Move(InputFlag* inputFlag)
 
 	if (inputFlag->Check(InputFlagCode::INPUT_RIGHT))
 	{
-		if (m_NowWalkSpeed >= M_MAX_WALK_SPEED)
+		if (m_NowWalkSpeed >= m_MaxWalkSpeed)
 		{
-			m_NowWalkSpeed = M_MAX_WALK_SPEED;
+			m_NowWalkSpeed = m_MaxWalkSpeed;
 		}
 		else
 		{
@@ -79,9 +79,9 @@ void Player::Move(InputFlag* inputFlag)
 
 	if (inputFlag->Check(InputFlagCode::INPUT_LEFT))
 	{
-		if (m_NowWalkSpeed <= -M_MAX_WALK_SPEED)
+		if (m_NowWalkSpeed <= -m_MaxWalkSpeed)
 		{
-			m_NowWalkSpeed = -M_MAX_WALK_SPEED;
+			m_NowWalkSpeed = -m_MaxWalkSpeed;
 		}
 		else
 		{
@@ -109,9 +109,9 @@ void Player::Move(InputFlag* inputFlag)
 	//横移動
 	Walk(m_NowWalkSpeed);
 
-	if (m_PlayerState == MoveObjState::ON_THE_GROUND)
+	if (m_MoveObjState == MoveObjState::ON_THE_GROUND)
 	{
-		m_PlayerState = MoveObjState::CHECK_GROUND;
+		m_MoveObjState = MoveObjState::CHECK_GROUND;
 	}
 }
 
@@ -152,7 +152,7 @@ bool Player::Jump()
 {
 	if (m_JumpLevelCount > 0)
 	{
-		float jumpAmount = m_JumpPower * (m_JumpLevelCount / M_JUMP_ABJUST_POINT);
+		float jumpAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
 		m_yPos += jumpAmount;
 
 		m_pVertexArray[0] = {
@@ -182,7 +182,7 @@ bool Player::Jump()
 //落下（マリオ式）
 void Player::Fall()
 {
-	float fallAmount = m_JumpPower * (m_JumpLevelCount / M_JUMP_ABJUST_POINT);
+	float fallAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
 	m_yPos -= fallAmount;
 
 	m_pVertexArray[0] = {
@@ -201,7 +201,7 @@ void Player::Fall()
 	{ m_pVertexArray[3].pos[0], m_pVertexArray[3].pos[1] - fallAmount , m_pVertexArray[3].pos[2] } ,
 	{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
 
-	if (m_JumpLevelCount < M_MAX_JUMP_LEVEL)
+	if (m_JumpLevelCount < m_MaxJumpLevel)
 	{
 		m_JumpLevelCount++;
 	}

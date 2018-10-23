@@ -6,7 +6,7 @@ enum class Object : unsigned char;
 class Stage
 {
 public:
-	Stage(const char* stageName, HWND hwnd);
+	Stage(const char* stageName);
 	~Stage();
 
 public:

@@ -2,7 +2,7 @@
 
 DeathChecker::DeathChecker(float xPos, float yPos, float zPos, float xSize, float ySize,ID3D11Device* pDevice) : Square(xPos, yPos, zPos, xSize, ySize)
 {
-	LoadTexture(pDevice, L"MARIO_GAMEOVER.png");
+	LoadTexture (pDevice, L"MARIO_GAMEOVER.png");
 	CreateShader(pDevice, L"VertexShader.vsh", L"PixelShader.psh");
 	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }

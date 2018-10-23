@@ -9,6 +9,7 @@
 #include"WICTextureLoader.h"
 #include"CharacterManager.h"
 #include"Characters.h"
+#include"DeathChecker.h"
 
 using namespace DirectX;
 
@@ -155,6 +156,7 @@ HRESULT Dx11::Render(Camera* pCamera,GameState gameState,CharacterManager* pChar
 	case GameState::PLAY:
 		pCharacterManager->m_pPlayer->ThisObjRender(m_pDeviceContext, strides, offsets);
 		pCharacterManager->m_pCharacters_Block->ThisObjRender(m_pDeviceContext, strides, offsets);
+		pCharacterManager->m_pDeathChecker->ThisObjRender(m_pDeviceContext, strides, offsets);
 		break;
 
 	case GameState::GAMEOVER:

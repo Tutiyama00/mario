@@ -25,7 +25,7 @@ public:
 public:
 
 	//---IMoveObj---
-	MoveObjState m_PlayerState = MoveObjState::ON_THE_GROUND;     //プレイヤーのステート
+	MoveObjState m_MoveObjState = MoveObjState::ON_THE_GROUND;     //プレイヤーのステート
 	bool m_JumpFlag = true;        //ジャンプ可能かどうかのフラグ
 	float m_NowWalkSpeed = 0.0f;   //今の歩く速度
 	float m_JumpPower = 0.0005f;   //ジャンプ量
@@ -41,10 +41,10 @@ private:
 
 private:
 	//---IMoveObj---
-	const int M_MAX_JUMP_LEVEL    = 50;                //ジャンプのレベルカウントの上限
-	int m_JumpLevelCount          = M_MAX_JUMP_LEVEL;  //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
-	const int M_JUMP_ABJUST_POINT = 2;                 //ジャンプ力計算に使う調整値
-	const float M_MAX_WALK_SPEED  = 0.003f;            //歩く最大スピード
+	int m_MaxJumpLevel    = 50;                //ジャンプのレベルカウントの上限
+	int m_JumpLevelCount          = m_MaxJumpLevel;  //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
+	const int m_JumpAbjustPoint = 2;                 //ジャンプ力計算に使う調整値
+	const float m_MaxWalkSpeed  = 0.003f;            //歩く最大スピード
 	float m_WalkFluctuationAmount = 0.0005f;           //歩くスピードを変える
 
     float m_SlipStopAmount        = 0.0001f;       //滑りを抑制する値
