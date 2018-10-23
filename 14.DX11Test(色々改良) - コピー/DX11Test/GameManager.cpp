@@ -45,6 +45,8 @@ void GameManager::UpDateGame()
 	switch (m_GameState)
 	{
 	case GameState::TITLE:
+
+		//スペースボタンでゲームステートをプレイにする
 		if (m_pFlag->Check(InputFlagCode::INPUT_SPACE))
 		{
 			m_GameState = GameState::PLAY;
@@ -53,12 +55,23 @@ void GameManager::UpDateGame()
 
 	case GameState::PLAY:
 	
+		//ブロック群のプレイヤーに対して衝突判定
 		for (int i = 0; i < m_pCharacterManager->m_pCharacters_Block->m_ObjectVector.size(); i++)
 		{
 			m_pCharacterManager->m_pCharacters_Block->m_ObjectVector[i]->CheckPlayer(m_pCharacterManager->m_pPlayer, m_pFlag);
 		}
 
+		//プレイヤー移動
 		m_pCharacterManager->m_pPlayer->Move(m_pFlag);
+		break;
+
+	case GameState::GAMEOVER:
+
+		//スペースボタンでタイトルに戻る
+		if (m_pFlag->Check(InputFlagCode::INPUT_SPACE))
+		{
+			m_GameState = GameState::TITLE;
+		}
 		break;
 	}
 }

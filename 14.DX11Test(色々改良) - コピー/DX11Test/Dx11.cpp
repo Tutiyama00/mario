@@ -156,6 +156,9 @@ HRESULT Dx11::Render(Camera* pCamera,GameState gameState,CharacterManager* pChar
 		pCharacterManager->m_pPlayer->ThisObjRender(m_pDeviceContext, strides, offsets);
 		pCharacterManager->m_pCharacters_Block->ThisObjRender(m_pDeviceContext, strides, offsets);
 		break;
+
+	case GameState::GAMEOVER:
+		break;
 	}
 
 	//Presentは１回でOK←複数置くと点滅などの現象がおこる←Presentは裏で描画したもの箱を開けて表示するようなものだから

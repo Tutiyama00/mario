@@ -4,9 +4,11 @@ enum class GameState : unsigned char
 {
 	TITLE,
 	PLAY,
+	GAMEOVER,
+	GAMECLEAR
 };
 
-enum class PlayerState : unsigned char
+enum class MoveObjState : unsigned char
 {
 	ON_THE_GROUND,
 	CHECK_GROUND,

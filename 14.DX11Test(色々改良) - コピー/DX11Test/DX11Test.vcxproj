@@ -127,6 +127,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Characters.cpp" />
+    <ClCompile Include="DeathChecker.cpp" />
     <ClCompile Include="Dx11.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="Characters.h" />
+    <ClInclude Include="DeathChecker.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="GameManager.h" />
@@ -181,7 +183,6 @@
     <Text Include="STAGE_1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

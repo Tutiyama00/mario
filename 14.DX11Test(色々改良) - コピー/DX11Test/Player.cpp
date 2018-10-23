@@ -3,7 +3,7 @@
 #include"Enum.h"
 #include"Flag.h"
 
-Player::Player(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice) :Square::Square(xPos, yPos, zPos, xSize, ySize)
+Player::Player(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice) : Square::Square(xPos, yPos, zPos, xSize, ySize)
 {
 	LoadTexture(pDevice, L"Mario.png");
 	CreateShader(pDevice, L"VertexShader.vsh", L"PixelShader.psh");
@@ -18,10 +18,10 @@ void Player::Move(InputFlag* inputFlag)
 {
 	switch (m_PlayerState)
 	{
-	case PlayerState::CHECK_GROUND:
-		m_PlayerState = PlayerState::FALL;
+	case MoveObjState::CHECK_GROUND:
+		m_PlayerState = MoveObjState::FALL;
 
-	case PlayerState::ON_THE_GROUND:
+	case MoveObjState::ON_THE_GROUND:
 
 		if (m_JumpLevelCount != M_MAX_JUMP_LEVEL)
 		{
@@ -33,7 +33,7 @@ void Player::Move(InputFlag* inputFlag)
 			if (m_JumpFlag)
 			{
 				Jump();
-				m_PlayerState = PlayerState::JUMP;
+				m_PlayerState = MoveObjState::JUMP;
 				break;
 			}
 		}
@@ -44,16 +44,16 @@ void Player::Move(InputFlag* inputFlag)
 
 		break;
 
-	case PlayerState::JUMP:
+	case MoveObjState::JUMP:
 		if (!inputFlag->Check(InputFlagCode::INPUT_SPACE) || !Jump())
 		{
 			m_JumpFlag = false;
-			m_PlayerState = PlayerState::FALL;
+			m_PlayerState = MoveObjState::FALL;
 		}
 
 		break;
 
-	case PlayerState::FALL:
+	case MoveObjState::FALL:
 
 		Fall();
 
@@ -109,9 +109,9 @@ void Player::Move(InputFlag* inputFlag)
 	//‰¡ˆÚ“®
 	Walk(m_NowWalkSpeed);
 
-	if (m_PlayerState == PlayerState::ON_THE_GROUND)
+	if (m_PlayerState == MoveObjState::ON_THE_GROUND)
 	{
-		m_PlayerState = PlayerState::CHECK_GROUND;
+		m_PlayerState = MoveObjState::CHECK_GROUND;
 	}
 }
 

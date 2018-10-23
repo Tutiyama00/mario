@@ -36,12 +36,12 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 		}
 
 		//プレイヤーがジャンプ中かどうか
-		if (pPlayer->m_PlayerState == PlayerState::JUMP)
+		if (pPlayer->m_PlayerState == MoveObjState::JUMP)
 		{
 			if (DownCheck(pPlayer, pInputFlag))
 			{
 				//もしそうならステートをFALLに変える
-				pPlayer->m_PlayerState = PlayerState::FALL;
+				pPlayer->m_PlayerState = MoveObjState::FALL;
 				pPlayer->m_JumpFlag = false;
 
 				return;
@@ -49,12 +49,12 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 		}
 
 		//プレイヤーがFALL中かどうか
-		if (pPlayer->m_PlayerState == PlayerState::FALL || pPlayer->m_PlayerState == PlayerState::CHECK_GROUND)
+		if (pPlayer->m_PlayerState == MoveObjState::FALL || pPlayer->m_PlayerState == MoveObjState::CHECK_GROUND)
 		{
 			if (UpCheck(pPlayer, pInputFlag))
 			{
 				//もしそうならステートを接地中に変える
-				pPlayer->m_PlayerState = PlayerState::ON_THE_GROUND;
+				pPlayer->m_PlayerState = MoveObjState::ON_THE_GROUND;
 
 				return;
 			}
