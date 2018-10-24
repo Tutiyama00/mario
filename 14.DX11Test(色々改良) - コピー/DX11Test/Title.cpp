@@ -2,8 +2,8 @@
 
 Title::Title(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice) : Square::Square(xPos, yPos, zPos, xSize, ySize)
 {
-	LoadTexture(pDevice, L"MARIO_TITLE_LOGO.png");
-	CreateShader(pDevice, L"VertexShader.vsh", L"PixelShader.psh");
+	LoadTexture(pDevice, L"Texture/MARIO_TITLE_LOGO.png");
+	CreateShader(pDevice, L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 

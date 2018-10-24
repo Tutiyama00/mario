@@ -17,7 +17,7 @@ GameManager::GameManager(HWND hwnd)
 	m_pFlag     = new InputFlag();
 	m_pDx11     = new Dx11();
 	m_pDsound   = new Dsound(hwnd);
-	m_pStage    = new Stage("STAGE_1.txt");
+	m_pStage    = new Stage("Stage/STAGE_1.txt");
 	m_GameState = GameState::TITLE;
 
 	m_pDx11->Create(hwnd);
@@ -87,9 +87,26 @@ void GameManager::UpDateGame()
 			delete m_pStage;
 			m_pStage = nullptr;
 
-			m_pStage = new Stage("STAGE_1.txt");
+			m_pStage = new Stage("Stage/STAGE_1.txt");
 			m_pCharacterManager = new CharacterManager(m_pStage->m_pStageDataArray, m_pStage->GetStageHeight(), m_pStage->GetStageWidth(), m_pDx11->m_pDevice);
 	
+			m_GameState = GameState::TITLE;
+		}
+		break;
+
+	case GameState::GAMECLEAR:
+
+		//スペースボタンでタイトルに戻る
+		if (m_pFlag->Check(InputFlagCode::INPUT_SPACE))
+		{
+			delete m_pCharacterManager;
+			m_pCharacterManager = nullptr;
+			delete m_pStage;
+			m_pStage = nullptr;
+
+			m_pStage = new Stage("Stage/STAGE_1.txt");
+			m_pCharacterManager = new CharacterManager(m_pStage->m_pStageDataArray, m_pStage->GetStageHeight(), m_pStage->GetStageWidth(), m_pDx11->m_pDevice);
+
 			m_GameState = GameState::TITLE;
 		}
 		break;

@@ -9,7 +9,7 @@
 
 CharacterManager::CharacterManager(Object* stageArray, int stageHeight, int stageWidth, ID3D11Device* pDevice)
 {
-	m_pCharacters_Block = new Characters<Block>(pDevice, L"Block2.png", L"VertexShader.vsh", L"PixelShader.psh");
+	m_pCharacters_Block = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	CharacterMake(stageArray, stageHeight, stageWidth, pDevice);
 
