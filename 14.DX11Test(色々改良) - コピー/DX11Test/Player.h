@@ -3,7 +3,7 @@
 #include"Vertex.h"
 #include"RenderObj.h"
 #include"Enum.h"
-#include"Interface.h"
+#include"IMoveObj.h"
 
 //‘O•ûéŒ¾
 class InputFlag;

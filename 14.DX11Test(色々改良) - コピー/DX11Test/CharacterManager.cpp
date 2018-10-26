@@ -14,9 +14,9 @@ CharacterManager::CharacterManager(Object* stageArray, int stageHeight, int stag
 	CharacterMake(stageArray, stageHeight, stageWidth, pDevice);
 
 	m_pCharacters_Block->ThisObjCreateBuffer(pDevice);
-	m_pPlayer->ThisObjCreateBuffer(pDevice);
-	m_pTitle->ThisObjCreateBuffer(pDevice);
-	m_pDeathChecker->ThisObjCreateBuffer(pDevice);
+	m_pPlayer          ->ThisObjCreateBuffer(pDevice);
+	m_pTitle           ->ThisObjCreateBuffer(pDevice);
+	m_pDeathChecker    ->ThisObjCreateBuffer(pDevice);
 }
 
 CharacterManager::~CharacterManager()
@@ -45,6 +45,7 @@ void CharacterManager::CharacterMake(Object* stageArray, int stageHeight, int st
 			{
 			case Object::MARIO:
 				m_pPlayer = new Player(xPos, yPos, m_StandardZpos, m_StandardSize, m_StandardSize, pDevice);
+				m_pDeathChecker = new DeathChecker(xPos, yPos-0.1, m_StandardZpos, m_StandardSize, m_StandardSize, pDevice);
 				break;
 			case Object::NORMAL_BLOCK:
 				m_pCharacters_Block->m_ObjectVector.push_back(new Block(xPos, yPos, m_StandardZpos, m_StandardSize, m_StandardSize));
@@ -56,5 +57,5 @@ void CharacterManager::CharacterMake(Object* stageArray, int stageHeight, int st
 	//タイトル用オブジェクトの生成
 	m_pTitle = new Title(0.0f, 0.0f, m_StandardZpos, 1.5, 1.3, pDevice);
 
-	m_pDeathChecker = new DeathChecker(1.0f, 0.0f, m_StandardZpos, m_StandardSize, m_StandardSize, pDevice);
+	
 }

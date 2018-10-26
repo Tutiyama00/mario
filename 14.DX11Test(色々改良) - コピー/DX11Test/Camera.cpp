@@ -56,4 +56,6 @@ void Camera::Shoot(ID3D11DeviceContext* pDeviceContext, D3D11_VIEWPORT* pViewPor
 	XMStoreFloat4x4(&cb.view, XMMatrixTranspose(viewMatrix));
 	XMStoreFloat4x4(&cb.projection, XMMatrixTranspose(projMatrix));
 	pDeviceContext->UpdateSubresource(m_pCameraConstantBuffer, 0, NULL, &cb, 0, 0);
+
+	pDeviceContext->VSSetConstantBuffers(0, 1, &m_pCameraConstantBuffer);
 }

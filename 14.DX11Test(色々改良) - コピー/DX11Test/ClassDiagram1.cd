@@ -41,7 +41,7 @@
         <Point X="9.5" Y="1.312" />
         <Point X="9.5" Y="2.594" />
         <Point X="10.229" Y="2.594" Type="JumpStart" />
-        <Point X="10.396" Y="2.594" Type="JumpEnd" />
+        <Point X="10.395" Y="2.594" Type="JumpEnd" />
         <Point X="12.062" Y="2.594" />
         <Point X="12.062" Y="4" />
       </Path>
@@ -65,18 +65,13 @@
         <Position X="0.072" Y="0.086" Height="0.182" Width="0.907" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="m_pCamera" Type="Camera">
-      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="0" Y="0.074" Height="0.182" Width="1.025" />
-      </MemberNameLabel>
-    </AssociationLine>
     <AssociationLine Name="m_GameState" Type="GameState">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.11" Y="0.066" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AQCIACAAEBCAAgAAAAAAAAAAACAAAAEAAAAIAABQAAA=</HashCode>
+      <HashCode>AQiIAAAAEBCAAgAAAAAAAAAAACAAAAEAAAAAAABQAAA=</HashCode>
       <FileName>GameManager.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -85,7 +80,6 @@
       <Field Name="m_pCharacterManager" />
       <Field Name="m_pFlag" />
       <Field Name="m_pStage" />
-      <Field Name="m_pCamera" />
       <Field Name="m_GameState" />
     </ShowAsAssociation>
   </Class>
@@ -93,7 +87,7 @@
     <Position X="1.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Interface.h</FileName>
+      <FileName>INotPlayer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Player" Collapsed="true">
@@ -149,7 +143,7 @@
   <Class Name="Dx11" Collapsed="true">
     <Position X="9" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAADoCACChgAAQQAAAAAEEICABAAQAAABAQ=</HashCode>
+      <HashCode>AAIAAAAAAAACICACChAgAQABAAAAEEICABAAAAAAAAQ=</HashCode>
       <FileName>Dx11.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -255,7 +249,28 @@
     <Position X="3.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CCAAAAEEAoCAAAAIAAQABAgAAABAIAgAAAAAAQAAEAA=</HashCode>
-      <FileName>Interface.h</FileName>
+      <FileName>IMoveObj.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TitleScene" Collapsed="true">
+    <Position X="11.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIQCAAAAAAAgAAAAAAAIAAAgAAAIAAAAAAQAAAAAA=</HashCode>
+      <FileName>TitleScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IGameScene" Collapsed="true">
+    <Position X="12.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIQAAAAAAAAgAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IGameScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayScene" Collapsed="true">
+    <Position X="13.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIQCAAAAABAgAAAAAAAAAACgAAAAAAAAAIAAAAAAQ=</HashCode>
+      <FileName>PlayScene.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="CameraConstantBuffer">

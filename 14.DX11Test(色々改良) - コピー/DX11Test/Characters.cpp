@@ -11,6 +11,11 @@ template<class T> Characters<T>::Characters(ID3D11Device* pDevice, const wchar_t
 
 template<class T> Characters<T>::~Characters()
 {
+	for (int i = 0; i < m_ObjectVector.size(); i++)
+	{
+		if (m_ObjectVector[i] != nullptr) { delete m_ObjectVector[i]; m_ObjectVector[i] = nullptr; }
+	}
+
 	if (m_pVertexArray != nullptr) { delete[] m_pVertexArray; m_pVertexArray = nullptr; }
 	if (m_pIndexArray  != nullptr) { delete[] m_pIndexArray;  m_pIndexArray  = nullptr; }
 }

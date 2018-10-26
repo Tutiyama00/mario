@@ -133,10 +133,12 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RenderObj.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -149,14 +151,18 @@
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="Interface.h" />
+    <ClInclude Include="IGameScene.h" />
+    <ClInclude Include="IMoveObj.h" />
+    <ClInclude Include="INotPlayer.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RenderObj.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Dx11.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>

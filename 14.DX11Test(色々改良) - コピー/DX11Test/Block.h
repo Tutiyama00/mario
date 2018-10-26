@@ -1,7 +1,7 @@
 #pragma once
 
 #include"Vertex.h"
-#include"Interface.h"
+#include"INotPlayer.h"
 
 //‘O•ûéŒ¾
 class InputFlag;

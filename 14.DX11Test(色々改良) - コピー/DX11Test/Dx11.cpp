@@ -17,7 +17,10 @@ using namespace DirectX;
 
 /*----------------------  public   -----------------------------------*/
 
-Dx11::Dx11(){}
+Dx11::Dx11()
+{
+	strides = sizeof(vertex);
+}
 
 Dx11::~Dx11() 
 {
@@ -125,48 +128,6 @@ HRESULT Dx11::Create(HWND hwnd)
 	m_ViewPort.TopLeftY = 0;
 	
 	return S_OK;
-}
-
-//•`‰æ
-HRESULT Dx11::Render(Camera* pCamera,GameState gameState,CharacterManager* pCharacterManager)
-{
-	float ClearColor[4] = { 0.0f,1.0f,1.0f,1.0f };
-	UINT strides = sizeof(vertex);
-	UINT offsets = 0;
-
-	pCamera->Shoot(m_pDeviceContext, &m_ViewPort, pCharacterManager->m_pPlayer->m_xPos);
-
-	//ƒNƒŠƒA
-	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);
-	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-	//Šî‘bÝ’è
-	m_pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_pDeviceContext->VSSetConstantBuffers(0, 1, &pCamera->m_pCameraConstantBuffer);
-	m_pDeviceContext->RSSetViewports(1, &m_ViewPort);
-	m_pDeviceContext->PSSetSamplers(0, 1, &m_pSampler);
-	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
-
-	switch (gameState)
-	{
-	case GameState::TITLE:
-		pCharacterManager->m_pTitle->ThisObjRender(m_pDeviceContext, strides, offsets);
-		break;
-
-	case GameState::PLAY:
-		pCharacterManager->m_pPlayer->ThisObjRender(m_pDeviceContext, strides, offsets);
-		pCharacterManager->m_pCharacters_Block->ThisObjRender(m_pDeviceContext, strides, offsets);
-		pCharacterManager->m_pDeathChecker->ThisObjRender(m_pDeviceContext, strides, offsets);
-		break;
-
-	case GameState::GAMEOVER:
-		break;
-	}
-
-	//Present‚Í‚P‰ñ‚ÅOK©•¡”’u‚­‚Æ“_–Å‚È‚Ç‚ÌŒ»Û‚ª‚¨‚±‚é©Present‚Í— ‚Å•`‰æ‚µ‚½‚à‚Ì” ‚ðŠJ‚¯‚Ä•\Ž¦‚·‚é‚æ‚¤‚È‚à‚Ì‚¾‚©‚ç
-	m_pSwapChain->Present(0, 0);
-
-	return TRUE;
 }
 
 //‰ð•ú

@@ -21,6 +21,7 @@ RenderObj::~RenderObj()
 	if (m_pTextureInputLayout  != nullptr) { m_pTextureInputLayout  ->Release();  m_pTextureInputLayout  = nullptr; }
 
 	if (m_pMainTextureResource != nullptr) { m_pMainTextureResource ->Release();  m_pMainTextureResource = nullptr; }
+	if (m_pMainTextureSRV      != nullptr) { m_pMainTextureSRV      ->Release();  m_pMainTextureSRV      = nullptr; }
 }
 
 void RenderObj::LoadTexture(ID3D11Device* pDevice, const wchar_t* pFileName)

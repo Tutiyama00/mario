@@ -9,6 +9,8 @@ class Dsound;
 class Stage;
 class Camera;
 class CharacterManager;
+class TitleScene;
+class PlayScene;
 
 class GameManager
 {
@@ -25,11 +27,10 @@ public:
 	Dsound*   m_pDsound   = nullptr;
 
 private:
-	CharacterManager* m_pCharacterManager = nullptr;
 	InputFlag*        m_pFlag             = nullptr;
-	Stage*            m_pStage            = nullptr;
-	Camera*           m_pCamera           = nullptr;
 	int               m_InputKey          = 0;
 
-	GameState m_GameState;
+	GameState   m_GameState;
+	TitleScene* m_pTitleScene = nullptr;
+	PlayScene*  m_pPlayScene  = nullptr;
 };

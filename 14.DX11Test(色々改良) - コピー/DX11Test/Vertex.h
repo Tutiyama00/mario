@@ -1,6 +1,5 @@
 #pragma once
 #include<d3d11.h>
-#include"Interface.h"
 
 //í∏ì_ç\ë¢ëÃ
 struct vertex
