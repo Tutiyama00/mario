@@ -26,6 +26,6 @@ VS_OUT vs_main( VS_IN input )
 	output.pos = mul(output.pos, Projection);
 
 	output.tex = input.tex;
-
+    
     return output;
 }

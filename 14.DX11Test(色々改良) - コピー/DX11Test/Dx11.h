@@ -45,10 +45,6 @@ public:
 	template<class tfunction> HRESULT Render(tfunction ifunction)
 	{
 		float ClearColor[4] = { 0.0f,1.0f,1.0f,1.0f };
-		//UINT strides = sizeof(vertex);
-		//UINT offsets = 0;
-
-		//pCamera->Shoot(m_pDeviceContext, &m_ViewPort, pCharacterManager->m_pPlayer->m_xPos);
 
 		//ƒNƒŠƒA
 		m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);

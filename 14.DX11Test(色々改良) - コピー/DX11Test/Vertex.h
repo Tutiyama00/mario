@@ -21,7 +21,7 @@ public:
 	UINT    m_VertexArraySize;  //頂点配列の要素数
 	UINT    m_IndexArraySize;   //インデックス配列の要素数
 	vertex* m_pVertexArray = nullptr;     //頂点配列
-    WORD*   m_pIndexArray  = nullptr;      //インデックス配列
+    WORD*   m_pIndexArray  = nullptr;     //インデックス配列
 
 	float m_xPos;  //X座標
 	float m_yPos;  //Y座標
