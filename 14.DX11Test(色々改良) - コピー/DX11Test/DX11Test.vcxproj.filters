@@ -102,6 +102,9 @@
     <ClCompile Include="TextChar.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
+    <ClCompile Include="TextCharacters.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enum.h">
@@ -165,6 +168,9 @@
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="TextChar.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCharacters.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>
