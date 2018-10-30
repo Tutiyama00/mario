@@ -7,6 +7,7 @@
 class Title;
 class Dx11;
 class Camera;
+class TextChar;
 
 class TitleScene : public IGameScene
 {
@@ -20,6 +21,7 @@ public:
 private:
 	Camera* m_pCamera = nullptr;
 	Title*  m_pTitle  = nullptr;
+	TextChar* m_pTextChar = nullptr;
 
 protected:
 	//---IGameScene---

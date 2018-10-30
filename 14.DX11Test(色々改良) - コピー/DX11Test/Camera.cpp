@@ -4,7 +4,8 @@
 using namespace DirectX;
 
 //•ÏŠ·s—ñ
-struct CameraConstantBuffer {
+struct CameraConstantBuffer
+{
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;
 	XMFLOAT4X4 projection;

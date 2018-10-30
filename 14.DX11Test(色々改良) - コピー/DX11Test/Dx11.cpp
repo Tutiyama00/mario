@@ -7,7 +7,6 @@
 #include"Title.h"
 #include"Block.h"
 #include"WICTextureLoader.h"
-#include"CharacterManager.h"
 #include"Characters.h"
 #include"DeathChecker.h"
 

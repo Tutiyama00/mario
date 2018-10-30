@@ -6,6 +6,7 @@ struct vertex
 {
 	float pos[3];
 	float tex[2];
+	float col[4];
 };
 
 //###################    Polygon   ##############################

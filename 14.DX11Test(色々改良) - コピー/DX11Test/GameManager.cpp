@@ -8,7 +8,6 @@
 #include"Stage.h"
 #include"Block.h"
 #include"Camera.h"
-#include"CharacterManager.h"
 #include"Characters.h"
 #include"DeathChecker.h"
 #include"TitleScene.h"
@@ -66,9 +65,4 @@ void GameManager::UpDateGame()
 	case GameState::GAMECLEAR:
 		break;
 	}
-}
-
-void GameManager::Draw()
-{
-	
 }

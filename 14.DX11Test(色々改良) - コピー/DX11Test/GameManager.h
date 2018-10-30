@@ -20,7 +20,6 @@ public:
 
 	void GetInput();
 	void UpDateGame();
-	void Draw();
 
 public:
 	Dx11*     m_pDx11     = nullptr;

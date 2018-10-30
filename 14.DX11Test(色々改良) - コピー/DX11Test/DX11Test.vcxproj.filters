@@ -78,9 +78,6 @@
     <ClCompile Include="Math.cpp">
       <Filter>ソース ファイル\Static</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -101,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TextChar.cpp">
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +134,6 @@
     <ClInclude Include="Math.h">
       <Filter>ヘッダー ファイル\Static</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterManager.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Dx11.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
@@ -167,6 +164,9 @@
     <ClInclude Include="PlayScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="TextChar.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
@@ -177,5 +177,8 @@
   <ItemGroup>
     <FxCompile Include="Shader\PixelShader.psh" />
     <FxCompile Include="Shader\VertexShader.vsh" />
+    <FxCompile Include="Shader\TextVertexShader.vsh" />
+    <FxCompile Include="Shader\TextPixelShader_Black.psh" />
+    <FxCompile Include="Shader\TextPixelShader_White.psh" />
   </ItemGroup>
 </Project>

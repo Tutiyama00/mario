@@ -113,7 +113,6 @@ HRESULT MainLoop()
 	}
 	g_pGameManager->GetInput();
 	g_pGameManager->UpDateGame();
-	g_pGameManager->Draw();
 	return TRUE;
 }
 
