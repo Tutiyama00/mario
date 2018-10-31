@@ -1,3 +1,5 @@
+#include<crtdbg.h>
+
 #include <Windows.h>
 #include"Vertex.h"
 #include"Sound.h"
@@ -34,6 +36,9 @@ nCmdShow      = ウィンドウの表示状態
 */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine, int nCmdShow)
 {
+	//メモリリーク検知
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	//ウィンドウクラス構造体の設定
 	WNDCLASSEX wc = { 0 };
 	wc.cbSize               = sizeof(wc);                          //WNDCLASSEX構造体のサイズ

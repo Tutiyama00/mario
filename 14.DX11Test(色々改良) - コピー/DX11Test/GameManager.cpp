@@ -12,6 +12,7 @@
 #include"DeathChecker.h"
 #include"TitleScene.h"
 #include"PlayScene.h"
+#include"GameOverScene.h"
 
 GameManager::GameManager(HWND hwnd)
 {
@@ -21,17 +22,17 @@ GameManager::GameManager(HWND hwnd)
 	m_GameState = GameState::TITLE;
 
 	m_pDx11->Create(hwnd);
-	m_pTitleScene = new TitleScene(m_pDx11->m_pDevice);
-	m_pPlayScene = new PlayScene(m_pDx11->m_pDevice);
+	m_pTitleScene    = new TitleScene(m_pDx11->m_pDevice);
 }
 
 GameManager::~GameManager()
 {
-	if (m_pDx11       != nullptr) { delete m_pDx11;        m_pDx11       = nullptr; }
-	if (m_pDsound     != nullptr) { delete m_pDsound;      m_pDsound     = nullptr; }
-	if (m_pFlag       != nullptr) { delete m_pFlag;        m_pFlag       = nullptr; }
-	if (m_pTitleScene != nullptr) { delete m_pTitleScene;  m_pTitleScene = nullptr; }
-	if (m_pPlayScene  != nullptr) { delete m_pPlayScene;   m_pPlayScene  = nullptr; }
+	if (m_pDx11          != nullptr) { delete m_pDx11;            m_pDx11          = nullptr; }
+	if (m_pDsound        != nullptr) { delete m_pDsound;          m_pDsound        = nullptr; }
+	if (m_pFlag          != nullptr) { delete m_pFlag;            m_pFlag          = nullptr; }
+	if (m_pTitleScene    != nullptr) { delete m_pTitleScene;      m_pTitleScene    = nullptr; }
+	if (m_pPlayScene     != nullptr) { delete m_pPlayScene;       m_pPlayScene     = nullptr; }
+	if (m_pGameOverScene != nullptr) { delete m_pGameOverScene;   m_pGameOverScene = nullptr; }
 }
 
 void GameManager::GetInput()
@@ -45,11 +46,21 @@ void GameManager::GetInput()
 
 void GameManager::UpDateGame()
 {
+	GameState oldGameState = m_GameState;
+
 	switch (m_GameState)
 	{
 	case GameState::TITLE:
 
 		m_GameState = m_pTitleScene->UpDateScene(*m_pFlag, m_pDx11);
+
+		if (m_GameState != oldGameState)
+		{
+			delete m_pTitleScene; 
+			m_pTitleScene = nullptr;
+
+			m_pPlayScene = new PlayScene(m_pDx11->m_pDevice);
+		}
 
 		break;
 
@@ -57,9 +68,36 @@ void GameManager::UpDateGame()
 
 		m_GameState = m_pPlayScene->UpDateScene(*m_pFlag, m_pDx11);
 
+		if (m_GameState != oldGameState)
+		{
+			delete m_pPlayScene;
+			m_pPlayScene = nullptr;
+
+			switch (m_GameState)
+			{
+			case GameState::GAMEOVER:
+				m_pGameOverScene = new GameOverScene(m_pDx11->m_pDevice);
+				break;
+
+			case GameState::GAMECLEAR:
+				break;
+			}
+		}
+
 		break;
 
 	case GameState::GAMEOVER:
+
+		m_GameState = m_pGameOverScene->UpDateScene(*m_pFlag, m_pDx11);
+
+		if (m_GameState != oldGameState)
+		{
+			delete m_pGameOverScene;
+			m_pGameOverScene = nullptr;
+
+			m_pTitleScene = new TitleScene(m_pDx11->m_pDevice);
+		}
+
 		break;
 
 	case GameState::GAMECLEAR:

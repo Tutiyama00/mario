@@ -3,11 +3,12 @@
 #include<string>
 #include<d3d11.h>
 #include"Math.h"
+#include"TextChar.h"
 
 using namespace OriginalMath;
 
 template<class T> class Characters;
-class TextChar;
+//class TextChar;
 
 class TextCharacters
 {

@@ -105,6 +105,9 @@
     <ClCompile Include="Math.cpp">
       <Filter>ソース ファイル\Static</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enum.h">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="Math.h">
       <Filter>ヘッダー ファイル\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

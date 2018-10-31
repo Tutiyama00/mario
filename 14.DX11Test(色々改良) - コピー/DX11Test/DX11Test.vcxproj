@@ -130,6 +130,7 @@
     <ClCompile Include="Dx11.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="IGameScene.h" />
     <ClInclude Include="IMoveObj.h" />
     <ClInclude Include="INotPlayer.h" />

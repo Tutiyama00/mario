@@ -7,7 +7,6 @@
 class Title;
 class Dx11;
 class Camera;
-class TextChar;
 class TextCharacters;
 
 class TitleScene : public IGameScene
