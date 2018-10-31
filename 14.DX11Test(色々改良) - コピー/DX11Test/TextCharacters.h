@@ -1,11 +1,22 @@
 #pragma once
 
+#include<string>
+#include<d3d11.h>
+#include"Math.h"
+
+using namespace OriginalMath;
+
+template<class T> class Characters;
+class TextChar;
+
 class TextCharacters
 {
 public:
-	TextCharacters();
+	TextCharacters(Vector3 pos, Vector2 size, std::string text, ID3D11Device* pDevice,LPCWSTR TPS_COLOR);
 	~TextCharacters();
 
-private:
+	void Render(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
 
+private:
+	Characters<TextChar>* m_pCharacters = nullptr;
 };

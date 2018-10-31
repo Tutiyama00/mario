@@ -2,14 +2,17 @@
 
 #include"Vertex.h"
 #include"RenderObj.h"
+#include"Math.h"
 
-#define TC_BLACK L"Shader/TextPixelShader_Black.psh"
-#define TC_WHITE L"Shader/TextPixelShader_White.psh"
+using namespace OriginalMath;
+
+#define TPS_BLACK L"Shader/TextPixelShader_Black.psh"
+#define TPS_WHITE L"Shader/TextPixelShader_White.psh"
 
 class TextChar : public Square,public RenderObj
 {
 public:
-	TextChar(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice, float texLeftUp[2], float texRightDown[2], LPCWSTR TC_COLOR, char setChar);
+	TextChar(Vector3 pos, Vector2 size, ID3D11Device* pDevice, LPCWSTR TPS_COLOR, char setChar);
 	~TextChar();
 
 	void CherTexSet(char setChar);

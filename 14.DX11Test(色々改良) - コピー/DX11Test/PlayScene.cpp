@@ -7,6 +7,9 @@
 #include"Block.h"
 #include"DeathChecker.h"
 #include"Dx11.h"
+#include"Math.h"
+
+using namespace OriginalMath;
 
 PlayScene::PlayScene(ID3D11Device* pDevice)
 {
@@ -41,15 +44,23 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 			float xPos = m_StandardSize * width;
 			float yPos = m_StandardSize * -(height - halfHeight);
 
+			Vector3 pos = { xPos,yPos,m_StandardZpos };
+			Vector2 size = { m_StandardSize, m_StandardSize };
+
 			//スイッチ分で判別
 			switch (*(m_pStage->m_pStageDataArray + (height*m_pStage->GetStageWidth() + width)))
 			{
 			case Object::MARIO:
-				m_pPlayer = new Player(xPos, yPos, m_StandardZpos, m_StandardSize, m_StandardSize, pDevice);
-				m_pDeathChecker = new DeathChecker(xPos, yPos - 0.1, m_StandardZpos, m_StandardSize, m_StandardSize, pDevice);
+
+				m_pPlayer = new Player(pos, size, pDevice);
+
+				pos.y -= 0.1f;
+
+				m_pDeathChecker = new DeathChecker(pos, size, pDevice);
 				break;
 			case Object::NORMAL_BLOCK:
-				m_pBlocks->m_ObjectVector.push_back(new Block(xPos, yPos, m_StandardZpos, m_StandardSize, m_StandardSize));
+
+				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
 			}
 		}

@@ -2,6 +2,9 @@
 
 #include"Vertex.h"
 #include"INotPlayer.h"
+#include"Math.h"
+
+using namespace OriginalMath;
 
 //ëOï˚êÈåæ
 class InputFlag;
@@ -9,7 +12,7 @@ class InputFlag;
 class Block : public Square,public INotPlayer
 {
 public:
-	Block(float xPos, float yPos, float zPos, float xSize, float ySize);
+	Block(Vector3 pos, Vector2 size);
 	~Block();
 
 	void CheckPlayer(Player* pPlayer,InputFlag* pInputFlag);

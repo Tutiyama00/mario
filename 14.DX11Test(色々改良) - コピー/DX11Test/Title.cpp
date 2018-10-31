@@ -1,6 +1,6 @@
 #include"Title.h"
 
-Title::Title(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice) : Square::Square(xPos, yPos, zPos, xSize, ySize)
+Title::Title(Vector3 pos, Vector2 size, ID3D11Device* pDevice) : Square::Square(pos, size)
 {
 	LoadTexture(pDevice, L"Texture/MARIO_TITLE_LOGO.png");
 	CreateShader(pDevice, L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");

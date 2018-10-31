@@ -2,11 +2,14 @@
 
 #include"Vertex.h"
 #include"RenderObj.h"
+#include"Math.h"
+
+using namespace OriginalMath;
 
 class DeathChecker : Square,RenderObj
 {
 public:
-	DeathChecker(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice);
+	DeathChecker(Vector3 pos, Vector2 size, ID3D11Device* pDevice);
 	~DeathChecker();
 
 	bool DeathCheck(Polygon* pSquare);

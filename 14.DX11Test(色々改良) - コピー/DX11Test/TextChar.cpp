@@ -1,11 +1,11 @@
 #include"TextChar.h"
 
-TextChar::TextChar(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice, float texLeftUp[2], float texRightDown[2], LPCWSTR TC_COLOR,char setChar)
-	     :Square(xPos, yPos, zPos, xSize, ySize)
+TextChar::TextChar(Vector3 pos, Vector2 size, ID3D11Device* pDevice, LPCWSTR TPS_COLOR,char setChar)
+	     :Square(pos, size)
 {
 	LoadTexture(pDevice, L"Texture/DOT_FONT.png");
 	CherTexSet(setChar);
-	CreateShader(pDevice, L"Shader/TextVertexShader.vsh",TC_COLOR);
+	CreateShader(pDevice, L"Shader/TextVertexShader.vsh",TPS_COLOR);
 	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	HRESULT hr = S_OK;

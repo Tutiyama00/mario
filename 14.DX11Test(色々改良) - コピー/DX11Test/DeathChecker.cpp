@@ -1,6 +1,6 @@
 #include"DeathChecker.h"
 
-DeathChecker::DeathChecker(float xPos, float yPos, float zPos, float xSize, float ySize,ID3D11Device* pDevice) : Square(xPos, yPos, zPos, xSize, ySize)
+DeathChecker::DeathChecker(Vector3 pos, Vector2 size,ID3D11Device* pDevice) : Square(pos, size)
 {
 	LoadTexture (pDevice, L"Texture/MARIO_GAMEOVER.png");
 	CreateShader(pDevice, L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");

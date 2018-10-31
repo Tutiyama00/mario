@@ -14,7 +14,7 @@ Polygon::~Polygon(){}
 void Square::Abstract(){}
 
 //コンストラクタ
-Square::Square(float xPos, float yPos, float zPos, float xSize, float ySize)
+Square::Square(Vector3 pos, Vector2 size)
 {
 	m_VertexArraySize = 4;
 	m_IndexArraySize  = 6;
@@ -22,16 +22,16 @@ Square::Square(float xPos, float yPos, float zPos, float xSize, float ySize)
 	m_pVertexArray = new vertex[m_VertexArraySize];
 	m_pIndexArray  = new WORD  [m_IndexArraySize];
 
-	m_xPos = xPos;
-	m_yPos = yPos;
-	m_zPos = zPos;
-	m_xSize = xSize;
-	m_ySize = ySize;
+	m_xPos = pos.x;
+	m_yPos = pos.y;
+	m_zPos = pos.z;
+	m_xSize = size.x;
+	m_ySize = size.y;
 
-	m_pVertexArray[0] = { { xPos - (xSize / 2) , yPos + (ySize / 2) , zPos } ,  {0,0} }; //左上
-	m_pVertexArray[1] = { { xPos + (xSize / 2) , yPos - (ySize / 2) , zPos } ,  {1,1} }; //右下
-	m_pVertexArray[2] = { { xPos - (xSize / 2) , yPos - (ySize / 2) , zPos } ,  {0,1} }; //左下
-	m_pVertexArray[3] = { { xPos + (xSize / 2) , yPos + (ySize / 2) , zPos } ,  {1,0} }; //右上
+	m_pVertexArray[0] = { { pos.x - (size.x / 2) , pos.y + (size.y / 2) , pos.z } ,  {0,0} }; //左上
+	m_pVertexArray[1] = { { pos.x + (size.x / 2) , pos.y - (size.y / 2) , pos.z } ,  {1,1} }; //右下
+	m_pVertexArray[2] = { { pos.x - (size.x / 2) , pos.y - (size.y / 2) , pos.z } ,  {0,1} }; //左下
+	m_pVertexArray[3] = { { pos.x + (size.x / 2) , pos.y + (size.y / 2) , pos.z } ,  {1,0} }; //右上
 
 	m_pIndexArray[0] = { 0 };
 	m_pIndexArray[1] = { 1 };
@@ -78,42 +78,4 @@ bool Square::CollisionCheck(Polygon* checkPolygon)
 	}
 
 	return false;
-}
-
-
-
-/*######################  Triangle  ###################################*/
-
-/*----------------------  public   -----------------------------------*/
-
-void Triangle::Abstract() {}
-
-Triangle::Triangle(float xPos, float yPos, float zPos, float xSize, float ySize)
-{
-	m_VertexArraySize = 3;
-	m_IndexArraySize  = 3;
-
-	m_pVertexArray = new vertex[m_VertexArraySize];
-	m_pIndexArray  = new WORD  [m_IndexArraySize];
-
-	m_xPos  = xPos;
-	m_yPos  = yPos;
-	m_zPos  = zPos;
-	m_xSize = xSize;
-	m_ySize = ySize;
-
-	m_pVertexArray[0] = { {               xPos, yPos + (ySize / 2), zPos} , {0,0} };
-	m_pVertexArray[1] = { { xPos + (xSize / 2), yPos - (ySize / 2), zPos} , {1,1} };
-	m_pVertexArray[2] = { { xPos - (xSize / 2), yPos - (ySize / 2), zPos} , {1,0} };
-
-	m_pIndexArray[0] = { 0 };
-	m_pIndexArray[1] = { 1 };
-	m_pIndexArray[2] = { 2 };
-}
-
-//デストラクタ
-Triangle::~Triangle()
-{
-	delete[] m_pVertexArray;  //この行を基底クラス側でやるとエラーがでる←newしたクラス側でdeleteしなければならない
-	delete[] m_pIndexArray;   //この行を基底クラス側でやるとエラーがでる←newしたクラス側でdeleteしなければならない
 }

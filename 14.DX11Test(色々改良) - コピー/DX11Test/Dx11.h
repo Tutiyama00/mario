@@ -44,7 +44,7 @@ private:
 public:
 	template<class tfunction> HRESULT Render(tfunction ifunction)
 	{
-		float ClearColor[4] = { 0.0f,1.0f,1.0f,1.0f };
+		float ClearColor[4] = { 0.0f,0.0f,0.0f,1.0f };
 
 		//ƒNƒŠƒA
 		m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);

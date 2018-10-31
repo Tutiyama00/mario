@@ -3,7 +3,8 @@
 #include"Flag.h"
 #include"Enum.h"
 
-Block::Block(float xPos, float yPos, float zPos, float xSize, float ySize) : Square::Square(xPos, yPos, zPos, xSize, ySize){}
+
+Block::Block(Vector3 pos, Vector2 size) : Square::Square(pos, size){}
 
 Block::~Block() {}
 

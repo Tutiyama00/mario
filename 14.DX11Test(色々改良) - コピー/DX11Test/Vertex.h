@@ -1,5 +1,8 @@
 #pragma once
 #include<d3d11.h>
+#include"Math.h"
+
+using namespace OriginalMath;
 
 //頂点構造体
 struct vertex
@@ -40,7 +43,7 @@ public:
 	void Abstract();  //抽象クラス化のための純粋仮想関数をここで定義する←このクラスが抽象クラスだと判断されないために
 
 	//コンストラクタ
-	Square(float xPos, float yPos, float zPos,float xSize, float ySize);
+	Square(Vector3 pos,Vector2 size);
 
 	//デストラクタ
 	~Square();
@@ -50,19 +53,4 @@ public:
 private:
 
 	float m_DiagonalLength = 0; //この四角形の対角線の長さ
-};
-
-
-//###################    Triangle   ##############################
-
-class Triangle : public Polygon
-{
-public:
-	void Abstract();  //抽象クラス化のための純粋仮想関数をここで定義する←このクラスが抽象クラスだと判断されないために
-
-	//コンストラクタ
-	Triangle(float xPos, float yPos, float zPos, float xSize, float ySize);
-
-	//デストラクタ
-	~Triangle();
 };

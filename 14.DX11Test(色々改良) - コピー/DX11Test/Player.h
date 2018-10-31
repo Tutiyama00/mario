@@ -4,6 +4,9 @@
 #include"RenderObj.h"
 #include"Enum.h"
 #include"IMoveObj.h"
+#include"Math.h"
+
+using namespace OriginalMath;
 
 //前方宣言
 class InputFlag;
@@ -12,7 +15,7 @@ class Block;
 class Player : public Square, public RenderObj, public IMoveObj
 {
 public:
-	Player(float xPos, float yPos, float zPos, float xSize, float ySize, ID3D11Device* pDevice);  //コンストラクタ
+	Player(Vector3 pos, Vector2 size, ID3D11Device* pDevice);  //コンストラクタ
 	~Player(); //デストラクタ
 
 	//---IMoveObj---

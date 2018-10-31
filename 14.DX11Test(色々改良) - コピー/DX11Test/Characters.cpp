@@ -1,5 +1,6 @@
 #include"Characters.h"
 #include"Block.h"
+#include"TextChar.h"
 
 template<class T> void Characters<T>::Abstract() {};
 
@@ -96,5 +97,14 @@ template void Characters<Block>::UpdateVIBuffer(ID3D11DeviceContext* deviceConte
 template void Characters<Block>::ClearVArray();
 template void Characters<Block>::ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
 template void Characters<Block>::ThisObjCreateBuffer(ID3D11Device* pDevice);
+
+template void Characters<TextChar>::Abstract();
+template Characters<TextChar>::Characters(ID3D11Device* pDevice, const wchar_t* pTextureFileName, LPCWSTR pVSFileName, LPCWSTR pPSFileName);
+template Characters<TextChar>::~Characters();
+template void Characters<TextChar>::SetVertexIndex();
+template void Characters<TextChar>::UpdateVIBuffer(ID3D11DeviceContext* deviceContext);
+template void Characters<TextChar>::ClearVArray();
+template void Characters<TextChar>::ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
+template void Characters<TextChar>::ThisObjCreateBuffer(ID3D11Device* pDevice);
 
 #pragma endregion
