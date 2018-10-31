@@ -25,7 +25,7 @@ template<class T> void Characters<T>::SetVertexIndex()
 {
 	//このクラスの配列数を確定
 	int size       = m_ObjectVector.size();
-	int vertexSize = m_ObjectVector[0]->m_VertexArraySize;
+	int vertexSize = m_ObjectVector[0]->GetVertexArraySize();
 	m_pVertexArray = new vertex[vertexSize * size]();
 	m_pIndexArray  = new WORD[(vertexSize * size - 3) * 3 + 3]();
 
@@ -33,14 +33,14 @@ template<class T> void Characters<T>::SetVertexIndex()
 	for (int i = 0; i < m_ObjectVector.size(); i++)
 	{
 		//Index
-		for (int j = 0; j < m_ObjectVector[i]->m_IndexArraySize; j++)
+		for (int j = 0; j < m_ObjectVector[i]->GetIndexArraySize(); j++)
 		{
 			//今格納されている頂点情報数によってインデックスの番号が変動するので単純な計算をしている
 			m_pIndexArray[m_IndexArraySize] = m_ObjectVector[i]->m_pIndexArray[j] + m_VertexArraySize;
 			m_IndexArraySize++;
 		}
 		//Vertex
-		for (int j = 0; j < m_ObjectVector[i]->m_VertexArraySize; j++)
+		for (int j = 0; j < m_ObjectVector[i]->GetVertexArraySize(); j++)
 		{
 			m_pVertexArray[m_VertexArraySize] = m_ObjectVector[i]->m_pVertexArray[j];
 			m_VertexArraySize++;
@@ -56,7 +56,7 @@ template<class T> void Characters<T>::UpdateVIBuffer(ID3D11DeviceContext* device
 	for (int i = 0; i < m_ObjectVector.size(); i++)
 	{
 		//Vertex
-		for (int j = 0; j < m_ObjectVector[i]->m_VertexArraySize; j++)
+		for (int j = 0; j < m_ObjectVector[i]->GetVertexArraySize(); j++)
 		{
 			m_pVertexArray[m_VertexArraySize] = m_ObjectVector[i]->m_pVertexArray[j];
 			m_VertexArraySize++;

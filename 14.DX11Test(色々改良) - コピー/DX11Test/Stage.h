@@ -12,7 +12,7 @@ public:
 public:
 	/*アクセサー*/
 	int GetStageHeight() { return m_StageHeight; }
-	int GetStageWidth() { return m_StageWidth; }
+	int GetStageWidth()  { return m_StageWidth; }
 
 	Object* m_pStageDataArray; //ステージデータを保存する配列のポインタ
 

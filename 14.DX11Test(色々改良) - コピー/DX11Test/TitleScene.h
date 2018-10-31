@@ -22,7 +22,6 @@ public:
 private:
 	Camera* m_pCamera = nullptr;
 	Title*  m_pTitle  = nullptr;
-	TextChar* m_pTextChar = nullptr;
 	TextCharacters* m_pTextCharacters = nullptr;
 
 protected:

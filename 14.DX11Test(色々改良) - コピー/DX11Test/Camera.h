@@ -10,6 +10,6 @@ public:
 
 	void Shoot(ID3D11DeviceContext* pDeviceContext, D3D11_VIEWPORT* pViewPort, float xPos);
 
-public:
+private:
 	ID3D11Buffer*   m_pCameraConstantBuffer = nullptr;
 };

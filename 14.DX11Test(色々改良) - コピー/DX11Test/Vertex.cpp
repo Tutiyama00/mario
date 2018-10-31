@@ -54,9 +54,9 @@ Square::~Square()
 bool Square::CollisionCheck(Polygon* checkPolygon)
 {
 	//’²¸‘ÎÛ‚Æ©•ª‚Ì‹——£‚ğ”äŠr‚µ‚ÄÕ“Ë‚Ì‰Â”\«‚ª‚ ‚é‚©‚Ç‚¤‚©”»’f
-	if (OriginalMath::Math::CosineTheorem90(checkPolygon->m_xPos - m_xPos, checkPolygon->m_yPos - m_yPos) <= m_DiagonalLength)
+	if (OriginalMath::Math::CosineTheorem90(checkPolygon->GetxPos() - m_xPos, checkPolygon->GetyPos() - m_yPos) <= m_DiagonalLength)
 	{
-		for (int i = 0; i < checkPolygon->m_VertexArraySize; i++)
+		for (int i = 0; i < checkPolygon->GetVertexArraySize(); i++)
 		{
 			//©•ª‚Ì“à‘¤‚Éd‚È‚Á‚Ä‚¢‚½ê‡
 			if (m_pVertexArray[0].pos[0] <= checkPolygon->m_pVertexArray[i].pos[0] && m_pVertexArray[1].pos[0] >= checkPolygon->m_pVertexArray[i].pos[0])

@@ -66,7 +66,7 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 bool Block::LeftCheck(Player* pPlayer, InputFlag* pInputFlag)
 {
 	//プレイヤーがこのブロックの左側にあるか
-	if (pPlayer->m_xPos <= m_xPos)
+	if (pPlayer->GetxPos() <= m_xPos)
 	{
 		//プレイヤーの右上か右下の頂点がこのブロックの左上、左下の間にあるか
 		if (pPlayer->m_pVertexArray[3].pos[1] - m_Threshold <= m_pVertexArray[0].pos[1] && pPlayer->m_pVertexArray[3].pos[1] - m_Threshold >= m_pVertexArray[2].pos[1])
@@ -85,7 +85,7 @@ bool Block::LeftCheck(Player* pPlayer, InputFlag* pInputFlag)
 bool Block::RightCheck(Player* pPlayer, InputFlag* pInputFlag)
 {
 	//プレイヤーがこのブロックの右側にあるか
-	if (pPlayer->m_xPos >= m_xPos)
+	if (pPlayer->GetxPos() >= m_xPos)
 	{
 		//プレイヤーの左上か左下の頂点がこのブロックの右上、右下の間にあるか
 		if (pPlayer->m_pVertexArray[0].pos[1] - m_Threshold <= m_pVertexArray[3].pos[1] && pPlayer->m_pVertexArray[3].pos[1] - m_Threshold >= m_pVertexArray[1].pos[1])
@@ -104,7 +104,7 @@ bool Block::RightCheck(Player* pPlayer, InputFlag* pInputFlag)
 bool Block::DownCheck(Player* pPlayer, InputFlag* pInputFlag)
 {
 	//プレイヤーがこのブロックの下にあるか
-	if (pPlayer->m_yPos <= m_yPos)
+	if (pPlayer->GetyPos() <= m_yPos)
 	{
 		//プレイヤーの左上か右上の頂点がこのブロックの左下、右下の間にあるか
 		if (pPlayer->m_pVertexArray[0].pos[0] + m_Threshold >= m_pVertexArray[2].pos[0] && pPlayer->m_pVertexArray[0].pos[0] + m_Threshold <= m_pVertexArray[1].pos[0])
@@ -123,7 +123,7 @@ bool Block::DownCheck(Player* pPlayer, InputFlag* pInputFlag)
 bool Block::UpCheck(Player* pPlayer, InputFlag* pInputFlag)
 {
 	//プレイヤーがこのブロックの上にあるか
-	if (pPlayer->m_yPos >= m_yPos)
+	if (pPlayer->GetyPos() >= m_yPos)
 	{
 		//プレイヤーの左下か右下の頂点がこのブロックの左上、右上の間にあるか
 		if (pPlayer->m_pVertexArray[2].pos[0] + m_Threshold >= m_pVertexArray[0].pos[0] && pPlayer->m_pVertexArray[2].pos[0] + m_Threshold <= m_pVertexArray[3].pos[0])

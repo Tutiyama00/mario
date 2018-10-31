@@ -22,10 +22,18 @@ public:
 	virtual ~Polygon();           //デストラクタ←ここでカラ定義
 
 public:
-	UINT    m_VertexArraySize;  //頂点配列の要素数
-	UINT    m_IndexArraySize;   //インデックス配列の要素数
-	vertex* m_pVertexArray = nullptr;     //頂点配列
-    WORD*   m_pIndexArray  = nullptr;     //インデックス配列
+	float GetxPos() { return m_xPos; }
+	float GetyPos() { return m_yPos; }
+	UINT GetVertexArraySize() { return m_VertexArraySize; }
+	UINT GetIndexArraySize() { return m_IndexArraySize; }
+
+public:
+	vertex* m_pVertexArray = nullptr;  //頂点配列
+	WORD*   m_pIndexArray = nullptr;  //インデックス配列
+
+protected:
+	UINT    m_VertexArraySize;         //頂点配列の要素数
+	UINT    m_IndexArraySize;          //インデックス配列の要素数
 
 	float m_xPos;  //X座標
 	float m_yPos;  //Y座標
@@ -51,6 +59,5 @@ public:
 	virtual bool CollisionCheck(Polygon* checkPolygon); //衝突判定
 
 private:
-
 	float m_DiagonalLength = 0; //この四角形の対角線の長さ
 };

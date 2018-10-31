@@ -13,8 +13,8 @@ TitleScene::TitleScene(ID3D11Device* pDevice)
 	Vector3 pos = { 0.0f, 0.1f, -0.5f };
 	Vector2 size = { 1.3f, 1.0f };
 
-	m_pCamera = new Camera(pDevice);
-	m_pTitle = new Title(pos, size, pDevice);
+	m_pCamera       = new Camera(pDevice);
+	m_pTitle        = new Title(pos, size, pDevice);
 	m_NextGameState = GameState::TITLE;
 
 	pos.x = -0.45f;
@@ -29,7 +29,6 @@ TitleScene::~TitleScene()
 {
 	if (m_pCamera   != nullptr)   { delete m_pCamera;    m_pCamera   = nullptr; }
 	if (m_pTitle    != nullptr)   { delete m_pTitle;     m_pTitle    = nullptr; }
-	if (m_pTextChar != nullptr)   { delete m_pTextChar;  m_pTextChar = nullptr; }
 	if (m_pTextCharacters != nullptr) { delete m_pTextCharacters;  m_pTextCharacters = nullptr; }
 }
 
