@@ -8,7 +8,6 @@
 using namespace OriginalMath;
 
 template<class T> class Characters;
-//class TextChar;
 
 class TextCharacters
 {

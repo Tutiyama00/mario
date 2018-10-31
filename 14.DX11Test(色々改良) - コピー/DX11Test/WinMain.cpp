@@ -154,7 +154,7 @@ void FrameControl()
 	//設定した最低フレーム間秒より短いかどうかの比較
 	if (g_frameTime < G_MIN_FREAM_TIME)
 	{
-		OutputDebugString("sleep\n");
+		//OutputDebugString("sleep\n");
 
 		//ミリ秒に変換する←Sleep()はミリ秒設定なので
 		g_sleepTime = (DWORD)((G_MIN_FREAM_TIME - g_frameTime) * 1000);
@@ -176,9 +176,9 @@ void FrameControl()
 		std::stringstream stream;
 #endif
 		stream << g_fps << " FPS" << std::endl;
-		// カウンタ付けて10回に1回出力、とかにしないと見づらいかもね
-		OutputDebugString(stream.str().c_str());
-#endif // _DEBUG
+		//カウンタ付けて10回に1回出力、とかにしないと見づらいかもね
+		//OutputDebugString(stream.str().c_str());
+#endif  //_DEBUG
 	}
 
 	g_timeStart = g_timeEnd;

@@ -8,6 +8,7 @@ class Title;
 class Dx11;
 class Camera;
 class TextCharacters;
+class Timer;
 
 class TitleScene : public IGameScene
 {
@@ -22,6 +23,7 @@ private:
 	Camera* m_pCamera = nullptr;
 	Title*  m_pTitle  = nullptr;
 	TextCharacters* m_pTextCharacters = nullptr;
+	Timer* m_pTimer = nullptr;
 
 protected:
 	//---IGameScene---
