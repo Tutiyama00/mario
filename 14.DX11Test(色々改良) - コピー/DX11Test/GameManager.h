@@ -12,6 +12,7 @@ class CharacterManager;
 class TitleScene;
 class PlayScene;
 class GameOverScene;
+class ParameterScene;
 
 class GameManager
 {
@@ -34,4 +35,5 @@ private:
 	TitleScene*    m_pTitleScene    = nullptr;
 	PlayScene*     m_pPlayScene     = nullptr;
 	GameOverScene* m_pGameOverScene = nullptr;
+	ParameterScene* m_pParameterScene = nullptr;
 };

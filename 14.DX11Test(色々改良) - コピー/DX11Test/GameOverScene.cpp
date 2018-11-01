@@ -14,7 +14,7 @@ GameOverScene::GameOverScene(ID3D11Device* pDevice)
 
 	m_pCamera = new Camera(pDevice);
 
-	Vector3 pos  = { -0.275f,0.0f,-0.5f };
+	Vector3 pos  = { -0.275f,0.0f,0.0f };
 	Vector2 size = { 0.07f,0.07f };
 
 	m_pTextCharacters = new TextCharacters(pos, size, "GAME OVER", pDevice, TPS_WHITE);
@@ -44,11 +44,6 @@ void GameOverScene::UpDateGame(InputFlag inputFlag)
 
 void GameOverScene::Draw(Dx11* pDx11)
 {
-	auto GameOverRender = [this, pDx11]
-	{
-		m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->m_ViewPort, 0.0f);
-		m_pTextCharacters->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	};
-
-	pDx11->Render(GameOverRender);
+	m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->m_ViewPort, 0.0f);
+	m_pTextCharacters->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 }

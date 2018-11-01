@@ -7,8 +7,8 @@
 #include<sstream>
 
 HWND  g_hwnd               = nullptr;
-const UINT G_WINDOW_WIDTH  = 1440;
-const UINT G_WINDOW_HEIGHT = 810;
+const UINT G_WINDOW_WIDTH  = 1000;
+const UINT G_WINDOW_HEIGHT = 750;
 MSG   g_msg = {0};
 GameManager* g_pGameManager = nullptr;
 LPDIRECTSOUNDBUFFER g_BGMdirectSoundBuffer = nullptr;

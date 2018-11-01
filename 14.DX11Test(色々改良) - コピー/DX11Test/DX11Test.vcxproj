@@ -132,6 +132,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="ParameterScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RenderObj.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="IMoveObj.h" />
     <ClInclude Include="INotPlayer.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="ParameterScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RenderObj.h" />

@@ -27,8 +27,8 @@ private:
 
 private:
 	ID3D11Buffer*   m_pTextureConstantBuffer = nullptr;
-	const UINT m_FontHeight = 10;
-	const UINT m_FontWidth  = 10;
+	const UINT m_FontHeight    = 10;
+	const UINT m_FontWidth     = 10;
 	const UINT m_MinFontNamber = 32;
 	const UINT m_MaxFontNamber = 125;
 };

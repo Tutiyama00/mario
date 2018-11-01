@@ -13,6 +13,7 @@
 #include"TitleScene.h"
 #include"PlayScene.h"
 #include"GameOverScene.h"
+#include"ParameterScene.h"
 
 GameManager::GameManager(HWND hwnd)
 {
@@ -23,6 +24,7 @@ GameManager::GameManager(HWND hwnd)
 
 	m_pDx11->Create(hwnd);
 	m_pTitleScene    = new TitleScene(m_pDx11->m_pDevice);
+	m_pParameterScene = new ParameterScene(m_pDx11->m_pDevice, m_GameState);
 }
 
 GameManager::~GameManager()
@@ -46,7 +48,11 @@ void GameManager::GetInput()
 
 void GameManager::UpDateGame()
 {
+	m_pDx11->RenderStart();
+
 	GameState oldGameState = m_GameState;
+
+	m_pParameterScene->UpDateScene(*m_pFlag, m_pDx11);
 
 	switch (m_GameState)
 	{
@@ -103,4 +109,8 @@ void GameManager::UpDateGame()
 	case GameState::GAMECLEAR:
 		break;
 	}
+
+	
+
+	m_pDx11->RenderEnd();
 }

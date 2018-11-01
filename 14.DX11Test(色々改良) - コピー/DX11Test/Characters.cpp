@@ -48,6 +48,7 @@ template<class T> void Characters<T>::SetVertexIndex()
 	}
 }
 
+//頂点配列の更新、それに伴ってVertexBufferの更新（このままではインデックス情報の更新はしていない）
 template<class T> void Characters<T>::UpdateVIBuffer(ID3D11DeviceContext* deviceContext)
 {
 	ClearVArray();

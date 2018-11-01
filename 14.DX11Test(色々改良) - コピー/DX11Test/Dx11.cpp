@@ -142,3 +142,44 @@ HRESULT Dx11::AllDelete()
 
 	return TRUE;
 }
+
+//Render開始
+void Dx11::RenderStart()
+{
+	if (!m_RunningFlag)
+	{
+		m_RunningFlag = true;
+
+		float ClearColor[4] = { 0.0f,0.0f,0.0f,1.0f };
+
+		//クリア
+		m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);
+		m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+		//基礎設定
+		m_pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		m_pDeviceContext->RSSetViewports(1, &m_ViewPort);
+		m_pDeviceContext->PSSetSamplers(0, 1, &m_pSampler);
+		m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+	}
+	else
+	{
+		MessageBox(NULL, "RenderNow!", "ERRER", MB_OK);
+	}
+}
+
+//Render終了
+void Dx11::RenderEnd()
+{
+	if (m_RunningFlag)
+	{
+		//Presentは１回でOK←複数置くと点滅などの現象がおこる←Presentは裏で描画したもの箱を開けて表示するようなものだから
+		m_pSwapChain->Present(0, 0);
+
+		m_RunningFlag = false;
+	}
+	else
+	{
+		MessageBox(NULL, "NotPlayRender", "ERRER", MB_OK);
+	}
+}
