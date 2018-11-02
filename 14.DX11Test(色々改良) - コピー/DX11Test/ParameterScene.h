@@ -20,6 +20,7 @@ private:
 	TextCharacters* m_pTextOfMARIO = nullptr;
 	TextCharacters* m_pTextOfWORLD = nullptr;
 	TextCharacters* m_pTextOfTIME  = nullptr;
+	TextCharacters* m_pTextOfTimeNamber = nullptr;
 
 protected:
 	//---IGameScene---

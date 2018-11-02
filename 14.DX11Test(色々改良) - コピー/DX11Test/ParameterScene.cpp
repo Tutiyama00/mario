@@ -20,18 +20,39 @@ ParameterScene::ParameterScene(ID3D11Device* pDevice,GameState nowGameState)
 
 	pos.x = 0.6f;
 	m_pTextOfTIME  = new TextCharacters(pos, size, "TIME",  pDevice, TPS_WHITE);
+
+	pos.x = 0.675f;
+	pos.y = 0.775f;
+	m_pTextOfTimeNamber = new TextCharacters(pos, size, "   ", pDevice, TPS_WHITE);
+
+	m_pTimer->SetTimeRemaining(110);
+	int time = m_pTimer->CountStart();
+
+	m_pTextOfTimeNamber->ChangeText(std::to_string(time), pDevice);
 }
 
 ParameterScene::~ParameterScene()
 {
-	if (m_pTimer       != nullptr) { delete m_pTimer;       m_pTimer       = nullptr; }
-	if (m_pTextOfMARIO != nullptr) { delete m_pTextOfMARIO; m_pTextOfMARIO = nullptr; }
-	if (m_pTextOfTIME  != nullptr) { delete m_pTextOfTIME;  m_pTextOfTIME  = nullptr; }
-	if (m_pTextOfWORLD != nullptr) { delete m_pTextOfWORLD; m_pTextOfWORLD = nullptr; }
+	if (m_pTimer            != nullptr) { delete m_pTimer;            m_pTimer            = nullptr; }
+	if (m_pTextOfMARIO      != nullptr) { delete m_pTextOfMARIO;      m_pTextOfMARIO      = nullptr; }
+	if (m_pTextOfTIME       != nullptr) { delete m_pTextOfTIME;       m_pTextOfTIME       = nullptr; }
+	if (m_pTextOfWORLD      != nullptr) { delete m_pTextOfWORLD;      m_pTextOfWORLD      = nullptr; }
+	if (m_pTextOfTimeNamber != nullptr) { delete m_pTextOfTimeNamber; m_pTextOfTimeNamber = nullptr; }
 }
 
 GameState ParameterScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 {
+	int time = m_pTimer->GetCount();
+	if (time < 100)
+	{
+		m_pTextOfTimeNamber->ChangeText("0" + std::to_string(time), pDx11->m_pDevice);
+	}
+	else
+	{
+		m_pTextOfTimeNamber->ChangeText(std::to_string(time), pDx11->m_pDevice);
+	}
+	
+
 	UpDateGame(inputFlag);
 	Draw(pDx11);
 
@@ -40,7 +61,7 @@ GameState ParameterScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 
 void ParameterScene::UpDateGame(InputFlag inputFlag)
 {
-
+	
 }
 
 void ParameterScene::Draw(Dx11* pDx11)
@@ -48,4 +69,5 @@ void ParameterScene::Draw(Dx11* pDx11)
 	m_pTextOfMARIO->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 	m_pTextOfTIME ->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 	m_pTextOfWORLD->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pTextOfTimeNamber->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 }

@@ -25,6 +25,7 @@ RenderObj::~RenderObj()
 	if (m_pMainTextureSRV      != nullptr) { m_pMainTextureSRV      ->Release();  m_pMainTextureSRV      = nullptr; }
 }
 
+//テクスチャの読み込み
 void RenderObj::LoadTexture(ID3D11Device* pDevice, const wchar_t* pFileName)
 {
 	HRESULT hr = S_OK;
@@ -43,6 +44,7 @@ void RenderObj::LoadTexture(ID3D11Device* pDevice, const wchar_t* pFileName)
 	CoUninitialize();
 }
 
+//シェーダーの生成
 void RenderObj::CreateShader(ID3D11Device* pDevice, LPCWSTR pVSFileName, LPCWSTR pPSFileName)
 {
 	HRESULT hr = TRUE;
@@ -84,16 +86,19 @@ void RenderObj::CreateShader(ID3D11Device* pDevice, LPCWSTR pVSFileName, LPCWSTR
 		MessageBox(NULL, "Error : CreatePixelShader() Failed.", "ERRER", MB_OK);
 	}
 
+	//解放処理
 	vs_pBlob->Release();
 	vs_pBlob = nullptr;
 	ps_pBlob->Release();
 	ps_pBlob = nullptr;
 }
 
+//バッファの生成
 void RenderObj::CreateBuffer(ID3D11Device* pDevice,vertex* pVertexArray,UINT vertexArraySize,WORD* pIndexArray,UINT indexArraySize)
 {
 	HRESULT hr = S_OK;
 
+	//バッファの設定
 	ZeroMemory(&m_VertexBufferDesc, sizeof(m_VertexBufferDesc));
 	m_VertexBufferDesc.ByteWidth           = sizeof(vertex) * vertexArraySize;
 	m_VertexBufferDesc.Usage               = D3D11_USAGE_DEFAULT;
@@ -118,6 +123,7 @@ void RenderObj::CreateBuffer(ID3D11Device* pDevice,vertex* pVertexArray,UINT ver
 	m_IndexSubResourData.SysMemPitch       = 0;
 	m_IndexSubResourData.SysMemSlicePitch  = 0;
 
+	//バッファの作成
 	hr = pDevice->CreateBuffer(&m_VertexBufferDesc, &m_VertexSubResourData, &m_pVertexBuffer);
 	if (FAILED(hr))
 	{

@@ -24,10 +24,6 @@ TitleScene::TitleScene(ID3D11Device* pDevice)
 	size.x = size.y = 0.07f;
 
 	m_pTextCharacters = new TextCharacters(pos, size,"1 PLAYER GAME", pDevice, TPS_WHITE);
-
-	m_pTimer = new Timer();
-	m_pTimer->SetTimeRemaining((DWORD)10);
-	m_pTimer->CountStart();
 }
 
 TitleScene::~TitleScene()
@@ -35,13 +31,10 @@ TitleScene::~TitleScene()
 	if (m_pCamera   != nullptr)   { delete m_pCamera;    m_pCamera   = nullptr; }
 	if (m_pTitle    != nullptr)   { delete m_pTitle;     m_pTitle    = nullptr; }
 	if (m_pTextCharacters != nullptr) { delete m_pTextCharacters;  m_pTextCharacters = nullptr; }
-	if (m_pTimer != nullptr) { delete m_pTimer;  m_pTimer = nullptr; }
 }
 
 GameState TitleScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 {
-	m_pTimer->GetCount();
-
 	UpDateGame(inputFlag);
 	Draw(pDx11);
 

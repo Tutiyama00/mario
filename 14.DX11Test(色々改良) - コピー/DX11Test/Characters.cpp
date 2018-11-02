@@ -54,21 +54,27 @@ template<class T> void Characters<T>::SetVertexIndex()
 	}
 }
 
-//頂点配列の更新、それに伴ってVertexBufferの更新（このままではインデックス情報の更新はしていない）
+//頂点とインデックス情報を更新、バッファを新しく作ってセットしている
 template<class T> void Characters<T>::UpdateVIBuffer(ID3D11Device* pDevice)
 {
 	HRESULT hr = S_OK;
 
+	//頂点とインデックス情報を更新
 	SetVertexIndex();
 
+	//サイズの再設定
 	m_VertexBufferDesc.ByteWidth  = sizeof(vertex) * m_VertexArraySize;
 	m_IndexBufferDesc.ByteWidth   = sizeof(WORD)   * m_IndexArraySize;
+
+	//配列の再設定
 	m_VertexSubResourData.pSysMem = m_pVertexArray;
 	m_IndexSubResourData.pSysMem  = m_pIndexArray;
 
+	//前のバッファをリリース
 	if (m_pVertexBuffer != nullptr) { m_pVertexBuffer ->Release(); m_pVertexBuffer = nullptr; }
 	if (m_pIndexBuffer  != nullptr) { m_pIndexBuffer  ->Release(); m_pIndexBuffer  = nullptr; }
 
+	//新しくバッファを作成
 	hr = pDevice->CreateBuffer(&m_VertexBufferDesc, &m_VertexSubResourData, &m_pVertexBuffer);
 	if (FAILED(hr))
 	{
