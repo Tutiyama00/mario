@@ -9,6 +9,8 @@ public:
 	Characters(ID3D11Device* pDevice, const wchar_t* pTextureFileName, LPCWSTR pVSFileName, LPCWSTR pPSFileName);
 	~Characters();
 
+	void UpdateVIBuffer(ID3D11Device* pDevice);
+
 	//---RenderObj---
 	void ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
 	void ThisObjCreateBuffer(ID3D11Device* pDevice);
@@ -18,8 +20,6 @@ public:
 
 private:
 	void SetVertexIndex();
-	void UpdateVIBuffer(ID3D11DeviceContext* pDeviceContext);
-	void ClearVArray();
 
 	//---RenderObj---
 	void Abstract();

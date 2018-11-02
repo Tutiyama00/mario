@@ -16,7 +16,11 @@ public:
 	~TextCharacters();
 
 	void Render(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
+	void ChangeText(std::string text,ID3D11Device* pDevice);
 
 private:
 	Characters<TextChar>* m_pCharacters = nullptr;
+	const Vector3 M_POS;
+	const Vector2 M_SIZE;
+	const LPCWSTR M_TPS_COLOR;
 };

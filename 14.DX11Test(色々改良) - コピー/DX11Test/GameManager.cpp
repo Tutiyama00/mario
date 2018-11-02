@@ -29,12 +29,13 @@ GameManager::GameManager(HWND hwnd)
 
 GameManager::~GameManager()
 {
-	if (m_pDx11          != nullptr) { delete m_pDx11;            m_pDx11          = nullptr; }
-	if (m_pDsound        != nullptr) { delete m_pDsound;          m_pDsound        = nullptr; }
-	if (m_pFlag          != nullptr) { delete m_pFlag;            m_pFlag          = nullptr; }
-	if (m_pTitleScene    != nullptr) { delete m_pTitleScene;      m_pTitleScene    = nullptr; }
-	if (m_pPlayScene     != nullptr) { delete m_pPlayScene;       m_pPlayScene     = nullptr; }
-	if (m_pGameOverScene != nullptr) { delete m_pGameOverScene;   m_pGameOverScene = nullptr; }
+	if (m_pDx11           != nullptr) { delete m_pDx11;            m_pDx11           = nullptr; }
+	if (m_pDsound         != nullptr) { delete m_pDsound;          m_pDsound         = nullptr; }
+	if (m_pFlag           != nullptr) { delete m_pFlag;            m_pFlag           = nullptr; }
+	if (m_pTitleScene     != nullptr) { delete m_pTitleScene;      m_pTitleScene     = nullptr; }
+	if (m_pPlayScene      != nullptr) { delete m_pPlayScene;       m_pPlayScene      = nullptr; }
+	if (m_pGameOverScene  != nullptr) { delete m_pGameOverScene;   m_pGameOverScene  = nullptr; }
+	if (m_pParameterScene != nullptr) { delete m_pParameterScene;  m_pParameterScene = nullptr; }
 }
 
 void GameManager::GetInput()
