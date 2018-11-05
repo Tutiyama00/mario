@@ -19,6 +19,8 @@ PlayScene::PlayScene(ID3D11Device* pDevice)
 	m_pCamera = new Camera(pDevice);
 	m_pBlocks = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	MakeStageObj(pDevice);
+
+	m_pPlayer->SetLife(3);
 }
 
 PlayScene::~PlayScene()
@@ -47,13 +49,14 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 			Vector3 pos = { xPos,yPos,m_StandardZpos };
 			Vector2 size = { m_StandardSize, m_StandardSize };
 
-			//スイッチ分で判別
+			//スイッチ文で判別
 			switch (*(m_pStage->m_pStageDataArray + (height*m_pStage->GetStageWidth() + width)))
 			{
 			case Object::MARIO:
 
 				m_pPlayer = new Player(pos, size, pDevice);
 
+				pos.x += 0.2f;
 				pos.y -= 0.1f;
 
 				m_pDeathChecker = new DeathChecker(pos, size, pDevice);
@@ -79,11 +82,6 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 
 void PlayScene::UpDateGame(InputFlag inputFlag)
 {
-	if (m_pPlayer->m_MoveObjState == MoveObjState::DEATH)
-	{
-		m_NextGameState = GameState::GAMEOVER;
-	}
-
 	//ブロック群のプレイヤーに対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
@@ -93,10 +91,20 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	//プレイヤー移動
 	m_pPlayer->Move(&inputFlag);
 
+	//死亡チェック
 	if (m_pDeathChecker->DeathCheck(m_pPlayer))
 	{
-		m_pPlayer->m_MoveObjState = MoveObjState::DEATH;
-		m_NextGameState = GameState::GAMEOVER;
+		//プレイヤーの死亡処理
+		m_pPlayer->Die();
+		//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
+		if (m_pPlayer->GetLife() == 0)
+		{
+			m_NextGameState = GameState::GAMEOVER;
+		}
+		else
+		{
+			m_NextGameState = GameState::RESULT_RESTART;
+		}
 	}
 }
 
@@ -106,4 +114,21 @@ void PlayScene::Draw(Dx11* pDx11)
 	m_pPlayer->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 	m_pDeathChecker->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 	m_pBlocks->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+}
+
+void PlayScene::ReStart(ID3D11Device* pDevice)
+{
+	m_OldPlayerLife = m_pPlayer->GetLife();
+
+	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
+	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
+	if (m_pDeathChecker != nullptr) { delete m_pDeathChecker; m_pDeathChecker = nullptr; }
+
+	m_pBlocks = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+
+	MakeStageObj(pDevice);
+
+	m_pPlayer->SetLife(m_OldPlayerLife);
+
+	m_NextGameState = GameState::PLAY;
 }

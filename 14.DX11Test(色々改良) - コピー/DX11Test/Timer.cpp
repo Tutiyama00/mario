@@ -42,7 +42,7 @@ DWORD Timer::GetCount()
 		//c‚èŠÔ‚ğo—Í
 		std::stringstream stream;
 		stream << m_TimeRemaining << std::endl;
-		OutputDebugString(stream.str().c_str());
+		//OutputDebugString(stream.str().c_str());
 
 		return m_TimeRemaining;
 	}

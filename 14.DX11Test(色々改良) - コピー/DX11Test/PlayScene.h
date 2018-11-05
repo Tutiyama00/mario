@@ -16,8 +16,13 @@ public:
 	PlayScene(ID3D11Device* pDevice);
 	~PlayScene();
 
+	void ReStart(ID3D11Device* pDevice);
+
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
+
+public:
+	Player* GetPlayer() { return m_pPlayer; }
 
 private:
 	void MakeStageObj(ID3D11Device* pDevice);
@@ -31,6 +36,8 @@ private:
 
 	float m_StandardSize = 0.1f;
 	float m_StandardZpos = -0.5f;
+
+	UINT m_OldPlayerLife = 0;
 
 protected:
 	//---IGameScene---

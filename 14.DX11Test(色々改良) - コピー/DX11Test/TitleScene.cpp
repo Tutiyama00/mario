@@ -45,7 +45,7 @@ void TitleScene::UpDateGame(InputFlag inputFlag)
 {
 	if (inputFlag.Check(InputFlagCode::INPUT_SPACE))
 	{
-		m_NextGameState = GameState::PLAY;
+		m_NextGameState = GameState::RESULT_RESTART;
 	}
 }
 

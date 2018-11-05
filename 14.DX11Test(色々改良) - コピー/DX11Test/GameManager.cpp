@@ -14,6 +14,7 @@
 #include"PlayScene.h"
 #include"GameOverScene.h"
 #include"ParameterScene.h"
+#include"ResultScene.h"
 
 GameManager::GameManager(HWND hwnd)
 {
@@ -36,6 +37,7 @@ GameManager::~GameManager()
 	if (m_pPlayScene      != nullptr) { delete m_pPlayScene;       m_pPlayScene      = nullptr; }
 	if (m_pGameOverScene  != nullptr) { delete m_pGameOverScene;   m_pGameOverScene  = nullptr; }
 	if (m_pParameterScene != nullptr) { delete m_pParameterScene;  m_pParameterScene = nullptr; }
+	if (m_pResultScene    != nullptr) { delete m_pResultScene;     m_pResultScene    = nullptr; }
 }
 
 void GameManager::GetInput()
@@ -67,6 +69,7 @@ void GameManager::UpDateGame()
 			m_pTitleScene = nullptr;
 
 			m_pPlayScene = new PlayScene(m_pDx11->m_pDevice);
+			m_pResultScene = new ResultScene(m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetLife(),GameState::RESULT_RESTART);
 		}
 
 		break;
@@ -77,16 +80,18 @@ void GameManager::UpDateGame()
 
 		if (m_GameState != oldGameState)
 		{
-			delete m_pPlayScene;
-			m_pPlayScene = nullptr;
-
 			switch (m_GameState)
 			{
 			case GameState::GAMEOVER:
+				delete m_pPlayScene;
+				m_pPlayScene = nullptr;
+
 				m_pGameOverScene = new GameOverScene(m_pDx11->m_pDevice);
 				break;
 
-			case GameState::GAMECLEAR:
+			case GameState::RESULT_RESTART:
+				m_pResultScene = new ResultScene(m_pDx11->m_pDevice,m_pPlayScene->GetPlayer()->GetLife(),GameState::RESULT_RESTART);
+				m_pPlayScene->ReStart(m_pDx11->m_pDevice);
 				break;
 			}
 		}
@@ -107,11 +112,17 @@ void GameManager::UpDateGame()
 
 		break;
 
-	case GameState::GAMECLEAR:
+	case GameState::RESULT_RESTART:
+		m_GameState = m_pResultScene->UpDateScene(*m_pFlag, m_pDx11);
+
+		if (m_GameState != oldGameState)
+		{
+			delete m_pResultScene;
+			m_pResultScene = nullptr;
+		}
+
 		break;
 	}
-
-	
 
 	m_pDx11->RenderEnd();
 }

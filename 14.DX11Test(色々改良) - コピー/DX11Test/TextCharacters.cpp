@@ -26,6 +26,7 @@ void TextCharacters::Render(ID3D11DeviceContext* pDeviceContext, UINT strides, U
 	m_pCharacters->ThisObjRender(pDeviceContext, strides, offsets);
 }
 
+//表示する文字の変更
 void TextCharacters::ChangeText(std::string text,ID3D11Device* pDevice)
 {
 	//各々のサイズの保存

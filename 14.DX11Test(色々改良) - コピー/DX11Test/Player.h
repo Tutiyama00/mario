@@ -18,6 +18,8 @@ public:
 	Player(Vector3 pos, Vector2 size, ID3D11Device* pDevice);  //コンストラクタ
 	~Player(); //デストラクタ
 
+	void Die(); //死亡処理
+
 	//---IMoveObj---
 	void Move(InputFlag* inputFlag);  //プレイヤーの動き（入力情報)
 
@@ -26,13 +28,19 @@ public:
 	void ThisObjCreateBuffer(ID3D11Device* pDevice);
 
 public:
-
 	//---IMoveObj---
-	MoveObjState m_MoveObjState = MoveObjState::ON_THE_GROUND;     //プレイヤーのステート
 	bool m_JumpFlag = true;        //ジャンプ可能かどうかのフラグ
 	float m_NowWalkSpeed = 0.0f;   //今の歩く速度
 	float m_JumpPower = 0.0005f;   //ジャンプ量
 
+public:
+	int  GetLife()           { return m_Life; }
+	void SetLife(UINT value) { m_Life = value; }
+
+	//---IMoveObj---
+	MoveObjState GetMoveObjState() { return m_MoveObjState; };
+	void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; };
+	
 private:
 	//---IMoveObj---
 	void Walk(float xAmount);  //歩く
@@ -44,6 +52,7 @@ private:
 
 private:
 	//---IMoveObj---
+	MoveObjState m_MoveObjState = MoveObjState::ON_THE_GROUND;     //プレイヤーのステート
 	int m_MaxJumpLevel    = 50;                //ジャンプのレベルカウントの上限
 	int m_JumpLevelCount          = m_MaxJumpLevel;  //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
 	const int m_JumpAbjustPoint = 2;                 //ジャンプ力計算に使う調整値
@@ -52,4 +61,6 @@ private:
 
     float m_SlipStopAmount        = 0.0001f;       //滑りを抑制する値
 	float m_SlipStopThreshold     = 0.001f;        //滑りを０にするしきい値
+
+	UINT m_Life = 0; //残り残機
 };

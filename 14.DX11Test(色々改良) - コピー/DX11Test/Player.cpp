@@ -12,6 +12,15 @@ Player::Player(Vector3 pos, Vector2 size, ID3D11Device* pDevice) : Square::Squar
 
 Player::~Player() {}
 
+//€–Sˆ—
+void Player::Die()
+{
+	if (m_Life != 0)
+	{
+		m_Life--;
+	}
+}
+
 void Player::Abstract() {}
 
 void Player::Move(InputFlag* inputFlag)

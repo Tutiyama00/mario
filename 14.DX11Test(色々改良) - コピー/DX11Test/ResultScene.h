@@ -3,14 +3,22 @@
 #include"IGameScene.h"
 #include<d3d11.h>
 
+class Image;
+class TextCharacters;
+
 class ResultScene : public IGameScene
 {
 public:
-	ResultScene(ID3D11Device* pDevice, GameState nowGameState);
+	ResultScene(ID3D11Device* pDevice,UINT playerLife, GameState gameState);
 	~ResultScene();
 
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
+
+private:
+	Image* m_pImageOfMario = nullptr;
+	TextCharacters* m_pTextOfWORLD = nullptr;
+	TextCharacters* m_pTextOfMarioLife = nullptr;
 
 protected:
 	//---IGameScene---

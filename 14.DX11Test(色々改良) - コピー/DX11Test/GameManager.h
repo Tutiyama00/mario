@@ -13,6 +13,7 @@ class TitleScene;
 class PlayScene;
 class GameOverScene;
 class ParameterScene;
+class ResultScene;
 
 class GameManager
 {
@@ -28,12 +29,13 @@ public:
 	Dsound*   m_pDsound   = nullptr;
 
 private:
-	InputFlag*        m_pFlag             = nullptr;
-	int               m_InputKey          = 0;
+	InputFlag*        m_pFlag         = nullptr;
+	int               m_InputKey      = 0;
 
-	GameState      m_GameState;
-	TitleScene*    m_pTitleScene    = nullptr;
-	PlayScene*     m_pPlayScene     = nullptr;
-	GameOverScene* m_pGameOverScene = nullptr;
+	GameState       m_GameState;
+	TitleScene*     m_pTitleScene     = nullptr;
+	PlayScene*      m_pPlayScene      = nullptr;
+	GameOverScene*  m_pGameOverScene  = nullptr;
 	ParameterScene* m_pParameterScene = nullptr;
+	ResultScene*    m_pResultScene    = nullptr;
 };

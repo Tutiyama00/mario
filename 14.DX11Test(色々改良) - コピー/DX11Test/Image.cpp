@@ -3,7 +3,7 @@
 Image::Image(Vector3 pos, Vector2 size, ID3D11Device* pDevice, const wchar_t* pTextureFileName) : Square(pos,size)
 {
 	LoadTexture(pDevice, pTextureFileName);
-	CreateShader(pDevice, L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	CreateShader(pDevice, L"Shader/TextVertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 

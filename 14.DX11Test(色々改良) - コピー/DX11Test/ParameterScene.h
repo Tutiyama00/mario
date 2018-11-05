@@ -5,6 +5,7 @@
 
 class Timer;
 class TextCharacters;
+class Image;
 
 class ParameterScene : public IGameScene
 {
@@ -16,11 +17,14 @@ public:
 	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
 
 private:
-	Timer*          m_pTimer       = nullptr;
-	TextCharacters* m_pTextOfMARIO = nullptr;
-	TextCharacters* m_pTextOfWORLD = nullptr;
-	TextCharacters* m_pTextOfTIME  = nullptr;
-	TextCharacters* m_pTextOfTimeNamber = nullptr;
+	Timer*          m_pTimer             = nullptr;
+	TextCharacters* m_pTextOfMARIO       = nullptr;
+	TextCharacters* m_pTextOfWORLD       = nullptr;
+	TextCharacters* m_pTextOfTIME        = nullptr;
+	TextCharacters* m_pTextOfTimeNamber  = nullptr;
+	TextCharacters* m_pTextOfCoinNamber  = nullptr;
+	TextCharacters* m_pTextOfScoreNamber = nullptr;
+	Image*          m_pImageOfCoin       = nullptr;
 
 protected:
 	//---IGameScene---
