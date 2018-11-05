@@ -131,11 +131,13 @@
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="ParameterScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RenderObj.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TextChar.cpp" />
@@ -156,6 +158,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="IGameScene.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="IMoveObj.h" />
     <ClInclude Include="INotPlayer.h" />
     <ClInclude Include="Math.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RenderObj.h" />
+    <ClInclude Include="ResultScene.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Dx11.h" />
     <ClInclude Include="Stage.h" />
