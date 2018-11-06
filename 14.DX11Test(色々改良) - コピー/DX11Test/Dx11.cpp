@@ -8,7 +8,6 @@
 #include"Block.h"
 #include"WICTextureLoader.h"
 #include"Characters.h"
-#include"DeathChecker.h"
 
 using namespace DirectX;
 

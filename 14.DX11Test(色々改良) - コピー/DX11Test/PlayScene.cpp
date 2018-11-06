@@ -5,7 +5,6 @@
 #include"Flag.h"
 #include"Characters.h"
 #include"Block.h"
-#include"DeathChecker.h"
 #include"Dx11.h"
 #include"Math.h"
 
@@ -16,9 +15,8 @@ PlayScene::PlayScene(ID3D11Device* pDevice)
 {
 	m_NextGameState = GameState::PLAY;
 
-	m_pStage = new Stage("Stage/STAGE_1-1.txt");
+	m_pStage  = new Stage("Stage/STAGE_1-1.txt");
 	m_pCamera = new Camera(pDevice);
-	m_pBlocks = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	MakeStageObj(pDevice);
 
 	m_pPlayer->SetLife(3);
@@ -37,6 +35,8 @@ PlayScene::~PlayScene()
 /*ステージ上のオブジェクトの生成*/
 void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 {
+	m_pBlocks = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
 	int halfHeight = m_pStage->GetStageHeight() / 2;
 
@@ -49,7 +49,7 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 			float xPos = m_StandardSize * width;
 			float yPos = m_StandardSize * -(height - halfHeight);
 
-			Vector3 pos = { xPos,yPos,m_StandardZpos };
+			Vector3 pos  = { xPos,yPos,m_StandardZpos };
 			Vector2 size = { m_StandardSize, m_StandardSize };
 
 			//スイッチ文で判別
@@ -58,11 +58,6 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 			case Object::MARIO:
 
 				m_pPlayer = new Player(pos, size, pDevice);
-
-				pos.x += 0.2f;
-				pos.y -= 0.1f;
-
-				m_pDeathChecker = new DeathChecker(pos, size, pDevice);
 				break;
 			case Object::NORMAL_BLOCK:
 
@@ -73,12 +68,20 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 	}
 
 	m_pBlocks->ThisObjCreateBuffer(pDevice);
+
+	/*下の死亡判定ラインの計算*/
+	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
 }
 
 GameState PlayScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 {
 	UpDateGame(inputFlag,pDx11->m_pDevice);
-	Draw(pDx11);
+
+	/*ReStart()をした後に描画をすると一瞬初期状態が映り込んでしまうため条件追加*/
+	if (m_NextGameState == GameState::PLAY)
+	{
+		Draw(pDx11);
+	}
 
 	return m_NextGameState;
 }
@@ -96,8 +99,8 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 	//プレイヤー移動
 	m_pPlayer->Move(&inputFlag);
 
-	//死亡チェック
-	if (m_pDeathChecker->DeathCheck(m_pPlayer))
+	//落下チェック
+	if (m_UnderDeathLine > m_pPlayer->GetyPos())
 	{
 		//プレイヤーの死亡処理
 		m_pPlayer->Die();
@@ -117,22 +120,24 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 void PlayScene::Draw(Dx11* pDx11)
 {
 	m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->m_ViewPort, m_pPlayer->GetxPos());
-	m_pPlayer->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pDeathChecker->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pBlocks->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pPlayer      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pBlocks      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 }
 
+/*ゲームのリスタート*/
 void PlayScene::ReStart(ID3D11Device* pDevice)
 {
+	/*再生成後のプレイヤーに残機を設定するためにデリート前に値を保存*/
 	m_OldPlayerLife = m_pPlayer->GetLife();
 
-	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
-	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
+	/*ステージ上のオブジェクトのデリート*/
+	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
+	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
 	if (m_pDeathChecker != nullptr) { delete m_pDeathChecker; m_pDeathChecker = nullptr; }
 
-	m_pBlocks = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
-
+	/*ステージオブジェクト再生成*/
 	MakeStageObj(pDevice);
 
+	/*プレイヤーの残機設定*/
 	m_pPlayer->SetLife(m_OldPlayerLife);
 }

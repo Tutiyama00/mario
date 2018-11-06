@@ -72,9 +72,6 @@
     <ClCompile Include="Title.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
-    <ClCompile Include="DeathChecker.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -140,9 +137,6 @@
     <ClInclude Include="Block.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
-    <ClInclude Include="DeathChecker.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
@@ -203,12 +197,12 @@
     <ClInclude Include="Image.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
+    <ClInclude Include="ClearChecker.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Stage\STAGE_1.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\PixelShader.psh" />
@@ -216,5 +210,8 @@
     <FxCompile Include="Shader\TextVertexShader.vsh" />
     <FxCompile Include="Shader\TextPixelShader_Black.psh" />
     <FxCompile Include="Shader\TextPixelShader_White.psh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Stage\STAGE_1-1.txt" />
   </ItemGroup>
 </Project>

@@ -9,7 +9,6 @@
 #include"Block.h"
 #include"Camera.h"
 #include"Characters.h"
-#include"DeathChecker.h"
 #include"TitleScene.h"
 #include"PlayScene.h"
 #include"GameOverScene.h"
@@ -25,7 +24,7 @@ GameManager::GameManager(HWND hwnd)
 	m_GameState = GameState::TITLE;
 
 	m_pDx11->Create(hwnd);
-	m_pTitleScene    = new TitleScene(m_pDx11->m_pDevice);
+	m_pTitleScene     = new TitleScene(m_pDx11->m_pDevice);
 	m_pParameterScene = new ParameterScene(m_pDx11->m_pDevice, m_GameState);
 }
 
@@ -80,7 +79,7 @@ void GameManager::UpDateGame()
 			delete m_pTitleScene; 
 			m_pTitleScene = nullptr;
 
-			m_pPlayScene = new PlayScene(m_pDx11->m_pDevice);
+			m_pPlayScene   = new PlayScene(m_pDx11->m_pDevice);
 			m_pResultScene = new ResultScene(m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetLife());
 		}
 
@@ -131,7 +130,7 @@ void GameManager::UpDateGame()
 
 		break;
 
-	/*リザルト（死亡した場合）シーン*/
+	/*リザルトシーン*/
 	case GameState::RESULT:
 
 		/*シーンの更新*/

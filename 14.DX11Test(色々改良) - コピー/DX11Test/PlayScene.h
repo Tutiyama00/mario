@@ -38,6 +38,8 @@ private:
 
 	UINT m_OldPlayerLife = 0;
 
+	float m_UnderDeathLine = 0;  //‰æ–Ê‰º‚ÌŽ€–S”»’èƒ‰ƒCƒ“
+
 protected:
 	//---IGameScene---
 	void UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice);

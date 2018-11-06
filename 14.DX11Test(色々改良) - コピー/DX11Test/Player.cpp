@@ -3,6 +3,7 @@
 #include"Enum.h"
 #include"Flag.h"
 
+/*コンストラクタ*/
 Player::Player(Vector3 pos, Vector2 size, ID3D11Device* pDevice) : Square::Square(pos, size)
 {
 	LoadTexture(pDevice, L"Texture/Mario.png");
@@ -10,21 +11,38 @@ Player::Player(Vector3 pos, Vector2 size, ID3D11Device* pDevice) : Square::Squar
 	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 
+/*デストラクタ*/
 Player::~Player() {}
 
-//死亡処理
+/*死亡処理*/
 void Player::Die()
 {
-	if (m_Life != 0)
+	/*まだ生きていた場合処理する*/
+	if (m_LivingFlag)
 	{
-		m_Life--;
+		/*生存フラグを折る*/
+		m_LivingFlag = false;
+
+		/*残機が０以上だったら残機を減らす*/
+		if (m_Life > 0)
+		{
+			m_Life--;
+		}
 	}
 }
 
+/*抽象化関数*/
 void Player::Abstract() {}
 
+/*動作関数*/
 void Player::Move(InputFlag* inputFlag)
 {
+	/*生きていない状態だったらリターンして動かさない*/
+	if (!m_LivingFlag)
+	{
+		return;
+	}
+
 	switch (m_MoveObjState)
 	{
 	case MoveObjState::CHECK_GROUND:
@@ -134,7 +152,8 @@ void Player::ThisObjCreateBuffer(ID3D11Device* pDevice)
 	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 
-//歩く（移動量横）
+/*歩く
+ *第一引数・移動量横*/
 void Player::Walk(float xAmount)
 {
 	m_xPos += xAmount;
@@ -156,7 +175,7 @@ void Player::Walk(float xAmount)
 	{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
 }
 
-//ジャンプ(マリオ式)
+/*ジャンプ(マリオ式)*/
 bool Player::Jump()
 {
 	if (m_JumpLevelCount > 0)
@@ -188,7 +207,7 @@ bool Player::Jump()
 	return false;
 }
 
-//落下（マリオ式）
+/*落下（マリオ式）*/
 void Player::Fall()
 {
 	float fallAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
