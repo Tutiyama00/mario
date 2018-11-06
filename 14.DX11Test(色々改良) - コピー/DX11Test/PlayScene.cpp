@@ -105,6 +105,12 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 	//プレイヤー移動
 	m_pPlayer->Move(&inputFlag);
 
+	if (m_pGoal->CollisionCheck(m_pPlayer))
+	{
+		ReStart(pDevice);
+		m_NextGameState = GameState::RESULT;
+	}
+
 	//落下チェック
 	if (m_UnderDeathLine > m_pPlayer->GetyPos())
 	{
