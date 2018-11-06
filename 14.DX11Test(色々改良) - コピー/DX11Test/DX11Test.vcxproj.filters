@@ -117,6 +117,9 @@
     <ClCompile Include="Image.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enum.h">
@@ -197,7 +200,7 @@
     <ClInclude Include="Image.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
-    <ClInclude Include="ClearChecker.h">
+    <ClInclude Include="Goal.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>

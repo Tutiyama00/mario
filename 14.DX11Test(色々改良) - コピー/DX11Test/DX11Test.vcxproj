@@ -126,6 +126,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Characters.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Dx11.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -151,7 +152,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Characters.h" />
-    <ClInclude Include="ClearChecker.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="GameManager.h" />

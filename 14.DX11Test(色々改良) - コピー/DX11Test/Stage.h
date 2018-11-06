@@ -18,6 +18,6 @@ public:
 
 private:
 	int   m_StageSize;        //ステージ配列の長さ
-	int   m_StageHeight = 13; //配列の長さ（縦）
+	int   m_StageHeight = 17; //配列の長さ（縦）
 	int   m_StageWidth = 0;   //配列の長さ（幅）
 };

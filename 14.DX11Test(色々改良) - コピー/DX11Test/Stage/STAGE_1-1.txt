@@ -1,14 +1,18 @@
-20
-BBBBBBBBBBBBBBBBBBBB
-B                  B
-B                  B
-B                  B
-B                  B
-B             B    B
-B           B      B
-B         B        B
-B       B          B
-B     B            B
-B   BB             B
-B M                B
-BBBB  BBBBBBBBBBBBBB
+30
+B                             
+B                             
+B                             
+B                             
+B                             
+B                             
+B                             
+B                             
+B             B               
+B           B                 
+B         B                   
+B       B                     
+B     B                       
+B   BB                        
+B M                           
+BBBB  BBBBBBBBBBBBBBBBBBBBBBBB
+BBBB  BBBBBBBBBBBBBBBBBBBBBBBB

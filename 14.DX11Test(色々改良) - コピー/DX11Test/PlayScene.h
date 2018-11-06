@@ -8,7 +8,7 @@ class Player;
 template<class T> class Characters;
 class Block;
 class Stage;
-class DeathChecker;
+class Goal;
 
 class PlayScene : public IGameScene
 {
@@ -31,9 +31,9 @@ private:
 	Camera*            m_pCamera       = nullptr;
 	Player*            m_pPlayer       = nullptr;
 	Characters<Block>* m_pBlocks       = nullptr;
-	DeathChecker*      m_pDeathChecker = nullptr;
+	Goal*              m_pGoal         = nullptr;
 
-	float m_StandardSize = 0.1f;
+	float m_StandardSize = 0.075f;
 	float m_StandardZpos = -0.5f;
 
 	UINT m_OldPlayerLife = 0;

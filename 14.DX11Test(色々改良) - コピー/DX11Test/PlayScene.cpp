@@ -7,6 +7,7 @@
 #include"Block.h"
 #include"Dx11.h"
 #include"Math.h"
+#include"Goal.h"
 
 using namespace OriginalMath;
 
@@ -29,7 +30,7 @@ PlayScene::~PlayScene()
 	if (m_pCamera       != nullptr) { delete m_pCamera;       m_pCamera       = nullptr; }
 	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
-	if (m_pDeathChecker != nullptr) { delete m_pDeathChecker; m_pDeathChecker = nullptr; }
+	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 }
 
 /*ステージ上のオブジェクトの生成*/
@@ -66,6 +67,11 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 			}
 		}
 	}
+
+	Vector3 pos = { 1.75f,-0.115f,m_StandardZpos };
+	Vector2 size = { 0.75f,0.75f };
+
+	m_pGoal = new Goal(pos, size, pDevice);
 
 	m_pBlocks->ThisObjCreateBuffer(pDevice);
 
@@ -122,6 +128,7 @@ void PlayScene::Draw(Dx11* pDx11)
 	m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->m_ViewPort, m_pPlayer->GetxPos());
 	m_pPlayer      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 	m_pBlocks      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pGoal->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
 }
 
 /*ゲームのリスタート*/
@@ -133,7 +140,7 @@ void PlayScene::ReStart(ID3D11Device* pDevice)
 	/*ステージ上のオブジェクトのデリート*/
 	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
-	if (m_pDeathChecker != nullptr) { delete m_pDeathChecker; m_pDeathChecker = nullptr; }
+	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 
 	/*ステージオブジェクト再生成*/
 	MakeStageObj(pDevice);
