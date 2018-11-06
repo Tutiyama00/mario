@@ -16,6 +16,7 @@
 #include"ParameterScene.h"
 #include"ResultScene.h"
 
+/*コンストラクタ*/
 GameManager::GameManager(HWND hwnd)
 {
 	m_pFlag     = new InputFlag();
@@ -28,6 +29,7 @@ GameManager::GameManager(HWND hwnd)
 	m_pParameterScene = new ParameterScene(m_pDx11->m_pDevice, m_GameState);
 }
 
+/*デストラクタ*/
 GameManager::~GameManager()
 {
 	if (m_pDx11           != nullptr) { delete m_pDx11;            m_pDx11           = nullptr; }
@@ -40,7 +42,8 @@ GameManager::~GameManager()
 	if (m_pResultScene    != nullptr) { delete m_pResultScene;     m_pResultScene    = nullptr; }
 }
 
-void GameManager::GetInput()
+/*入力の取得*/
+void GameManager::InputGet()
 {
 	m_pFlag->AllReSet();
 
@@ -49,37 +52,51 @@ void GameManager::GetInput()
 	if (GetAsyncKeyState(VK_RIGHT)) { m_pFlag->Set(InputFlagCode::INPUT_RIGHT); }
 }
 
+/*ゲームの更新*/
 void GameManager::UpDateGame()
 {
+	/*レンダリングを開始状態にする*/
 	m_pDx11->RenderStart();
 
+	/*比較用に今のゲームステートを保存する*/
 	GameState oldGameState = m_GameState;
 
+	/*パラメーターシーンの更新*/
 	m_pParameterScene->UpDateScene(*m_pFlag, m_pDx11);
 
+	/*ステートに合わせて、対応したシーンの更新*/
 	switch (m_GameState)
 	{
+    /*タイトルシーン*/
 	case GameState::TITLE:
 
+		/*シーンの更新*/
 		m_GameState = m_pTitleScene->UpDateScene(*m_pFlag, m_pDx11);
 
+		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
+			/*変化している場合*/
 			delete m_pTitleScene; 
 			m_pTitleScene = nullptr;
 
 			m_pPlayScene = new PlayScene(m_pDx11->m_pDevice);
-			m_pResultScene = new ResultScene(m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetLife(),GameState::RESULT_RESTART);
+			m_pResultScene = new ResultScene(m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetLife());
 		}
 
 		break;
 
+	/*プレイシーン*/
 	case GameState::PLAY:
 
+		/*シーンの更新*/
 		m_GameState = m_pPlayScene->UpDateScene(*m_pFlag, m_pDx11);
 
+		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
+			/*変化していた場合
+			 *変化先のシーンによってやることが変わる*/
 			switch (m_GameState)
 			{
 			case GameState::GAMEOVER:
@@ -89,19 +106,21 @@ void GameManager::UpDateGame()
 				m_pGameOverScene = new GameOverScene(m_pDx11->m_pDevice);
 				break;
 
-			case GameState::RESULT_RESTART:
-				m_pResultScene = new ResultScene(m_pDx11->m_pDevice,m_pPlayScene->GetPlayer()->GetLife(),GameState::RESULT_RESTART);
-				m_pPlayScene->ReStart(m_pDx11->m_pDevice);
+			case GameState::RESULT:
+				m_pResultScene = new ResultScene(m_pDx11->m_pDevice,m_pPlayScene->GetPlayer()->GetLife());
 				break;
 			}
 		}
 
 		break;
 
+	/*ゲームオーバーシーン*/
 	case GameState::GAMEOVER:
 
+		/*シーンの更新*/
 		m_GameState = m_pGameOverScene->UpDateScene(*m_pFlag, m_pDx11);
 
+		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
 			delete m_pGameOverScene;
@@ -112,9 +131,13 @@ void GameManager::UpDateGame()
 
 		break;
 
-	case GameState::RESULT_RESTART:
+	/*リザルト（死亡した場合）シーン*/
+	case GameState::RESULT:
+
+		/*シーンの更新*/
 		m_GameState = m_pResultScene->UpDateScene(*m_pFlag, m_pDx11);
 
+		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
 			delete m_pResultScene;
@@ -124,5 +147,6 @@ void GameManager::UpDateGame()
 		break;
 	}
 
+	/*レンダリングを終了する*/
 	m_pDx11->RenderEnd();
 }

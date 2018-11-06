@@ -5,9 +5,9 @@
 #include"Dx11.h"
 #include"TextCharacters.h"
 
-ResultScene::ResultScene(ID3D11Device* pDevice, UINT playerLife,GameState gameState)
+ResultScene::ResultScene(ID3D11Device* pDevice, UINT playerLife)
 {
-	m_NextGameState = gameState;
+	m_NextGameState = GameState::RESULT;
 
 	Vector3 pos = { -0.14f,0.0f,0.0f };
 	Vector2 size = { 0.1f,0.1f };
@@ -26,20 +26,20 @@ ResultScene::ResultScene(ID3D11Device* pDevice, UINT playerLife,GameState gameSt
 
 ResultScene::~ResultScene()
 {
-	if (m_pImageOfMario != nullptr) { delete m_pImageOfMario; m_pImageOfMario = nullptr; }
-	if (m_pTextOfWORLD != nullptr) { delete m_pTextOfWORLD; m_pTextOfWORLD = nullptr; }
+	if (m_pImageOfMario    != nullptr) { delete m_pImageOfMario;    m_pImageOfMario    = nullptr; }
+	if (m_pTextOfWORLD     != nullptr) { delete m_pTextOfWORLD;     m_pTextOfWORLD     = nullptr; }
 	if (m_pTextOfMarioLife != nullptr) { delete m_pTextOfMarioLife; m_pTextOfMarioLife = nullptr; }
 }
 
 GameState ResultScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 {
-	UpDateGame(inputFlag);
+	UpDateGame(inputFlag,pDx11->m_pDevice);
 	Draw(pDx11);
 
 	return m_NextGameState;
 }
 
-void ResultScene::UpDateGame(InputFlag inputFlag)
+void ResultScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 {
 	if (inputFlag.Check(InputFlagCode::INPUT_LEFT))
 	{

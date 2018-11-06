@@ -35,17 +35,17 @@ TitleScene::~TitleScene()
 
 GameState TitleScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 {
-	UpDateGame(inputFlag);
+	UpDateGame(inputFlag,pDx11->m_pDevice);
 	Draw(pDx11);
 
 	return m_NextGameState;
 }
 
-void TitleScene::UpDateGame(InputFlag inputFlag)
+void TitleScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 {
 	if (inputFlag.Check(InputFlagCode::INPUT_SPACE))
 	{
-		m_NextGameState = GameState::RESULT_RESTART;
+		m_NextGameState = GameState::RESULT;
 	}
 }
 

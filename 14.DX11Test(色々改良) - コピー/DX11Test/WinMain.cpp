@@ -116,7 +116,7 @@ HRESULT MainLoop()
 			return FALSE;
 		}
 	}
-	g_pGameManager->GetInput();
+	g_pGameManager->InputGet();
 	g_pGameManager->UpDateGame();
 	return TRUE;
 }

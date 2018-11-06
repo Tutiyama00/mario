@@ -28,7 +28,7 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag);
+	void UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice);
 	void Draw(Dx11* pDx11);
 
 protected:

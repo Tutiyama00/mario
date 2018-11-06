@@ -66,13 +66,13 @@ GameState ParameterScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 	}
 	
 
-	UpDateGame(inputFlag);
+	UpDateGame(inputFlag,pDx11->m_pDevice);
 	Draw(pDx11);
 
 	return m_NextGameState;
 }
 
-void ParameterScene::UpDateGame(InputFlag inputFlag)
+void ParameterScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 {
 	
 }

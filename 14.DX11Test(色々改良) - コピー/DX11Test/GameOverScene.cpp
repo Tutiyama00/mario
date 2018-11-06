@@ -28,13 +28,13 @@ GameOverScene::~GameOverScene()
 
 GameState GameOverScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 {
-	UpDateGame(inputFlag);
+	UpDateGame(inputFlag,pDx11->m_pDevice);
 	Draw(pDx11);
 
 	return m_NextGameState;
 }
 
-void GameOverScene::UpDateGame(InputFlag inputFlag)
+void GameOverScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 {
 	if (inputFlag.Check(InputFlagCode::INPUT_SPACE))
 	{

@@ -9,7 +9,7 @@ class TextCharacters;
 class ResultScene : public IGameScene
 {
 public:
-	ResultScene(ID3D11Device* pDevice,UINT playerLife, GameState gameState);
+	ResultScene(ID3D11Device* pDevice,UINT playerLife);
 	~ResultScene();
 
 	//---IGameScene---
@@ -22,7 +22,7 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag);
+	void UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice);
 	void Draw(Dx11* pDx11);
 
 protected:

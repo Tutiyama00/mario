@@ -5,8 +5,7 @@ enum class GameState : unsigned char
 	TITLE,
 	PLAY,
 	GAMEOVER,
-	RESULT_RESTART,
-	RESULT_NEXTSTAGE
+	RESULT
 };
 
 enum class MoveObjState : unsigned char

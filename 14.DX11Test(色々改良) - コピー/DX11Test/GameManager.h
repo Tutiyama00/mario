@@ -21,7 +21,7 @@ public:
 	GameManager(HWND hwnd);  //コンストラクタ
 	~GameManager(); //デストラクタ
 
-	void GetInput();
+	void InputGet();
 	void UpDateGame();
 
 public:

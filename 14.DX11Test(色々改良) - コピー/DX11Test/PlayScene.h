@@ -16,8 +16,6 @@ public:
 	PlayScene(ID3D11Device* pDevice);
 	~PlayScene();
 
-	void ReStart(ID3D11Device* pDevice);
-
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
 
@@ -26,6 +24,7 @@ public:
 
 private:
 	void MakeStageObj(ID3D11Device* pDevice);
+	void ReStart(ID3D11Device* pDevice);
 
 private:
 	Stage*             m_pStage        = nullptr;
@@ -41,7 +40,7 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag);
+	void UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice);
 	void Draw(Dx11* pDx11);
 
 protected:

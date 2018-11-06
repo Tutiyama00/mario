@@ -11,11 +11,12 @@
 
 using namespace OriginalMath;
 
+/*コンストラクタ*/
 PlayScene::PlayScene(ID3D11Device* pDevice)
 {
 	m_NextGameState = GameState::PLAY;
 
-	m_pStage = new Stage("Stage/STAGE_1.txt");
+	m_pStage = new Stage("Stage/STAGE_1-1.txt");
 	m_pCamera = new Camera(pDevice);
 	m_pBlocks = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	MakeStageObj(pDevice);
@@ -23,6 +24,7 @@ PlayScene::PlayScene(ID3D11Device* pDevice)
 	m_pPlayer->SetLife(3);
 }
 
+/*デストラクタ*/
 PlayScene::~PlayScene()
 {
 	if (m_pStage        != nullptr) { delete m_pStage;        m_pStage        = nullptr; }
@@ -32,6 +34,7 @@ PlayScene::~PlayScene()
 	if (m_pDeathChecker != nullptr) { delete m_pDeathChecker; m_pDeathChecker = nullptr; }
 }
 
+/*ステージ上のオブジェクトの生成*/
 void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 {
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
@@ -74,14 +77,16 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 
 GameState PlayScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 {
-	UpDateGame(inputFlag);
+	UpDateGame(inputFlag,pDx11->m_pDevice);
 	Draw(pDx11);
 
 	return m_NextGameState;
 }
 
-void PlayScene::UpDateGame(InputFlag inputFlag)
+void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 {
+	m_NextGameState = GameState::PLAY;
+
 	//ブロック群のプレイヤーに対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
@@ -103,7 +108,8 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 		}
 		else
 		{
-			m_NextGameState = GameState::RESULT_RESTART;
+			ReStart(pDevice);
+			m_NextGameState = GameState::RESULT;
 		}
 	}
 }
@@ -129,6 +135,4 @@ void PlayScene::ReStart(ID3D11Device* pDevice)
 	MakeStageObj(pDevice);
 
 	m_pPlayer->SetLife(m_OldPlayerLife);
-
-	m_NextGameState = GameState::PLAY;
 }
