@@ -16,7 +16,10 @@ public:
 	virtual void Move(InputFlag* inputFlag) = 0;
 
 public:
+	/* getter */
 	virtual MoveObjState GetMoveObjState() { return m_MoveObjState; };
+
+	/* setter */
 	virtual void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; };
 
 protected:
@@ -32,8 +35,8 @@ protected:
 	int m_JumpAbjustPoint;        //ジャンプ力計算に使う調整値
 
 
-	float m_MaxWalkSpeed;            //歩く最大スピード
-	float m_WalkFluctuationAmount;   //歩くスピードを変える
+	float m_MaxWalkSpeed;          //歩く最大スピード
+	float m_WalkFluctuationAmount; //歩くスピードを変える
 
 	float m_SlipStopAmount;       //滑りを抑制する値
 	float m_SlipStopThreshold;    //滑りを０にするしきい値

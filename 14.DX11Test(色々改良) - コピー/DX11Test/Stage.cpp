@@ -11,9 +11,25 @@ using namespace std;
 /// Stageコンストラクタ
 /// </summary>
 /// <param name="stageName">ステージ名</param>
-/// <param name="stageH">ステージの高さ</param>
-/// <param name="stageW">ステージの幅</param>
 Stage::Stage(const char* stageName)
+{
+	LoadStage(stageName);
+}
+
+/// <summary>
+/// デストラクタ
+/// </summary>
+Stage::~Stage()
+{
+	Delete();
+}
+
+void Stage::Delete()
+{
+	if (m_pStageDataArray != nullptr) { delete[] m_pStageDataArray; m_pStageDataArray = nullptr; }
+}
+
+void Stage::LoadStage(const char* stageName)
 {
 	//ファイルのデータを一時格納するローカル変数
 	char* loadStageData = nullptr;
@@ -84,10 +100,8 @@ Stage::Stage(const char* stageName)
 	if (loadStageData != nullptr) { delete[] loadStageData; loadStageData = nullptr; }
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
-Stage::~Stage()
+void Stage::ChangeStage(const char* stageName)
 {
-	if (m_pStageDataArray != nullptr) { delete[] m_pStageDataArray; m_pStageDataArray = nullptr; }
+	Delete();
+	LoadStage(stageName);
 }
