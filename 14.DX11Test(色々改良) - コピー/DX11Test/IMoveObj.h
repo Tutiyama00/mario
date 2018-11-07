@@ -19,11 +19,6 @@ public:
 	virtual MoveObjState GetMoveObjState() { return m_MoveObjState; };
 	virtual void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; };
 
-public:
-	bool  m_JumpFlag;             //ジャンプ可能かどうかのフラグ
-	float m_NowWalkSpeed;         //今の歩く速度
-	float m_JumpPower;            //ジャンプ量
-
 protected:
 	virtual void Walk(float xAmount) = 0;  //歩く
 	virtual bool Jump() = 0;               //ジャンプ
@@ -42,4 +37,8 @@ protected:
 
 	float m_SlipStopAmount;       //滑りを抑制する値
 	float m_SlipStopThreshold;    //滑りを０にするしきい値
+
+	bool  m_JumpFlag;             //ジャンプ可能かどうかのフラグ
+	float m_NowWalkSpeed;         //今の歩く速度
+	float m_JumpPower;            //ジャンプ量
 };

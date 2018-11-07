@@ -1,5 +1,4 @@
-#ifndef FLAG_H
-#define FLAG_H
+#pragma once
 
 enum class InputFlagCode :unsigned char
 {
@@ -23,5 +22,3 @@ public:
 private:
 	unsigned char mFlags;
 };
-
-#endif // !FLAG_H

@@ -1,17 +1,6 @@
 #pragma once
 
 #include<d3d11.h>
-#include<vector>
-
-class Camera;
-enum class GameState : unsigned char;
-
-class Player;
-class Block;
-class Title;
-enum class Object : unsigned char;
-class CharacterManager;
-struct vertex;
 
 class Dx11
 {
@@ -26,11 +15,14 @@ public:
 	void RenderEnd();
 
 public:
+	/* getter */
+	UINT           GetStrides()  { return strides; }
+	UINT           GetOffsets()  { return offsets; }
+	D3D11_VIEWPORT GetViewPort() { return m_ViewPort; }
+
+public:
 	ID3D11DeviceContext*     m_pDeviceContext = nullptr;        //描画処理を行うクラス。内部的には、レンダリングコマンドと呼ばれるバイナリデータを作成し、GPUに送る。
 	ID3D11Device*            m_pDevice        = nullptr;        //DirectX11の中心になるクラス。全体の管理とバッファ、シェーダ、テクスチャなどのリソース作成などを行う。
-	UINT strides = 0;
-	UINT offsets = 0;
-	D3D11_VIEWPORT m_ViewPort;
 
 private:
 	const UINT M_WINDOW_WIDTH                         = 1000;
@@ -44,4 +36,8 @@ private:
 	                                                                    //ステンシル。型抜きのようなことをするために使ったりすること。
 	ID3D11SamplerState* m_pSampler = nullptr;
 	bool m_RunningFlag = false;
+
+	UINT strides = 0;
+	UINT offsets = 0;
+	D3D11_VIEWPORT m_ViewPort;
 };

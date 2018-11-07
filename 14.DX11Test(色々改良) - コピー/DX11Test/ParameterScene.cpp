@@ -79,11 +79,11 @@ void ParameterScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 
 void ParameterScene::Draw(Dx11* pDx11)
 {
-	m_pTextOfMARIO->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTextOfTIME ->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTextOfWORLD->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTextOfTimeNamber->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pImageOfCoin->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTextOfScoreNamber->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTextOfCoinNamber->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pTextOfMARIO      ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfTIME       ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfWORLD      ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfTimeNamber ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfScoreNamber->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfCoinNamber ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pImageOfCoin      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
 }

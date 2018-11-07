@@ -19,8 +19,8 @@ public:
 	GameState UpDateScene(InputFlag inputFlag,Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
 
 private:
-	Camera* m_pCamera = nullptr;
-	Title*  m_pTitle  = nullptr;
+	Camera*         m_pCamera         = nullptr;
+	Title*          m_pTitle          = nullptr;
 	TextCharacters* m_pTextCharacters = nullptr;
 
 protected:

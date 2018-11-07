@@ -29,7 +29,7 @@ public:
 
 public:
 	vertex* m_pVertexArray = nullptr;  //頂点配列
-	WORD*   m_pIndexArray = nullptr;  //インデックス配列
+	WORD*   m_pIndexArray  = nullptr;  //インデックス配列
 
 protected:
 	UINT    m_VertexArraySize;         //頂点配列の要素数

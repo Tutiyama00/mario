@@ -20,7 +20,7 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 			{
 				//もしそうなら右に進めなくする
 				pInputFlag->ReSet(InputFlagCode::INPUT_RIGHT);
-				pPlayer->m_NowWalkSpeed = 0.0f;
+				pPlayer->SetNowWalkSpeed(0.0f);
 			}
 		}
 
@@ -32,7 +32,7 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 			{
 				//もしそうなら左に進めなくする
 				pInputFlag->ReSet(InputFlagCode::INPUT_LEFT);
-				pPlayer->m_NowWalkSpeed = 0.0f;
+				pPlayer->SetNowWalkSpeed(0.0f);
 			}
 		}
 
@@ -43,7 +43,7 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 			{
 				//もしそうならステートをFALLに変える
 				pPlayer->SetMoveObjState(MoveObjState::FALL);
-				pPlayer->m_JumpFlag = false;
+				pPlayer->SetJumpFlag(false);
 
 				return;
 			}

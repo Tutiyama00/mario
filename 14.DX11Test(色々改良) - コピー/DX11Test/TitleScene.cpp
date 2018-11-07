@@ -56,7 +56,7 @@ void TitleScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 /*•`‰æ*/
 void TitleScene::Draw(Dx11* pDx11)
 {
-	m_pCamera        ->Shoot(pDx11->m_pDeviceContext, &pDx11->m_ViewPort, 0.0f);
-	m_pTextCharacters->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTitle         ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pCamera        ->Shoot(pDx11->m_pDeviceContext, &pDx11->GetViewPort(), 0.0f);
+	m_pTextCharacters->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTitle         ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
 }

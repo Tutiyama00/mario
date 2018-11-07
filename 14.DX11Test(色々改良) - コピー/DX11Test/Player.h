@@ -28,30 +28,29 @@ public:
 	void ThisObjCreateBuffer(ID3D11Device* pDevice);
 
 public:
-	//---IMoveObj---
-	bool m_JumpFlag      = true;    //ジャンプ可能かどうかのフラグ
-	float m_NowWalkSpeed = 0.0f;    //今の歩く速度
-	float m_JumpPower    = 0.0005f; //ジャンプ量
-
-public:
+	/* getter */
 	int  GetLife()           { return m_Life; }
-	void SetLife(UINT value) { m_Life = value; }
 
-	//---IMoveObj---
+	/* setter */
+	void SetLife        (UINT  value) { m_Life         = value; }
+	void SetJumpFlag    (bool  value) { m_JumpFlag     = value; }
+	void SetNowWalkSpeed(float value) { m_NowWalkSpeed = value; }
+
+	/*---IMoveObj---*/
 	MoveObjState GetMoveObjState() { return m_MoveObjState; };
 	void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; };
 	
 private:
-	//---IMoveObj---
+	/*---IMoveObj---*/
 	void Walk(float xAmount);  //歩く
 	bool Jump();               //ジャンプ
 	void Fall();               //落下
 
-	//---RenderObj---
+	/*---RenderObj---*/
 	void Abstract();
 
 private:
-	//---IMoveObj---
+	/*---IMoveObj---*/
 	bool m_LivingFlag             = true;                         //生きているかのフラグ
 	MoveObjState m_MoveObjState   = MoveObjState::ON_THE_GROUND;  //プレイヤーのステート
 	int m_MaxJumpLevel            = 50;              //ジャンプのレベルカウントの上限
@@ -64,4 +63,8 @@ private:
 	float m_SlipStopThreshold     = 0.001f;        //滑りを０にするしきい値
 
 	UINT m_Life = 0; //残り残機
+
+	bool  m_JumpFlag     = true;    //ジャンプ可能かどうかのフラグ
+	float m_NowWalkSpeed = 0.0f;    //今の歩く速度
+	float m_JumpPower    = 0.0005f; //ジャンプ量
 };

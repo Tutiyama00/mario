@@ -49,7 +49,7 @@ void ResultScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 
 void ResultScene::Draw(Dx11* pDx11)
 {
-	m_pImageOfMario->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTextOfWORLD->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pTextOfMarioLife->Render(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pImageOfMario   ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfWORLD    ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfMarioLife->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
 }

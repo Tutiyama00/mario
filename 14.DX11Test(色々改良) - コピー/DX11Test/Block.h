@@ -18,12 +18,12 @@ public:
 	//---INotPlayer---
 	void CheckPlayer(Player* pPlayer,InputFlag* pInputFlag);
 
-public:
-	float m_Threshold = 0.025f;
+private:
+	bool LeftCheck (Player* pPlayer, InputFlag* pInputFlag);
+	bool RightCheck(Player* pPlayer, InputFlag* pInputFlag);
+	bool DownCheck (Player* pPlayer, InputFlag* pInputFlag);
+	bool UpCheck   (Player* pPlayer, InputFlag* pInputFlag);
 
 private:
-	bool LeftCheck(Player* pPlayer, InputFlag* pInputFlag);
-	bool RightCheck(Player* pPlayer, InputFlag* pInputFlag);
-	bool DownCheck(Player* pPlayer, InputFlag* pInputFlag);
-	bool UpCheck(Player* pPlayer, InputFlag* pInputFlag);
+	float m_Threshold = 0.025f; //衝突判定時に使用する判定の調整値（値が大きくなれば判定も甘くなる）
 };

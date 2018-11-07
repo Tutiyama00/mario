@@ -131,10 +131,10 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 
 void PlayScene::Draw(Dx11* pDx11)
 {
-	m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->m_ViewPort, m_pPlayer->GetxPos());
-	m_pPlayer      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pBlocks      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
-	m_pGoal->ThisObjRender(pDx11->m_pDeviceContext, pDx11->strides, pDx11->offsets);
+	m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->GetViewPort(), m_pPlayer->GetxPos());
+	m_pPlayer->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pBlocks->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pGoal  ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
 }
 
 /*ゲームのリスタート*/
