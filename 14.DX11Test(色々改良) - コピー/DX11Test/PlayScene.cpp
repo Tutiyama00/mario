@@ -8,6 +8,7 @@
 #include"Dx11.h"
 #include"Math.h"
 #include"Goal.h"
+#include<string>
 
 using namespace OriginalMath;
 
@@ -15,8 +16,12 @@ using namespace OriginalMath;
 PlayScene::PlayScene(ID3D11Device* pDevice)
 {
 	m_NextGameState = GameState::PLAY;
+	m_NowWorldLevel = 1;
+	m_NowStageLevel = 1;
 
-	m_pStage  = new Stage("Stage/STAGE_1-1.txt");
+	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+
+	m_pStage  = new Stage(filePas.data());
 	m_pCamera = new Camera(pDevice);
 	MakeStageObj(pDevice);
 
@@ -105,8 +110,19 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 	//プレイヤー移動
 	m_pPlayer->Move(&inputFlag);
 
+	/*ゴールチェック*/
 	if (m_pGoal->CollisionCheck(m_pPlayer))
 	{
+		m_NowStageLevel++;
+		if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
+		{
+			m_NowWorldLevel++;
+			m_NowStageLevel = 1;
+		}
+
+		std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+
+		m_pStage->ChangeStage(filePas.data());
 		ReStart(pDevice);
 		m_NextGameState = GameState::RESULT;
 	}

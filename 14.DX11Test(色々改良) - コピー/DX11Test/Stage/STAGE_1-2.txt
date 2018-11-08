@@ -13,6 +13,6 @@ B         B
 B       B                     
 B     B                       
 B   BB                        
-B M                           
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  M                           
+  BBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  BBBBBBBBBBBBBBBBBBBBBBBBBBBB

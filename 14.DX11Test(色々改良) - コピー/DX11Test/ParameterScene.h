@@ -13,6 +13,8 @@ public:
 	ParameterScene(ID3D11Device* pDevice, GameState nowGameState);
 	~ParameterScene();
 
+	void ChangeWorldNamber(int worldNamber, int stageNamber, ID3D11Device* pDevice);
+
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
 
@@ -20,6 +22,7 @@ private:
 	Timer*          m_pTimer             = nullptr;
 	TextCharacters* m_pTextOfMARIO       = nullptr;
 	TextCharacters* m_pTextOfWORLD       = nullptr;
+	TextCharacters* m_pTextOfWorldNamber = nullptr;
 	TextCharacters* m_pTextOfTIME        = nullptr;
 	TextCharacters* m_pTextOfTimeNamber  = nullptr;
 	TextCharacters* m_pTextOfCoinNamber  = nullptr;

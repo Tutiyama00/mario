@@ -8,7 +8,7 @@ using namespace std;
 
 
 /// <summary>
-/// Stageコンストラクタ
+/// コンストラクタ
 /// </summary>
 /// <param name="stageName">ステージ名</param>
 Stage::Stage(const char* stageName)
@@ -24,11 +24,18 @@ Stage::~Stage()
 	Delete();
 }
 
+/// <summary>
+/// メンバ変数のデリート
+/// </summary>
 void Stage::Delete()
 {
 	if (m_pStageDataArray != nullptr) { delete[] m_pStageDataArray; m_pStageDataArray = nullptr; }
 }
 
+/// <summary>
+/// ステージの読み込み
+/// </summary>
+/// <param name="stageName">ステージのファイル名</param>
 void Stage::LoadStage(const char* stageName)
 {
 	//ファイルのデータを一時格納するローカル変数
@@ -100,8 +107,14 @@ void Stage::LoadStage(const char* stageName)
 	if (loadStageData != nullptr) { delete[] loadStageData; loadStageData = nullptr; }
 }
 
+/// <summary>
+/// ステージ情報を変更する（指定したステージを再読み込み）
+/// </summary>
+/// <param name="stageName">ステージ名</param>
 void Stage::ChangeStage(const char* stageName)
 {
 	Delete();
+	m_StageSize  = 0;
+	m_StageWidth = 0;
 	LoadStage(stageName);
 }

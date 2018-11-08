@@ -5,6 +5,7 @@
 #include"Enum.h"
 #include"Dx11.h"
 #include"Image.h"
+#include<string>
 
 ParameterScene::ParameterScene(ID3D11Device* pDevice,GameState nowGameState)
 {
@@ -21,7 +22,12 @@ ParameterScene::ParameterScene(ID3D11Device* pDevice,GameState nowGameState)
 	pos.y = 0.85f;
 	m_pTextOfWORLD = new TextCharacters(pos, size, "WORLD", pDevice, TPS_WHITE);
 
+	pos.x = 0.19f;
+	pos.y = 0.775f;
+	m_pTextOfWorldNamber = new TextCharacters(pos, size, "1-1", pDevice, TPS_WHITE);
+
 	pos.x = 0.6f;
+	pos.y = 0.85f;
 	m_pTextOfTIME  = new TextCharacters(pos, size, "TIME",  pDevice, TPS_WHITE);
 
 	pos.x = 0.675f;
@@ -51,6 +57,7 @@ ParameterScene::~ParameterScene()
 	if (m_pImageOfCoin       != nullptr) { delete m_pImageOfCoin;       m_pImageOfCoin       = nullptr; }
 	if (m_pTextOfCoinNamber  != nullptr) { delete m_pTextOfCoinNamber;  m_pTextOfCoinNamber  = nullptr; }
 	if (m_pTextOfScoreNamber != nullptr) { delete m_pTextOfScoreNamber; m_pTextOfScoreNamber = nullptr; }
+	if (m_pTextOfWorldNamber != nullptr) { delete m_pTextOfWorldNamber; m_pTextOfWorldNamber = nullptr; }
 }
 
 GameState ParameterScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
@@ -86,4 +93,12 @@ void ParameterScene::Draw(Dx11* pDx11)
 	m_pTextOfScoreNamber->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
 	m_pTextOfCoinNamber ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
 	m_pImageOfCoin      ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pTextOfWorldNamber->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+}
+
+void ParameterScene::ChangeWorldNamber(int worldNamber, int stageNamber,ID3D11Device* pDevice)
+{
+	std::string filePas = std::to_string(worldNamber) + "-" + std::to_string(stageNamber);  //ステージのファイルパス
+
+	m_pTextOfWorldNamber->ChangeText(filePas,pDevice);
 }

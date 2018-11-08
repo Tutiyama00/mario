@@ -225,6 +225,9 @@
   <ItemGroup>
     <Text Include="Stage\STAGE_1-1.txt" />
     <Text Include="Stage\STAGE_1-2.txt" />
+    <Text Include="Stage\STAGE_1-3.txt" />
+    <Text Include="Stage\STAGE_1-4.txt" />
+    <Text Include="Stage\STAGE_2-1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

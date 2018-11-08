@@ -12,13 +12,17 @@ public:
 	ResultScene(ID3D11Device* pDevice,UINT playerLife);
 	~ResultScene();
 
+	void ChangeWorldNamber(int worldNamber, int stageNamber, ID3D11Device* pDevice);
+	void ChangeMarioLife(UINT playerLife, ID3D11Device* pDevice);
+
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
 
 private:
-	Image*          m_pImageOfMario    = nullptr;
-	TextCharacters* m_pTextOfWORLD     = nullptr;
-	TextCharacters* m_pTextOfMarioLife = nullptr;
+	Image*          m_pImageOfMario      = nullptr;
+	TextCharacters* m_pTextOfWORLD       = nullptr;
+	TextCharacters* m_pTextOfWorldNamber = nullptr;
+	TextCharacters* m_pTextOfMarioLife   = nullptr;
 
 protected:
 	//---IGameScene---

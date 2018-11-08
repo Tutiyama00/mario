@@ -26,6 +26,7 @@ GameManager::GameManager(HWND hwnd)
 	m_pDx11->Create(hwnd);
 	m_pTitleScene     = new TitleScene(m_pDx11->m_pDevice);
 	m_pParameterScene = new ParameterScene(m_pDx11->m_pDevice, m_GameState);
+	m_pResultScene    = new ResultScene(m_pDx11->m_pDevice, 3);
 }
 
 /*デストラクタ*/
@@ -80,7 +81,6 @@ void GameManager::UpDateGame()
 			m_pTitleScene = nullptr;
 
 			m_pPlayScene   = new PlayScene(m_pDx11->m_pDevice);
-			m_pResultScene = new ResultScene(m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetLife());
 		}
 
 		break;
@@ -106,7 +106,9 @@ void GameManager::UpDateGame()
 				break;
 
 			case GameState::RESULT:
-				m_pResultScene = new ResultScene(m_pDx11->m_pDevice,m_pPlayScene->GetPlayer()->GetLife());
+				m_pResultScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel(), m_pDx11->m_pDevice);
+				m_pParameterScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel(), m_pDx11->m_pDevice);
+				m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetLife(), m_pDx11->m_pDevice);
 				break;
 			}
 		}
@@ -125,6 +127,8 @@ void GameManager::UpDateGame()
 			delete m_pGameOverScene;
 			m_pGameOverScene = nullptr;
 
+			m_pResultScene->ChangeWorldNamber(1, 1, m_pDx11->m_pDevice);
+			m_pParameterScene->ChangeWorldNamber(1, 1,m_pDx11->m_pDevice);
 			m_pTitleScene = new TitleScene(m_pDx11->m_pDevice);
 		}
 
@@ -135,13 +139,6 @@ void GameManager::UpDateGame()
 
 		/*シーンの更新*/
 		m_GameState = m_pResultScene->UpDateScene(*m_pFlag, m_pDx11);
-
-		/*更新の結果ゲームステートが変化しているか*/
-		if (m_GameState != oldGameState)
-		{
-			delete m_pResultScene;
-			m_pResultScene = nullptr;
-		}
 
 		break;
 	}
