@@ -130,4 +130,4 @@ void GameManager::UpDateGame()
 }
 
 
-//‚©‚«‚­‚¯‚±
+//‚½‚¿‚Â‚Ä‚Æ
