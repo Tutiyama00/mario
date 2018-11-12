@@ -15,21 +15,6 @@
 #include"ParameterScene.h"
 #include"ResultScene.h"
 
-/*コンストラクタ*/
-GameManager::GameManager(HWND hwnd)
-{
-	m_pFlag     = new InputFlag();
-	m_pDx11     = new Dx11();
-	m_pDsound   = new Dsound(hwnd);
-	m_GameState = GameState::TITLE;
-
-	m_pDx11->Create(hwnd);
-	m_pTitleScene     = new TitleScene    (m_pDx11->m_pDevice);
-	m_pParameterScene = new ParameterScene(m_pDx11->m_pDevice, m_GameState);
-	m_pPlayScene      = new PlayScene     (m_pDx11->m_pDevice);
-	m_pResultScene    = new ResultScene   (m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetSTART_LIFE());
-	m_pGameOverScene  = new GameOverScene (m_pDx11->m_pDevice);
-}
 
 /*デストラクタ*/
 GameManager::~GameManager()
@@ -44,9 +29,37 @@ GameManager::~GameManager()
 	if (m_pResultScene    != nullptr) { delete m_pResultScene;     m_pResultScene    = nullptr; }
 }
 
-/*入力の取得*/
+/// <summary>
+/// 初期化関数
+/// </summary>
+/// <param name="hwnd"></param>
+void GameManager::Initialize(HWND hwnd)
+{
+	if (!m_InitializedFlag)
+	{
+		m_pFlag     = new InputFlag();
+		m_pDx11     = new Dx11();
+		m_pDsound   = new Dsound(hwnd);
+		m_GameState = GameState::TITLE;
+
+		m_pDx11->Create(hwnd);
+		m_pTitleScene     = new TitleScene(m_pDx11->m_pDevice);
+		m_pParameterScene = new ParameterScene(m_pDx11->m_pDevice, m_GameState);
+		m_pPlayScene      = new PlayScene(m_pDx11->m_pDevice);
+		m_pResultScene    = new ResultScene(m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetSTART_LIFE());
+		m_pGameOverScene  = new GameOverScene(m_pDx11->m_pDevice);
+
+		m_InitializedFlag = true;
+	}
+}
+
+/// <summary>
+/// 入力の取得
+/// </summary>
 void GameManager::InputGet()
 {
+	if (!m_InitializedFlag) { MessageBox(NULL, "NotInitialize GameManager", "ERROR", 0); return; }
+
 	m_pFlag->AllReSet();
 
 	if (GetAsyncKeyState(VK_SPACE)) { m_pFlag->Set(InputFlagCode::INPUT_SPACE); }
@@ -54,9 +67,13 @@ void GameManager::InputGet()
 	if (GetAsyncKeyState(VK_RIGHT)) { m_pFlag->Set(InputFlagCode::INPUT_RIGHT); }
 }
 
-/*ゲームの更新*/
+/// <summary>
+/// ゲームの更新
+/// </summary>
 void GameManager::UpDateGame()
 {
+	if (!m_InitializedFlag) { MessageBox(NULL, "NotInitialize GameManager", "ERROR", 0); return; }
+
 	/*レンダリングを開始状態にする*/
 	m_pDx11->RenderStart();
 

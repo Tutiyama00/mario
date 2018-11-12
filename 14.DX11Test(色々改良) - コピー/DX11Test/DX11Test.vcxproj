@@ -125,7 +125,6 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Characters.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Dx11.cpp" />
     <ClCompile Include="Flag.cpp" />
@@ -167,6 +166,7 @@
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RenderObj.h" />
     <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Dx11.h" />
     <ClInclude Include="Stage.h" />

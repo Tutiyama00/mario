@@ -84,9 +84,6 @@
     <ClCompile Include="RenderObj.cpp">
       <Filter>ソース ファイル\Abstract</Filter>
     </ClCompile>
-    <ClCompile Include="Characters.cpp">
-      <Filter>ソース ファイル\Abstract</Filter>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
@@ -158,9 +155,6 @@
     <ClInclude Include="RenderObj.h">
       <Filter>ヘッダー ファイル\Abstract</Filter>
     </ClInclude>
-    <ClInclude Include="Characters.h">
-      <Filter>ヘッダー ファイル\Abstract</Filter>
-    </ClInclude>
     <ClInclude Include="IMoveObj.h">
       <Filter>ヘッダー ファイル\Interface</Filter>
     </ClInclude>
@@ -201,6 +195,12 @@
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
     <ClInclude Include="Goal.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>ヘッダー ファイル\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="Characters.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,5 @@
 #pragma once
+#include"Singleton.h"
 
 //前方宣言
 class InputFlag;
@@ -15,18 +16,26 @@ class GameOverScene;
 class ParameterScene;
 class ResultScene;
 
-class GameManager
+class GameManager : public Singleton<GameManager>
 {
 public:
-	GameManager(HWND hwnd);  //コンストラクタ
-	~GameManager();          //デストラクタ
+	friend class Singleton<GameManager>;
 
+public:
 	void InputGet();   //入力情報の取得
 	void UpDateGame(); //ゲームの更新
+
+	/*---Singleton---*/
+	void Initialize(HWND hwnd); //初期化関数
 
 public:
 	Dx11*     m_pDx11     = nullptr;
 	Dsound*   m_pDsound   = nullptr;
+
+private:
+	GameManager() {};  //コンストラクタ
+	GameManager(const GameManager &gameManager) {};  //コピーコンストラクタ
+	~GameManager();    //デストラクタ
 
 private:
 	InputFlag*        m_pFlag         = nullptr;
@@ -38,4 +47,12 @@ private:
 	GameOverScene*  m_pGameOverScene  = nullptr;
 	ParameterScene* m_pParameterScene = nullptr;
 	ResultScene*    m_pResultScene    = nullptr;
+
+protected:
+	/*---Singleton---*/
+	bool m_InitializedFlag = false;  //初期化しているかのフラグ（True＝初期化済み、False＝未初期化）
+
+protected:
+	/*---Singleton---*/
+	void Abstract() {};
 };

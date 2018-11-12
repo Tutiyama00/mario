@@ -10,7 +10,6 @@ HWND  g_hwnd               = nullptr;
 const UINT G_WINDOW_WIDTH  = 1000;
 const UINT G_WINDOW_HEIGHT = 750;
 MSG   g_msg = {0};
-GameManager* g_pGameManager = nullptr;
 LPDIRECTSOUNDBUFFER g_BGMdirectSoundBuffer = nullptr;
 char* g_baseClassName = (char*)"Base_Window";
 
@@ -24,7 +23,6 @@ DWORD g_sleepTime = 0;
 
 //ウィンドウプロシージャ
 LRESULT CALLBACK BaseWindProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-HRESULT AllDelete();
 HRESULT MainLoop();
 void FrameControl();
 
@@ -76,10 +74,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	//ウィンドウが正しく作成されたかチェック
 	if (g_hwnd == NULL) { return -1; }
 
-	g_pGameManager = new GameManager(g_hwnd);
-
 	//ウィンドウの表示
 	ShowWindow(g_hwnd, SW_SHOW);
+
+	//ゲームマネージャーの初期化
+	GameManager::Instance()->Initialize(g_hwnd);
 
 	//フレーム制御処理
 	QueryPerformanceFrequency(&g_timeFrequency);  //更新頻度の取得
@@ -94,7 +93,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		}
 	}
 
-	AllDelete();
 	return g_msg.wParam;
 }
 
@@ -116,8 +114,8 @@ HRESULT MainLoop()
 			return FALSE;
 		}
 	}
-	g_pGameManager->InputGet();
-	g_pGameManager->UpDateGame();
+	GameManager::Instance()->InputGet();
+	GameManager::Instance()->UpDateGame();
 	return TRUE;
 }
 
@@ -132,14 +130,6 @@ LRESULT CALLBACK BaseWindProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 
 	return DefWindowProc(hwnd, msg, wParam, lParam);
-}
-
-//解放
-HRESULT AllDelete()
-{
-	if (g_pGameManager != nullptr) { delete g_pGameManager; g_pGameManager = nullptr; }
-
-	return TRUE;
 }
 
 //フレーム制御
