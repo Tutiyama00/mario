@@ -130,4 +130,8 @@ void GameManager::UpDateGame()
 }
 
 
+<<<<<<< HEAD
 //ÇΩÇøÇ¬ÇƒÇ∆
+=======
+//Ç†Ç¢Ç§Ç¶Ç®
+>>>>>>> parent of 1f31d9e... „ÅÇ„ÅÇ
