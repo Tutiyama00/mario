@@ -128,10 +128,3 @@ void GameManager::UpDateGame()
 	/*ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ğI—¹‚·‚é*/
 	m_pDx11->RenderEnd();
 }
-
-
-<<<<<<< HEAD
-//‚½‚¿‚Â‚Ä‚Æ
-=======
-//‚ ‚¢‚¤‚¦‚¨
->>>>>>> parent of 1f31d9e... ã‚ã‚
