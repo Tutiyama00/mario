@@ -128,3 +128,6 @@ void GameManager::UpDateGame()
 	/*ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðI—¹‚·‚é*/
 	m_pDx11->RenderEnd();
 }
+
+
+//‚ ‚¢‚¤‚¦‚¨
