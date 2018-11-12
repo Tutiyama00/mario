@@ -29,7 +29,8 @@ public:
 
 public:
 	/* getter */
-	int  GetLife()           { return m_Life; }
+	unsigned char GetLife()           { return m_Life; }
+	unsigned char GetSTART_LIFE() { return M_START_LIFE; }
 
 	/* setter */
 	void SetLife        (UINT  value) { m_Life         = value; }
@@ -50,6 +51,8 @@ private:
 	void Abstract();
 
 private:
+	const UINT M_START_LIFE = 3;  //ゲームスタート時のプレイヤーの残機
+
 	/*---IMoveObj---*/
 	bool m_LivingFlag             = true;                         //生きているかのフラグ
 	MoveObjState m_MoveObjState   = MoveObjState::ON_THE_GROUND;  //プレイヤーのステート
@@ -62,7 +65,7 @@ private:
     float m_SlipStopAmount        = 0.0001f;       //滑りを抑制する値
 	float m_SlipStopThreshold     = 0.001f;        //滑りを０にするしきい値
 
-	UINT m_Life = 0; //残り残機
+	unsigned char m_Life = 0; //残り残機
 
 	bool  m_JumpFlag     = true;    //ジャンプ可能かどうかのフラグ
 	float m_NowWalkSpeed = 0.0f;    //今の歩く速度

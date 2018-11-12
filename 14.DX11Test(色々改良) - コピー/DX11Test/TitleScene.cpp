@@ -47,6 +47,8 @@ GameState TitleScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 /*ÉQÅ[ÉÄÇÃçXêV*/
 void TitleScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 {
+	m_NextGameState = GameState::TITLE;
+
 	if (inputFlag.Check(InputFlagCode::INPUT_SPACE))
 	{
 		m_NextGameState = GameState::RESULT;

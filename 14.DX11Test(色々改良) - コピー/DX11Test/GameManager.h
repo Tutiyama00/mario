@@ -19,10 +19,10 @@ class GameManager
 {
 public:
 	GameManager(HWND hwnd);  //コンストラクタ
-	~GameManager(); //デストラクタ
+	~GameManager();          //デストラクタ
 
-	void InputGet();
-	void UpDateGame();
+	void InputGet();   //入力情報の取得
+	void UpDateGame(); //ゲームの更新
 
 public:
 	Dx11*     m_pDx11     = nullptr;

@@ -25,7 +25,7 @@ PlayScene::PlayScene(ID3D11Device* pDevice)
 	m_pCamera = new Camera(pDevice);
 	MakeStageObj(pDevice);
 
-	m_pPlayer->SetLife(3);
+	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
 }
 
 /*デストラクタ*/
@@ -135,6 +135,7 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 		//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
 		if (m_pPlayer->GetLife() == 0)
 		{
+			ReSet(pDevice);
 			m_NextGameState = GameState::GAMEOVER;
 		}
 		else
@@ -169,4 +170,25 @@ void PlayScene::ReStart(ID3D11Device* pDevice)
 
 	/*プレイヤーの残機設定*/
 	m_pPlayer->SetLife(m_OldPlayerLife);
+}
+
+/// <summary>
+/// ゲーム状態のリセット
+/// </summary>
+/// <param name="pDevice"></param>
+void PlayScene::ReSet(ID3D11Device* pDevice)
+{
+	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
+	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
+	if (m_pGoal != nullptr) { delete m_pGoal;         m_pGoal = nullptr; }
+
+	m_NowWorldLevel = 1;
+	m_NowStageLevel = 1;
+
+	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+
+	m_pStage->ChangeStage(filePas.data());
+	MakeStageObj(pDevice);
+
+	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
 }
