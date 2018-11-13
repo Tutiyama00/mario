@@ -13,7 +13,7 @@
 using namespace OriginalMath;
 
 /*コンストラクタ*/
-PlayScene::PlayScene(ID3D11Device* pDevice)
+PlayScene::PlayScene()
 {
 	m_NextGameState = GameState::PLAY;
 	m_NowWorldLevel = 1;
@@ -22,8 +22,8 @@ PlayScene::PlayScene(ID3D11Device* pDevice)
 	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
 	m_pStage  = new Stage(filePas.data());
-	m_pCamera = new Camera(pDevice);
-	MakeStageObj(pDevice);
+	m_pCamera = new Camera();
+	MakeStageObj();
 
 	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
 }
@@ -39,9 +39,9 @@ PlayScene::~PlayScene()
 }
 
 /*ステージ上のオブジェクトの生成*/
-void PlayScene::MakeStageObj(ID3D11Device* pDevice)
+void PlayScene::MakeStageObj()
 {
-	m_pBlocks = new Characters<Block>(pDevice, L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlocks = new Characters<Block>(L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
 	int halfHeight = m_pStage->GetStageHeight() / 2;
@@ -62,11 +62,10 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 			switch (*(m_pStage->m_pStageDataArray + (height*m_pStage->GetStageWidth() + width)))
 			{
 			case Object::MARIO:
-
-				m_pPlayer = new Player(pos, size, pDevice);
+				m_pPlayer = new Player(pos, size);
 				break;
-			case Object::NORMAL_BLOCK:
 
+			case Object::NORMAL_BLOCK:
 				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
 			}
@@ -76,28 +75,28 @@ void PlayScene::MakeStageObj(ID3D11Device* pDevice)
 	Vector3 pos = { 1.75f,-0.115f,m_StandardZpos };
 	Vector2 size = { 0.75f,0.75f };
 
-	m_pGoal = new Goal(pos, size, pDevice);
+	m_pGoal = new Goal(pos, size);
 
-	m_pBlocks->ThisObjCreateBuffer(pDevice);
+	m_pBlocks->ThisObjCreateBuffer();
 
 	/*下の死亡判定ラインの計算*/
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
 }
 
-GameState PlayScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
+GameState PlayScene::UpDateScene(InputFlag inputFlag)
 {
-	UpDateGame(inputFlag,pDx11->m_pDevice);
+	UpDateGame(inputFlag);
 
 	/*ReStart()をした後に描画をすると一瞬初期状態が映り込んでしまうため条件追加*/
 	if (m_NextGameState == GameState::PLAY)
 	{
-		Draw(pDx11);
+		Draw();
 	}
 
 	return m_NextGameState;
 }
 
-void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
+void PlayScene::UpDateGame(InputFlag inputFlag)
 {
 	m_NextGameState = GameState::PLAY;
 
@@ -123,7 +122,7 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 		std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
 		m_pStage->ChangeStage(filePas.data());
-		ReStart(pDevice);
+		ReStart();
 		m_NextGameState = GameState::RESULT;
 	}
 
@@ -135,27 +134,27 @@ void PlayScene::UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice)
 		//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
 		if (m_pPlayer->GetLife() == 0)
 		{
-			ReSet(pDevice);
+			ReSet();
 			m_NextGameState = GameState::GAMEOVER;
 		}
 		else
 		{
-			ReStart(pDevice);
+			ReStart();
 			m_NextGameState = GameState::RESULT;
 		}
 	}
 }
 
-void PlayScene::Draw(Dx11* pDx11)
+void PlayScene::Draw()
 {
-	m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->GetViewPort(), m_pPlayer->GetxPos());
-	m_pPlayer->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
-	m_pBlocks->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
-	m_pGoal  ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pCamera->Shoot(m_pPlayer->GetxPos());
+	m_pPlayer->ThisObjRender();
+	m_pBlocks->ThisObjRender();
+	m_pGoal  ->ThisObjRender();
 }
 
 /*ゲームのリスタート*/
-void PlayScene::ReStart(ID3D11Device* pDevice)
+void PlayScene::ReStart()
 {
 	/*再生成後のプレイヤーに残機を設定するためにデリート前に値を保存*/
 	m_OldPlayerLife = m_pPlayer->GetLife();
@@ -166,7 +165,7 @@ void PlayScene::ReStart(ID3D11Device* pDevice)
 	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 
 	/*ステージオブジェクト再生成*/
-	MakeStageObj(pDevice);
+	MakeStageObj();
 
 	/*プレイヤーの残機設定*/
 	m_pPlayer->SetLife(m_OldPlayerLife);
@@ -176,7 +175,7 @@ void PlayScene::ReStart(ID3D11Device* pDevice)
 /// ゲーム状態のリセット
 /// </summary>
 /// <param name="pDevice"></param>
-void PlayScene::ReSet(ID3D11Device* pDevice)
+void PlayScene::ReSet()
 {
 	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
 	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
@@ -188,7 +187,7 @@ void PlayScene::ReSet(ID3D11Device* pDevice)
 	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
 	m_pStage->ChangeStage(filePas.data());
-	MakeStageObj(pDevice);
+	MakeStageObj();
 
 	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
 }

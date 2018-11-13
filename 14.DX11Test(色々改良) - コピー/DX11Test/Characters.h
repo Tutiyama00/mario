@@ -2,14 +2,15 @@
 
 #include"RenderObj.h"
 #include<vector>
+#include"Dx11.h"
 
 template<class T> class Characters : public RenderObj
 {
 public:
-	Characters(ID3D11Device* pDevice, const wchar_t* pTextureFileName, LPCWSTR pVSFileName, LPCWSTR pPSFileName)
+	Characters(const wchar_t* pTextureFileName, LPCWSTR pVSFileName, LPCWSTR pPSFileName)
 	{
-		LoadTexture(pDevice, pTextureFileName);
-		CreateShader(pDevice, pVSFileName, pPSFileName);
+		LoadTexture(pTextureFileName);
+		CreateShader(pVSFileName, pPSFileName);
 	}
 
 	~Characters()
@@ -20,10 +21,10 @@ public:
 		}
 
 		if (m_pVertexArray != nullptr) { delete[] m_pVertexArray; m_pVertexArray = nullptr; }
-		if (m_pIndexArray != nullptr) { delete[] m_pIndexArray;  m_pIndexArray = nullptr; }
+		if (m_pIndexArray  != nullptr) { delete[] m_pIndexArray;  m_pIndexArray = nullptr; }
 	}
 
-	void UpdateVIBuffer(ID3D11Device* pDevice)
+	void UpdateVIBuffer()
 	{
 		HRESULT hr = S_OK;
 
@@ -43,12 +44,12 @@ public:
 		if (m_pIndexBuffer != nullptr) { m_pIndexBuffer->Release(); m_pIndexBuffer = nullptr; }
 
 		//新しくバッファを作成
-		hr = pDevice->CreateBuffer(&m_VertexBufferDesc, &m_VertexSubResourData, &m_pVertexBuffer);
+		hr = Dx11::Instance()->m_pDevice->CreateBuffer(&m_VertexBufferDesc, &m_VertexSubResourData, &m_pVertexBuffer);
 		if (FAILED(hr))
 		{
 			MessageBox(NULL, "Error : CreateBuffer()m_pVertexBuffer Failed.", "ERRER", MB_OK);
 		}
-		hr = pDevice->CreateBuffer(&m_IndexBufferDesc, &m_IndexSubResourData, &m_pIndexBuffer);
+		hr = Dx11::Instance()->m_pDevice->CreateBuffer(&m_IndexBufferDesc, &m_IndexSubResourData, &m_pIndexBuffer);
 		if (FAILED(hr))
 		{
 			MessageBox(NULL, "Error : CreateBuffer()m_pIndexBuffer Failed.", "ERRER", MB_OK);
@@ -56,15 +57,15 @@ public:
 	}
 
 	//---RenderObj---
-	void ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets)
+	void ThisObjRender()
 	{
-		Render(pDeviceContext, strides, offsets, m_pVertexArray, m_IndexArraySize);
+		Render(m_pVertexArray, m_IndexArraySize);
 	}
 
-	void ThisObjCreateBuffer(ID3D11Device* pDevice)
+	void ThisObjCreateBuffer()
 	{
 		SetVertexIndex();
-		CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+		CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 	}
 
 public:

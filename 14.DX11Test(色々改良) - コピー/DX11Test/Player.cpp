@@ -4,11 +4,11 @@
 #include"Flag.h"
 
 /*コンストラクタ*/
-Player::Player(Vector3 pos, Vector2 size, ID3D11Device* pDevice) : Square::Square(pos, size)
+Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 {
-	LoadTexture(pDevice, L"Texture/Mario.png");
-	CreateShader(pDevice, L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
-	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+	LoadTexture(L"Texture/Mario.png");
+	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 
 /*デストラクタ*/
@@ -142,14 +142,14 @@ void Player::Move(InputFlag* inputFlag)
 	}
 }
 
-void Player::ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets)
+void Player::ThisObjRender()
 {
-	Render(pDeviceContext, strides, offsets, m_pVertexArray, m_IndexArraySize);
+	Render(m_pVertexArray, m_IndexArraySize);
 }
 
-void Player::ThisObjCreateBuffer(ID3D11Device* pDevice)
+void Player::ThisObjCreateBuffer()
 {
-	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 
 /*歩く

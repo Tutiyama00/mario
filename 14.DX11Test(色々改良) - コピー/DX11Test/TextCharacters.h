@@ -12,11 +12,11 @@ template<class T> class Characters;
 class TextCharacters
 {
 public:
-	TextCharacters(Vector3 pos, Vector2 size, std::string text, ID3D11Device* pDevice,LPCWSTR TPS_COLOR);
+	TextCharacters(Vector3 pos, Vector2 size, std::string text, LPCWSTR TPS_COLOR);
 	~TextCharacters();
 
-	void Render(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
-	void ChangeText(std::string text,ID3D11Device* pDevice);
+	void Render();
+	void ChangeText(std::string text);
 
 private:
 	Characters<TextChar>* m_pCharacters = nullptr;

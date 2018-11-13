@@ -12,16 +12,16 @@ using namespace OriginalMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="pDevice"></param>
-GameOverScene::GameOverScene(ID3D11Device* pDevice)
+GameOverScene::GameOverScene()
 {
 	m_NextGameState = GameState::GAMEOVER;
 
-	m_pCamera = new Camera(pDevice);
+	m_pCamera = new Camera();
 
 	Vector3 pos  = { -0.275f,0.0f,0.0f };
 	Vector2 size = { 0.07f,0.07f };
 
-	m_pTextCharacters = new TextCharacters(pos, size, "GAME OVER", pDevice, TPS_WHITE);
+	m_pTextCharacters = new TextCharacters(pos, size, "GAME OVER", TPS_WHITE);
 }
 
 /// <summary>
@@ -37,14 +37,13 @@ GameOverScene::~GameOverScene()
 /// シーンの更新
 /// </summary>
 /// <param name="inputFlag"></param>
-/// <param name="pDx11"></param>
 /// <returns></returns>
-GameState GameOverScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
+GameState GameOverScene::UpDateScene(InputFlag inputFlag)
 {
 	m_NextGameState = GameState::GAMEOVER;
 
-	UpDateGame(inputFlag,pDx11->m_pDevice);
-	Draw(pDx11);
+	UpDateGame(inputFlag);
+	Draw();
 
 	return m_NextGameState;
 }
@@ -52,9 +51,7 @@ GameState GameOverScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
 /// <summary>
 /// ゲームの更新
 /// </summary>
-/// <param name="inputFlag"></param>
-/// <param name="pDevice"></param>
-void GameOverScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
+void GameOverScene::UpDateGame(InputFlag inputFlag)
 {
 	if (inputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
@@ -65,9 +62,8 @@ void GameOverScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 /// <summary>
 /// 描画
 /// </summary>
-/// <param name="pDx11"></param>
-void GameOverScene::Draw(Dx11* pDx11)
+void GameOverScene::Draw()
 {
-	m_pCamera->Shoot(pDx11->m_pDeviceContext, &pDx11->GetViewPort(), 0.0f);
-	m_pTextCharacters->Render(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pCamera->Shoot(0.0f);
+	m_pTextCharacters->Render();
 }

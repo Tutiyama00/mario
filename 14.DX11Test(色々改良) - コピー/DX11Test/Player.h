@@ -15,7 +15,7 @@ class Block;
 class Player : public Square, public RenderObj, public IMoveObj
 {
 public:
-	Player(Vector3 pos, Vector2 size, ID3D11Device* pDevice);  //コンストラクタ
+	Player(Vector3 pos, Vector2 size);  //コンストラクタ
 	~Player(); //デストラクタ
 
 	void Die(); //死亡処理
@@ -24,8 +24,8 @@ public:
 	void Move(InputFlag* inputFlag);  //プレイヤーの動き（入力情報)
 
 	//---RenderObj---
-	void ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
-	void ThisObjCreateBuffer(ID3D11Device* pDevice);
+	void ThisObjRender();
+	void ThisObjCreateBuffer();
 
 public:
 	/* getter */

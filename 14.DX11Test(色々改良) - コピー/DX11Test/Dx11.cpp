@@ -92,15 +92,15 @@ void Dx11::Initialize(HWND hwnd)
 		//深度ステンシルビューの作成
 		D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
 		ZeroMemory(&dsvDesc, sizeof(dsvDesc));
-		dsvDesc.Format = descDepth.Format;
-		dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		dsvDesc.Format             = descDepth.Format;
+		dsvDesc.ViewDimension      = D3D11_DSV_DIMENSION_TEXTURE2D;
 		dsvDesc.Texture2D.MipSlice = 0;
 		m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture2D, NULL, &m_pDepthStencilView);
 
 		//サンプラーの作成
 		D3D11_SAMPLER_DESC smpDesc;
 		ZeroMemory(&smpDesc, sizeof(smpDesc));
-		smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		smpDesc.Filter   = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 		smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 		smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 		smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;

@@ -1,26 +1,26 @@
 #include"TextChar.h"
 
-TextChar::TextChar(Vector3 pos, Vector2 size, ID3D11Device* pDevice, LPCWSTR TPS_COLOR,char setChar)
+TextChar::TextChar(Vector3 pos, Vector2 size, LPCWSTR TPS_COLOR,char setChar)
 	     :Square(pos, size)
 {
-	LoadTexture(pDevice, L"Texture/DOT_FONT.png");
+	LoadTexture(L"Texture/DOT_FONT.png");
 	CherTexSet(setChar);
-	CreateShader(pDevice, L"Shader/TextVertexShader.vsh",TPS_COLOR);
-	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+	CreateShader(L"Shader/TextVertexShader.vsh",TPS_COLOR);
+	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	HRESULT hr = S_OK;
 }
 
 TextChar::~TextChar() {}
 
-void TextChar::ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets)
+void TextChar::ThisObjRender()
 {
-	Render(pDeviceContext, strides, offsets, m_pVertexArray, m_IndexArraySize);
+	Render(m_pVertexArray, m_IndexArraySize);
 }
 
-void TextChar::ThisObjCreateBuffer(ID3D11Device* pDevice)
+void TextChar::ThisObjCreateBuffer()
 {
-	CreateBuffer(pDevice, m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 
 void TextChar::CherTexSet(char setChar)

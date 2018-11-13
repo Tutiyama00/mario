@@ -9,12 +9,12 @@ using namespace OriginalMath;
 class Title : public Square,public RenderObj
 {
 public:
-	Title(Vector3 pos, Vector2 size, ID3D11Device* pDevice);
+	Title(Vector3 pos, Vector2 size);
 	~Title();
 
 	//---RenderObj---
-	void ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
-	void ThisObjCreateBuffer(ID3D11Device* pDevice);
+	void ThisObjRender();
+	void ThisObjCreateBuffer();
 
 private:
 

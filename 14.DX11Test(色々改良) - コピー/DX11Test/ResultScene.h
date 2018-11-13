@@ -9,14 +9,14 @@ class TextCharacters;
 class ResultScene : public IGameScene
 {
 public:
-	ResultScene(ID3D11Device* pDevice,UINT playerLife);
+	ResultScene(UINT playerLife);
 	~ResultScene();
 
-	void ChangeWorldNamber(int worldNamber, int stageNamber, ID3D11Device* pDevice);
-	void ChangeMarioLife(UINT playerLife, ID3D11Device* pDevice);
+	void ChangeWorldNamber(int worldNamber, int stageNamber);
+	void ChangeMarioLife(UINT playerLife);
 
 	//---IGameScene---
-	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
+	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
 
 private:
 	Image*          m_pImageOfMario      = nullptr;
@@ -26,8 +26,8 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice);
-	void Draw(Dx11* pDx11);
+	void UpDateGame(InputFlag inputFlag);
+	void Draw();
 
 protected:
 	//---IGameScene---

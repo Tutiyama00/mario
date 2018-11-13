@@ -10,13 +10,13 @@ class Image;
 class ParameterScene : public IGameScene
 {
 public:
-	ParameterScene(ID3D11Device* pDevice, GameState nowGameState);
+	ParameterScene(GameState nowGameState);
 	~ParameterScene();
 
-	void ChangeWorldNamber(int worldNamber, int stageNamber, ID3D11Device* pDevice);
+	void ChangeWorldNamber(int worldNamber, int stageNamber);
 
 	//---IGameScene---
-	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
+	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
 
 private:
 	Timer*          m_pTimer             = nullptr;
@@ -31,8 +31,8 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice);
-	void Draw(Dx11* pDx11);
+	void UpDateGame(InputFlag inputFlag);
+	void Draw();
 
 protected:
 	//---IGameScene---

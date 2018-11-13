@@ -1,5 +1,6 @@
 #include"Camera.h"
 #include<DirectXMath.h>
+#include"Dx11.h"
 
 using namespace DirectX;
 
@@ -11,7 +12,7 @@ struct CameraConstantBuffer
 	XMFLOAT4X4 projection;
 };
 
-Camera::Camera(ID3D11Device* pDevice)
+Camera::Camera()
 {
 	HRESULT hr = TRUE;
 
@@ -24,7 +25,7 @@ Camera::Camera(ID3D11Device* pDevice)
 	cbDesc.MiscFlags           = 0;
 	cbDesc.StructureByteStride = 0;
 
-	hr = pDevice->CreateBuffer(&cbDesc, NULL, &m_pCameraConstantBuffer);
+	hr = Dx11::Instance()->m_pDevice->CreateBuffer(&cbDesc, NULL, &m_pCameraConstantBuffer);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreateBuffer() m_pCameraConstantBuffer Failed.", "ERRER", MB_OK);
@@ -37,7 +38,7 @@ Camera::~Camera()
 }
 
 //ƒJƒƒ‰ŽB‰e
-void Camera::Shoot(ID3D11DeviceContext* pDeviceContext, D3D11_VIEWPORT* pViewPort, float xPos)
+void Camera::Shoot(float xPos)
 {
 	XMMATRIX worldMatrix = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 
@@ -47,16 +48,16 @@ void Camera::Shoot(ID3D11DeviceContext* pDeviceContext, D3D11_VIEWPORT* pViewPor
 	XMMATRIX viewMatrix = XMMatrixLookAtLH(eye, focus, up);
 
 	float    fov        = XMConvertToRadians(45.0f);
-	float    aspect     = pViewPort->Width / pViewPort->Height;
+	float    aspect     = Dx11::Instance()->GetViewPort().Width / Dx11::Instance()->GetViewPort().Height;
 	float    nearZ      = 0.1f;
 	float    farZ       = 100.0f;
 	XMMATRIX projMatrix = XMMatrixPerspectiveFovLH(fov, aspect, nearZ, farZ);
 
 	CameraConstantBuffer cb;
-	XMStoreFloat4x4(&cb.world, XMMatrixTranspose(worldMatrix));
-	XMStoreFloat4x4(&cb.view, XMMatrixTranspose(viewMatrix));
+	XMStoreFloat4x4(&cb.world,      XMMatrixTranspose(worldMatrix));
+	XMStoreFloat4x4(&cb.view,       XMMatrixTranspose(viewMatrix));
 	XMStoreFloat4x4(&cb.projection, XMMatrixTranspose(projMatrix));
-	pDeviceContext->UpdateSubresource(m_pCameraConstantBuffer, 0, NULL, &cb, 0, 0);
+	Dx11::Instance()->m_pDeviceContext->UpdateSubresource(m_pCameraConstantBuffer, 0, NULL, &cb, 0, 0);
 
-	pDeviceContext->VSSetConstantBuffers(0, 1, &m_pCameraConstantBuffer);
+	Dx11::Instance()->m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pCameraConstantBuffer);
 }

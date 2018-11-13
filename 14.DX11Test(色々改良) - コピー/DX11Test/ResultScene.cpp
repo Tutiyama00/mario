@@ -5,26 +5,26 @@
 #include"Dx11.h"
 #include"TextCharacters.h"
 
-ResultScene::ResultScene(ID3D11Device* pDevice, UINT playerLife)
+ResultScene::ResultScene(UINT playerLife)
 {
 	m_NextGameState = GameState::RESULT;
 
 	Vector3 pos  = { -0.14f,0.0f,0.0f };
 	Vector2 size = { 0.1f,0.1f };
 
-	m_pImageOfMario = new Image(pos, size, pDevice, L"Texture/Mario.png");
+	m_pImageOfMario = new Image(pos, size, L"Texture/Mario.png");
 
 	pos.x  = 0.0f;
 	size.x = size.y = 0.07f;
-	m_pTextOfMarioLife = new TextCharacters(pos, size, "*  " + std::to_string(playerLife) , pDevice, TPS_WHITE);
+	m_pTextOfMarioLife = new TextCharacters(pos, size, "*  " + std::to_string(playerLife), TPS_WHITE);
 
 	pos.x  = -0.25f;
 	pos.y  = 0.2f;
 	size.x = size.y = 0.07f;
-	m_pTextOfWORLD = new TextCharacters(pos, size, "WORLD", pDevice, TPS_WHITE);
+	m_pTextOfWORLD = new TextCharacters(pos, size, "WORLD", TPS_WHITE);
 
 	pos.x = 0.15f;
-	m_pTextOfWorldNamber = new TextCharacters(pos, size, "1-1", pDevice, TPS_WHITE);
+	m_pTextOfWorldNamber = new TextCharacters(pos, size, "1-1", TPS_WHITE);
 }
 
 ResultScene::~ResultScene()
@@ -35,17 +35,17 @@ ResultScene::~ResultScene()
 	if (m_pTextOfWorldNamber != nullptr) { delete m_pTextOfWorldNamber; m_pTextOfWorldNamber = nullptr; }
 }
 
-GameState ResultScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
+GameState ResultScene::UpDateScene(InputFlag inputFlag)
 {
 	m_NextGameState = GameState::RESULT;
 
-	UpDateGame(inputFlag,pDx11->m_pDevice);
-	Draw(pDx11);
+	UpDateGame(inputFlag);
+	Draw();
 
 	return m_NextGameState;
 }
 
-void ResultScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
+void ResultScene::UpDateGame(InputFlag inputFlag)
 {
 	if (inputFlag.Check(InputFlagCode::INPUT_LEFT))
 	{
@@ -53,22 +53,22 @@ void ResultScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 	}
 }
 
-void ResultScene::Draw(Dx11* pDx11)
+void ResultScene::Draw()
 {
-	m_pImageOfMario   ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
-	m_pTextOfWORLD    ->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
-	m_pTextOfMarioLife->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
-	m_pTextOfWorldNamber->Render(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pImageOfMario     ->ThisObjRender();
+	m_pTextOfWORLD      ->Render       ();
+	m_pTextOfMarioLife  ->Render       ();
+	m_pTextOfWorldNamber->Render       ();
 }
 
-void ResultScene::ChangeWorldNamber(int worldNamber, int stageNamber, ID3D11Device* pDevice)
+void ResultScene::ChangeWorldNamber(int worldNamber, int stageNamber)
 {
 	std::string filePas = std::to_string(worldNamber) + "-" + std::to_string(stageNamber);  //ステージのファイルパス
 
-	m_pTextOfWorldNamber->ChangeText(filePas, pDevice);
+	m_pTextOfWorldNamber->ChangeText(filePas);
 }
 
-void ResultScene::ChangeMarioLife(UINT playerLife,ID3D11Device* pDevice)
+void ResultScene::ChangeMarioLife(UINT playerLife)
 {
-	m_pTextOfMarioLife->ChangeText("*  " + std::to_string(playerLife), pDevice);
+	m_pTextOfMarioLife->ChangeText("*  " + std::to_string(playerLife));
 }

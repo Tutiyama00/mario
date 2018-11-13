@@ -9,11 +9,11 @@ class Dx11;
 class IGameScene
 {
 public:
-	virtual GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11) = 0;
+	virtual GameState UpDateScene(InputFlag inputFlag) = 0;
 
 protected:
-	virtual void UpDateGame(InputFlag inputFlag,ID3D11Device* pDevice) = 0;
-	virtual void Draw(Dx11* pDx11)        = 0;
+	virtual void UpDateGame(InputFlag inputFlag) = 0;
+	virtual void Draw()                          = 0;
 
 protected:
 	GameState m_NextGameState;

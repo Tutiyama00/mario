@@ -11,11 +11,11 @@ class TextCharacters;
 class GameOverScene : public IGameScene
 {
 public:
-	GameOverScene(ID3D11Device* pDevice);
+	GameOverScene();
 	~GameOverScene();
 
 	//---IGameScene---
-	GameState UpDateScene(InputFlag inputFlag, Dx11* pDx11);  //このシーンを更新する。戻り値は、次に行くべきステート
+	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
 
 private:
 	Camera*         m_pCamera         = nullptr;
@@ -23,8 +23,8 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice);
-	void Draw(Dx11* pDx11);
+	void UpDateGame(InputFlag inputFlag);
+	void Draw();
 
 protected:
 	//---IGameScene---

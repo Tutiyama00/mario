@@ -10,13 +10,13 @@
 #include"Timer.h"
 
 /*コンストラクタ*/
-TitleScene::TitleScene(ID3D11Device* pDevice)
+TitleScene::TitleScene()
 {
 	Vector3 pos = { 0.0f, 0.15f, -0.5f };
 	Vector2 size = { 1.2f, 0.7f };
 
-	m_pCamera       = new Camera(pDevice);
-	m_pTitle        = new Title(pos, size, pDevice);
+	m_pCamera       = new Camera();
+	m_pTitle        = new Title(pos, size);
 	m_NextGameState = GameState::TITLE;
 
 	pos.x  = -0.45f;
@@ -24,7 +24,7 @@ TitleScene::TitleScene(ID3D11Device* pDevice)
 	pos.z  = 0.0f;
 	size.x = size.y = 0.07f;
 
-	m_pTextCharacters = new TextCharacters(pos, size,"1 PLAYER GAME", pDevice, TPS_WHITE);
+	m_pTextCharacters = new TextCharacters(pos, size,"1 PLAYER GAME", TPS_WHITE);
 }
 
 /*デストラクタ*/
@@ -36,16 +36,16 @@ TitleScene::~TitleScene()
 }
 
 /*シーンの更新*/
-GameState TitleScene::UpDateScene(InputFlag inputFlag, Dx11* pDx11)
+GameState TitleScene::UpDateScene(InputFlag inputFlag)
 {
-	UpDateGame(inputFlag,pDx11->m_pDevice);
-	Draw(pDx11);
+	UpDateGame(inputFlag);
+	Draw();
 
 	return m_NextGameState;
 }
 
 /*ゲームの更新*/
-void TitleScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
+void TitleScene::UpDateGame(InputFlag inputFlag)
 {
 	m_NextGameState = GameState::TITLE;
 
@@ -56,9 +56,9 @@ void TitleScene::UpDateGame(InputFlag inputFlag, ID3D11Device* pDevice)
 }
 
 /*描画*/
-void TitleScene::Draw(Dx11* pDx11)
+void TitleScene::Draw()
 {
-	m_pCamera        ->Shoot(pDx11->m_pDeviceContext, &pDx11->GetViewPort(), 0.0f);
-	m_pTextCharacters->Render       (pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
-	m_pTitle         ->ThisObjRender(pDx11->m_pDeviceContext, pDx11->GetStrides(), pDx11->GetOffsets());
+	m_pCamera        ->Shoot(0.0f);
+	m_pTextCharacters->Render       ();
+	m_pTitle         ->ThisObjRender();
 }

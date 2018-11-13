@@ -11,15 +11,15 @@ class RenderObj
 {
 public:
 	virtual ~RenderObj();
-	virtual void ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets) = 0;
-	virtual void ThisObjCreateBuffer(ID3D11Device* pDevice) = 0;
+	virtual void ThisObjRender() = 0;
+	virtual void ThisObjCreateBuffer() = 0;
 
 protected:
 	virtual void Abstract() = 0;  //純粋仮想関数（これによってこのクラスはインスタンスできない)
-	virtual void LoadTexture(ID3D11Device* pDevice, const wchar_t* pFileName);
-	virtual void CreateShader(ID3D11Device* pDevice, LPCWSTR pVSFileName, LPCWSTR pPSFileName);
-	virtual void Render(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets, vertex* pVertexArray, UINT indexArraySize);
-	virtual void CreateBuffer(ID3D11Device* pDevice, vertex* pVertexArray, UINT vertexArraySize, WORD* pIndexArray, UINT indexArraySize);
+	virtual void LoadTexture(const wchar_t* pFileName);
+	virtual void CreateShader(LPCWSTR pVSFileName, LPCWSTR pPSFileName);
+	virtual void Render(vertex* pVertexArray, UINT indexArraySize);
+	virtual void CreateBuffer(vertex* pVertexArray, UINT vertexArraySize, WORD* pIndexArray, UINT indexArraySize);
 
 protected:
 	ID3D11Buffer*             m_pVertexBuffer        = nullptr;

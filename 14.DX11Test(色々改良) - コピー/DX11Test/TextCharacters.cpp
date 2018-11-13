@@ -2,18 +2,18 @@
 #include"Characters.h"
 #include"TextChar.h"
 
-TextCharacters::TextCharacters(Vector3 pos, Vector2 size,std::string text, ID3D11Device* pDevice,  LPCWSTR TPS_COLOR) : M_POS(pos), M_SIZE(size), M_TPS_COLOR(TPS_COLOR)
+TextCharacters::TextCharacters(Vector3 pos, Vector2 size,std::string text,  LPCWSTR TPS_COLOR) : M_POS(pos), M_SIZE(size), M_TPS_COLOR(TPS_COLOR)
 {
-	m_pCharacters = new Characters<TextChar>(pDevice, L"Texture/DOT_FONT.png", L"Shader/TextVertexShader.vsh", TPS_COLOR);
+	m_pCharacters = new Characters<TextChar>(L"Texture/DOT_FONT.png", L"Shader/TextVertexShader.vsh", TPS_COLOR);
 
 	int textSize = text.size();
 	for (int i = 0; i < textSize; i++)
 	{
-		m_pCharacters->m_ObjectVector.push_back(new TextChar(pos, size, pDevice, TPS_COLOR, text[i]));
+		m_pCharacters->m_ObjectVector.push_back(new TextChar(pos, size, TPS_COLOR, text[i]));
 		pos.x += size.x;
 	}
 
-	m_pCharacters->ThisObjCreateBuffer(pDevice);
+	m_pCharacters->ThisObjCreateBuffer();
 }
 
 TextCharacters::~TextCharacters()
@@ -21,13 +21,13 @@ TextCharacters::~TextCharacters()
 	if (m_pCharacters != nullptr) { delete m_pCharacters; m_pCharacters = nullptr; }
 }
 
-void TextCharacters::Render(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets)
+void TextCharacters::Render()
 {
-	m_pCharacters->ThisObjRender(pDeviceContext, strides, offsets);
+	m_pCharacters->ThisObjRender();
 }
 
 //表示する文字の変更
-void TextCharacters::ChangeText(std::string text,ID3D11Device* pDevice)
+void TextCharacters::ChangeText(std::string text)
 {
 	//各々のサイズの保存
 	int objSize  = m_pCharacters->m_ObjectVector.size();
@@ -79,7 +79,7 @@ void TextCharacters::ChangeText(std::string text,ID3D11Device* pDevice)
 				//超えている場合
 				//オブジェクトを追加
 				setPos.x = M_POS.x + M_SIZE.x * i;
-				m_pCharacters->m_ObjectVector.push_back(new TextChar(setPos, M_SIZE, pDevice, M_TPS_COLOR, text[i]));
+				m_pCharacters->m_ObjectVector.push_back(new TextChar(setPos, M_SIZE, M_TPS_COLOR, text[i]));
 			}
 			else
 			{
@@ -90,5 +90,5 @@ void TextCharacters::ChangeText(std::string text,ID3D11Device* pDevice)
 		}
 	}
 
-	m_pCharacters->UpdateVIBuffer(pDevice);
+	m_pCharacters->UpdateVIBuffer();
 }

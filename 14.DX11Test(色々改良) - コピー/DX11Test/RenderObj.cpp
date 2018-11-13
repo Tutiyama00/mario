@@ -4,6 +4,7 @@
 #include "WICTextureLoader.cpp"
 #include"Vertex.h"
 #include"Math.h"
+#include"Dx11.h"
 
 D3D11_INPUT_ELEMENT_DESC TextureVertexDesc[]
 {
@@ -26,7 +27,7 @@ RenderObj::~RenderObj()
 }
 
 //テクスチャの読み込み
-void RenderObj::LoadTexture(ID3D11Device* pDevice, const wchar_t* pFileName)
+void RenderObj::LoadTexture(const wchar_t* pFileName)
 {
 	HRESULT hr = S_OK;
 
@@ -34,7 +35,7 @@ void RenderObj::LoadTexture(ID3D11Device* pDevice, const wchar_t* pFileName)
 	CoInitialize(NULL);   //COMライブラリの初期化が必要(絶対ここでしばらく詰んだ)
 
 	//テクスチャの読み込み
-	hr = CreateWICTextureFromFile(pDevice, pFileName, &m_pMainTextureResource, &m_pMainTextureSRV);
+	hr = CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, pFileName, &m_pMainTextureResource, &m_pMainTextureSRV);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreateWICTextureFromFile() Failed.", "ERRER", MB_OK);
@@ -45,7 +46,7 @@ void RenderObj::LoadTexture(ID3D11Device* pDevice, const wchar_t* pFileName)
 }
 
 //シェーダーの生成
-void RenderObj::CreateShader(ID3D11Device* pDevice, LPCWSTR pVSFileName, LPCWSTR pPSFileName)
+void RenderObj::CreateShader(LPCWSTR pVSFileName, LPCWSTR pPSFileName)
 {
 	HRESULT hr = TRUE;
 
@@ -66,21 +67,21 @@ void RenderObj::CreateShader(ID3D11Device* pDevice, LPCWSTR pVSFileName, LPCWSTR
 	}
 
 	//頂点レイアウト作成
-	hr = pDevice->CreateInputLayout(TextureVertexDesc, ARRAYSIZE(TextureVertexDesc), vs_pBlob->GetBufferPointer(), vs_pBlob->GetBufferSize(), &m_pTextureInputLayout);
+	hr = Dx11::Instance()->m_pDevice->CreateInputLayout(TextureVertexDesc, ARRAYSIZE(TextureVertexDesc), vs_pBlob->GetBufferPointer(), vs_pBlob->GetBufferSize(), &m_pTextureInputLayout);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreateInputLayout() Failed.", "ERRER", MB_OK);
 	}
 
 	//頂点シェーダー生成
-	hr = pDevice->CreateVertexShader(vs_pBlob->GetBufferPointer(), vs_pBlob->GetBufferSize(), NULL, &m_pTextureVertexShader);
+	hr = Dx11::Instance()->m_pDevice->CreateVertexShader(vs_pBlob->GetBufferPointer(), vs_pBlob->GetBufferSize(), NULL, &m_pTextureVertexShader);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreateVertexShader() Failed.", "ERRER", MB_OK);
 	}
 
 	//ピクセルシェーダー生成
-	hr = pDevice->CreatePixelShader(ps_pBlob->GetBufferPointer(), ps_pBlob->GetBufferSize(), NULL, &m_pTexturePixelShader);
+	hr = Dx11::Instance()->m_pDevice->CreatePixelShader(ps_pBlob->GetBufferPointer(), ps_pBlob->GetBufferSize(), NULL, &m_pTexturePixelShader);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreatePixelShader() Failed.", "ERRER", MB_OK);
@@ -94,7 +95,7 @@ void RenderObj::CreateShader(ID3D11Device* pDevice, LPCWSTR pVSFileName, LPCWSTR
 }
 
 //バッファの生成
-void RenderObj::CreateBuffer(ID3D11Device* pDevice,vertex* pVertexArray,UINT vertexArraySize,WORD* pIndexArray,UINT indexArraySize)
+void RenderObj::CreateBuffer(vertex* pVertexArray,UINT vertexArraySize,WORD* pIndexArray,UINT indexArraySize)
 {
 	HRESULT hr = S_OK;
 
@@ -124,29 +125,32 @@ void RenderObj::CreateBuffer(ID3D11Device* pDevice,vertex* pVertexArray,UINT ver
 	m_IndexSubResourData.SysMemSlicePitch  = 0;
 
 	//バッファの作成
-	hr = pDevice->CreateBuffer(&m_VertexBufferDesc, &m_VertexSubResourData, &m_pVertexBuffer);
+	hr = Dx11::Instance()->m_pDevice->CreateBuffer(&m_VertexBufferDesc, &m_VertexSubResourData, &m_pVertexBuffer);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreateBuffer()m_pVertexBuffer Failed.", "ERRER", MB_OK);
 	}
-	hr = pDevice->CreateBuffer(&m_IndexBufferDesc, &m_IndexSubResourData, &m_pIndexBuffer);
+	hr = Dx11::Instance()->m_pDevice->CreateBuffer(&m_IndexBufferDesc, &m_IndexSubResourData, &m_pIndexBuffer);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreateBuffer()m_pIndexBuffer Failed.", "ERRER", MB_OK);
 	}
 }
 
-void RenderObj::Render(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets, vertex* pVertexArray, UINT indexArraySize)
+void RenderObj::Render(vertex* pVertexArray, UINT indexArraySize)
 {
-	pDeviceContext->UpdateSubresource(m_pVertexBuffer, 0, nullptr, pVertexArray, 0, 0);
+	UINT strides = Dx11::Instance()->GetStrides();
+	UINT offsets = Dx11::Instance()->GetOffsets();
 
-	pDeviceContext->IASetInputLayout(m_pTextureInputLayout);
-	pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &strides, &offsets);
-	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R16_UINT, offsets);
-	pDeviceContext->VSSetShader(m_pTextureVertexShader, NULL, 0);
-	pDeviceContext->PSSetShader(m_pTexturePixelShader, NULL, 0);
+	Dx11::Instance()->m_pDeviceContext->UpdateSubresource(m_pVertexBuffer, 0, nullptr, pVertexArray, 0, 0);
 
-	pDeviceContext->PSSetShaderResources(0, 1, &m_pMainTextureSRV);
+	Dx11::Instance()->m_pDeviceContext->IASetInputLayout(m_pTextureInputLayout);
+	Dx11::Instance()->m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &strides, &offsets);
+	Dx11::Instance()->m_pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R16_UINT, offsets);
+	Dx11::Instance()->m_pDeviceContext->VSSetShader(m_pTextureVertexShader, NULL, 0);
+	Dx11::Instance()->m_pDeviceContext->PSSetShader(m_pTexturePixelShader, NULL, 0);
 
-	pDeviceContext->DrawIndexed(indexArraySize, 0, 0);
+	Dx11::Instance()->m_pDeviceContext->PSSetShaderResources(0, 1, &m_pMainTextureSRV);
+
+	Dx11::Instance()->m_pDeviceContext->DrawIndexed(indexArraySize, 0, 0);
 }

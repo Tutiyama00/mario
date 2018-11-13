@@ -12,14 +12,14 @@ using namespace OriginalMath;
 class TextChar : public Square,public RenderObj
 {
 public:
-	TextChar(Vector3 pos, Vector2 size, ID3D11Device* pDevice, LPCWSTR TPS_COLOR, char setChar);
+	TextChar(Vector3 pos, Vector2 size, LPCWSTR TPS_COLOR, char setChar);
 	~TextChar();
 
 	void CherTexSet(char setChar);
 
 	//---RenderObj---
-	void ThisObjRender(ID3D11DeviceContext* pDeviceContext, UINT strides, UINT offsets);
-	void ThisObjCreateBuffer(ID3D11Device* pDevice);
+	void ThisObjRender();
+	void ThisObjCreateBuffer();
 
 private:
 	//---RenderObj---
