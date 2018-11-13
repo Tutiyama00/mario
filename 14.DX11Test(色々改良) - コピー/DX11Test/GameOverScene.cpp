@@ -53,9 +53,18 @@ GameState GameOverScene::UpDateScene(InputFlag inputFlag)
 /// </summary>
 void GameOverScene::UpDateGame(InputFlag inputFlag)
 {
-	if (inputFlag.Check(InputFlagCode::INPUT_RIGHT))
+	/* 指定したフレーム数だけシーンを継続する */
+	if (m_FlameCount >= M_CHANGE_FLAME_COUNT)
 	{
+		/* フレーム数カウントのリセット */
+		m_FlameCount = 0;
+		/* シーンの変更 */
 		m_NextGameState = GameState::TITLE;
+	}
+	else
+	{
+		/* フレーム数カウント */
+		m_FlameCount++;
 	}
 }
 

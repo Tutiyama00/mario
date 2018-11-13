@@ -24,6 +24,9 @@ private:
 	TextCharacters* m_pTextOfWorldNamber = nullptr;
 	TextCharacters* m_pTextOfMarioLife   = nullptr;
 
+	unsigned int m_FlameCount = 0;  //シーンを遷移させるまでのカウント
+	const unsigned int M_CHANGE_FLAME_COUNT = 180;
+
 protected:
 	//---IGameScene---
 	void UpDateGame(InputFlag inputFlag);
