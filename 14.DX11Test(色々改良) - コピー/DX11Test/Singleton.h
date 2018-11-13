@@ -9,8 +9,6 @@ public:
 		return &obj;
 	}
 
-	virtual void Initialize(HWND hwnd) = 0; //初期化関数
-
 protected:
 	bool m_InitializedFlag;  //初期化しているかのフラグ（True＝初期化済み、False＝未初期化）
 

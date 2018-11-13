@@ -19,7 +19,6 @@
 /*デストラクタ*/
 GameManager::~GameManager()
 {
-	if (m_pDx11           != nullptr) { delete m_pDx11;            m_pDx11           = nullptr; }
 	if (m_pDsound         != nullptr) { delete m_pDsound;          m_pDsound         = nullptr; }
 	if (m_pFlag           != nullptr) { delete m_pFlag;            m_pFlag           = nullptr; }
 	if (m_pTitleScene     != nullptr) { delete m_pTitleScene;      m_pTitleScene     = nullptr; }
@@ -37,17 +36,18 @@ void GameManager::Initialize(HWND hwnd)
 {
 	if (!m_InitializedFlag)
 	{
+		/* Dx11の初期化 */
+		Dx11::Instance()->Initialize(hwnd);
+
 		m_pFlag     = new InputFlag();
-		m_pDx11     = new Dx11();
 		m_pDsound   = new Dsound(hwnd);
 		m_GameState = GameState::TITLE;
 
-		m_pDx11->Create(hwnd);
-		m_pTitleScene     = new TitleScene(m_pDx11->m_pDevice);
-		m_pParameterScene = new ParameterScene(m_pDx11->m_pDevice, m_GameState);
-		m_pPlayScene      = new PlayScene(m_pDx11->m_pDevice);
-		m_pResultScene    = new ResultScene(m_pDx11->m_pDevice, m_pPlayScene->GetPlayer()->GetSTART_LIFE());
-		m_pGameOverScene  = new GameOverScene(m_pDx11->m_pDevice);
+		m_pTitleScene     = new TitleScene(Dx11::Instance()->m_pDevice);
+		m_pParameterScene = new ParameterScene(Dx11::Instance()->m_pDevice, m_GameState);
+		m_pPlayScene      = new PlayScene(Dx11::Instance()->m_pDevice);
+		m_pResultScene    = new ResultScene(Dx11::Instance()->m_pDevice, m_pPlayScene->GetPlayer()->GetSTART_LIFE());
+		m_pGameOverScene  = new GameOverScene(Dx11::Instance()->m_pDevice);
 
 		m_InitializedFlag = true;
 	}
@@ -58,7 +58,7 @@ void GameManager::Initialize(HWND hwnd)
 /// </summary>
 void GameManager::InputGet()
 {
-	if (!m_InitializedFlag) { MessageBox(NULL, "NotInitialize GameManager", "ERROR", 0); return; }
+	if (!m_InitializedFlag) { MessageBox(NULL, "NotInitialize GameManager", "ERROR", MB_OK); return; }
 
 	m_pFlag->AllReSet();
 
@@ -72,16 +72,16 @@ void GameManager::InputGet()
 /// </summary>
 void GameManager::UpDateGame()
 {
-	if (!m_InitializedFlag) { MessageBox(NULL, "NotInitialize GameManager", "ERROR", 0); return; }
+	if (!m_InitializedFlag) { MessageBox(NULL, "NotInitialize GameManager", "ERROR", MB_OK); return; }
 
 	/*レンダリングを開始状態にする*/
-	m_pDx11->RenderStart();
+	Dx11::Instance()->RenderStart();
 
 	/*比較用に今のゲームステートを保存する*/
 	GameState oldGameState = m_GameState;
 
 	/*パラメーターシーンの更新*/
-	m_pParameterScene->UpDateScene(*m_pFlag, m_pDx11);
+	m_pParameterScene->UpDateScene(*m_pFlag, Dx11::Instance());
 
 	/*ステートに合わせて、対応したシーンの更新*/
 	switch (m_GameState)
@@ -90,7 +90,7 @@ void GameManager::UpDateGame()
 	case GameState::TITLE:
 
 		/*シーンの更新*/
-		m_GameState = m_pTitleScene->UpDateScene(*m_pFlag, m_pDx11);
+		m_GameState = m_pTitleScene->UpDateScene(*m_pFlag, Dx11::Instance());
 
 		break;
 
@@ -98,7 +98,7 @@ void GameManager::UpDateGame()
 	case GameState::PLAY:
 
 		/*シーンの更新*/
-		m_GameState = m_pPlayScene->UpDateScene(*m_pFlag, m_pDx11);
+		m_GameState = m_pPlayScene->UpDateScene(*m_pFlag, Dx11::Instance());
 
 		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
@@ -108,9 +108,9 @@ void GameManager::UpDateGame()
 			switch (m_GameState)
 			{
 			case GameState::RESULT:
-				m_pResultScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel(), m_pDx11->m_pDevice);
-				m_pParameterScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel(), m_pDx11->m_pDevice);
-				m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetLife(), m_pDx11->m_pDevice);
+				m_pResultScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel(), Dx11::Instance()->m_pDevice);
+				m_pParameterScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel(), Dx11::Instance()->m_pDevice);
+				m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetLife(), Dx11::Instance()->m_pDevice);
 				break;
 			}
 		}
@@ -121,14 +121,14 @@ void GameManager::UpDateGame()
 	case GameState::GAMEOVER:
 
 		/*シーンの更新*/
-		m_GameState = m_pGameOverScene->UpDateScene(*m_pFlag, m_pDx11);
+		m_GameState = m_pGameOverScene->UpDateScene(*m_pFlag, Dx11::Instance());
 
 		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
-			m_pResultScene->ChangeWorldNamber(1, 1, m_pDx11->m_pDevice);
-			m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetSTART_LIFE(), m_pDx11->m_pDevice);
-			m_pParameterScene->ChangeWorldNamber(1, 1,m_pDx11->m_pDevice);
+			m_pResultScene->ChangeWorldNamber(1, 1, Dx11::Instance()->m_pDevice);
+			m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetSTART_LIFE(), Dx11::Instance()->m_pDevice);
+			m_pParameterScene->ChangeWorldNamber(1, 1, Dx11::Instance()->m_pDevice);
 		}
 
 		break;
@@ -137,11 +137,11 @@ void GameManager::UpDateGame()
 	case GameState::RESULT:
 
 		/*シーンの更新*/
-		m_GameState = m_pResultScene->UpDateScene(*m_pFlag, m_pDx11);
+		m_GameState = m_pResultScene->UpDateScene(*m_pFlag, Dx11::Instance());
 
 		break;
 	}
 
 	/*レンダリングを終了する*/
-	m_pDx11->RenderEnd();
+	Dx11::Instance()->RenderEnd();
 }

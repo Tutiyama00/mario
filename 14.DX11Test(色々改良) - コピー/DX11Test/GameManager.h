@@ -25,11 +25,9 @@ public:
 	void InputGet();   //“ü—Íî•ñ‚Ìæ“¾
 	void UpDateGame(); //ƒQ[ƒ€‚ÌXV
 
-	/*---Singleton---*/
 	void Initialize(HWND hwnd); //‰Šú‰»ŠÖ”
 
 public:
-	Dx11*     m_pDx11     = nullptr;
 	Dsound*   m_pDsound   = nullptr;
 
 private:

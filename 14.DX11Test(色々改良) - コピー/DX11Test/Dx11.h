@@ -1,15 +1,15 @@
 #pragma once
 
 #include<d3d11.h>
+#include"Singleton.h"
 
-class Dx11
+class Dx11 : public Singleton<Dx11>
 {
 public:
-	Dx11();
-	~Dx11();
+	friend class Singleton<Dx11>;
 
-	HRESULT Create(HWND hwnd);
-	HRESULT AllDelete();
+public:
+	void Initialize(HWND hwnd); //初期化関数
 
 	void RenderStart();
 	void RenderEnd();
@@ -40,4 +40,17 @@ private:
 	UINT strides = 0;
 	UINT offsets = 0;
 	D3D11_VIEWPORT m_ViewPort;
+
+private:
+	Dx11() {};
+	Dx11(const Dx11 &gameManager) {};
+	~Dx11();
+
+	HRESULT AllDelete();
+
+protected:
+	bool m_InitializedFlag = false;  //初期化しているかのフラグ（True＝初期化済み、False＝未初期化）
+
+protected:
+	void Abstract() {};  //純粋仮想関数（これによってこのクラスはインスタンスできない)
 };
