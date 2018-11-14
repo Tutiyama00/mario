@@ -142,7 +142,6 @@
     <ClCompile Include="TextChar.cpp" />
     <ClCompile Include="TextCharacters.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -173,7 +172,6 @@
     <ClInclude Include="TextChar.h" />
     <ClInclude Include="TextCharacters.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="Title.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>

@@ -1,5 +1,4 @@
 #include"TitleScene.h"
-#include"Title.h"
 #include"Enum.h"
 #include"Flag.h"
 #include"Dx11.h"
@@ -8,15 +7,18 @@
 #include"TextCharacters.h"
 #include"Characters.h"
 #include"Timer.h"
+#include"Image.h"
 
 /*コンストラクタ*/
 TitleScene::TitleScene()
 {
 	Vector3 pos = { 0.0f, 0.15f, -0.5f };
-	Vector2 size = { 1.2f, 0.7f };
+	Vector2 size = { 1.5f, 1.0f };
 
 	m_pCamera       = new Camera();
-	m_pTitle        = new Title(pos, size);
+
+	pos.z = 0.0f;
+	m_pImageOfTitle = new Image(pos, size, L"Texture/MARIO_TITLE_LOGO.png");
 	m_NextGameState = GameState::TITLE;
 
 	pos.x  = -0.45f;
@@ -31,8 +33,8 @@ TitleScene::TitleScene()
 TitleScene::~TitleScene()
 {
 	if (m_pCamera         != nullptr) { delete m_pCamera;          m_pCamera         = nullptr; }
-	if (m_pTitle          != nullptr) { delete m_pTitle;           m_pTitle          = nullptr; }
 	if (m_pTextCharacters != nullptr) { delete m_pTextCharacters;  m_pTextCharacters = nullptr; }
+	if (m_pImageOfTitle   != nullptr) { delete m_pImageOfTitle;    m_pImageOfTitle   = nullptr; }
 }
 
 /*シーンの更新*/
@@ -60,5 +62,5 @@ void TitleScene::Draw()
 {
 	m_pCamera        ->Shoot(0.0f);
 	m_pTextCharacters->Render       ();
-	m_pTitle         ->ThisObjRender();
+	m_pImageOfTitle  ->ThisObjRender();
 }

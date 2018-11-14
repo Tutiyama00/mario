@@ -4,10 +4,10 @@
 #include<d3d11.h>
 
 //‘O•ûéŒ¾
-class Title;
 class Dx11;
 class Camera;
 class TextCharacters;
+class Image;
 
 class TitleScene : public IGameScene
 {
@@ -20,8 +20,8 @@ public:
 
 private:
 	Camera*         m_pCamera         = nullptr;
-	Title*          m_pTitle          = nullptr;
 	TextCharacters* m_pTextCharacters = nullptr;
+	Image*          m_pImageOfTitle   = nullptr;
 
 protected:
 	//---IGameScene---

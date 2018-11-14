@@ -69,9 +69,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -138,9 +135,6 @@
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Title.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
     <ClInclude Include="Dx11.h">
