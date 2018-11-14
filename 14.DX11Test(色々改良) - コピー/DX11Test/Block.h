@@ -13,7 +13,7 @@ class Block : public Square,public INotPlayer
 {
 public:
 	Block(Vector3 pos, Vector2 size);
-	~Block();
+	~Block() {};
 
 	//---INotPlayer---
 	void CheckPlayer(Player* pPlayer,InputFlag* pInputFlag);

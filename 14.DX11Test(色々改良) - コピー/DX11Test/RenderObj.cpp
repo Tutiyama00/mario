@@ -13,6 +13,9 @@ D3D11_INPUT_ELEMENT_DESC TextureVertexDesc[]
     { "COLOR"   , 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,                            0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 RenderObj::~RenderObj()
 {
 	if (m_pVertexBuffer        != nullptr) { m_pVertexBuffer        ->Release();  m_pVertexBuffer        = nullptr; }
@@ -26,7 +29,10 @@ RenderObj::~RenderObj()
 	if (m_pMainTextureSRV      != nullptr) { m_pMainTextureSRV      ->Release();  m_pMainTextureSRV      = nullptr; }
 }
 
-//テクスチャの読み込み
+/// <summary>
+/// テクスチャの読み込み
+/// </summary>
+/// <param name="pFileName">テクスチャファイルのパス</param>
 void RenderObj::LoadTexture(const wchar_t* pFileName)
 {
 	HRESULT hr = S_OK;
@@ -45,7 +51,11 @@ void RenderObj::LoadTexture(const wchar_t* pFileName)
 	CoUninitialize();
 }
 
-//シェーダーの生成
+/// <summary>
+/// シェーダーの生成
+/// </summary>
+/// <param name="pVSFileName">バーテックスシェーダーファイルのパス</param>
+/// <param name="pPSFileName">ピクセルシェーダーファイルのパス</param>
 void RenderObj::CreateShader(LPCWSTR pVSFileName, LPCWSTR pPSFileName)
 {
 	HRESULT hr = TRUE;
@@ -94,7 +104,13 @@ void RenderObj::CreateShader(LPCWSTR pVSFileName, LPCWSTR pPSFileName)
 	ps_pBlob = nullptr;
 }
 
-//バッファの生成
+/// <summary>
+/// バッファの生成
+/// </summary>
+/// <param name="pVertexArray">頂点情報配列のポインタ</param>
+/// <param name="vertexArraySize">頂点情報配列の要素数</param>
+/// <param name="pIndexArray">頂点インデックス情報配列のポインタ</param>
+/// <param name="indexArraySize">頂点インデックス情報配列の要素数</param>
 void RenderObj::CreateBuffer(vertex* pVertexArray,UINT vertexArraySize,WORD* pIndexArray,UINT indexArraySize)
 {
 	HRESULT hr = S_OK;
@@ -137,6 +153,11 @@ void RenderObj::CreateBuffer(vertex* pVertexArray,UINT vertexArraySize,WORD* pIn
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="pVertexArray">頂点情報配列のポインタ</param>
+/// <param name="indexArraySize">頂点インデックス情報配列の要素数</param>
 void RenderObj::Render(vertex* pVertexArray, UINT indexArraySize)
 {
 	UINT strides = Dx11::Instance()->GetStrides();

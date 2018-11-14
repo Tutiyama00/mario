@@ -3,10 +3,12 @@
 #include"Flag.h"
 #include"Enum.h"
 
-
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="pos">ポジション</param>
+/// <param name="size">サイズ</param>
 Block::Block(Vector3 pos, Vector2 size) : Square::Square(pos, size){}
-
-Block::~Block() {}
 
 void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 {
