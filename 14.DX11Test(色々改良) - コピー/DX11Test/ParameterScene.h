@@ -3,6 +3,7 @@
 #include"IGameScene.h"
 #include<d3d11.h>
 #include"Flag.h"
+#include"Timer.h"
 
 class Timer;
 class TextCharacters;
@@ -18,7 +19,7 @@ public:
 	void StopTimer();
 	void StartTimer();
 	void SetTimer(DWORD time);
-
+	DWORD GetNowTime() { return m_pTimer->GetCount(); }
 
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート

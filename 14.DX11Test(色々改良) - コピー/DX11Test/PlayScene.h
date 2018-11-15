@@ -16,6 +16,8 @@ public:
 	PlayScene();
 	~PlayScene();
 
+	GameState KillPlayer();
+
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
 

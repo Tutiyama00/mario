@@ -87,7 +87,7 @@ void ParameterScene::UpDateGame(InputFlag inputFlag)
 	if(GameManager::Instance()->GetGameState() == GameState::PLAY)
 	{
 		/* time‚ğæ“¾ */
-		UINT time = m_pTimer->GetCount();
+		DWORD time = m_pTimer->GetCount();
 		if (time < 100 && time > 9)
 		{
 			/* ‚QŒ…‚Ìê‡ */

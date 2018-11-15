@@ -86,12 +86,7 @@ void PlayScene::MakeStageObj()
 GameState PlayScene::UpDateScene(InputFlag inputFlag)
 {
 	UpDateGame(inputFlag);
-
-	/*ReStart()をした後に描画をすると一瞬初期状態が映り込んでしまうため条件追加*/
-	if (m_NextGameState == GameState::PLAY)
-	{
-		Draw();
-	}
+	Draw();
 
 	return m_NextGameState;
 }
@@ -129,19 +124,7 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	//落下チェック
 	if (m_UnderDeathLine > m_pPlayer->GetyPos())
 	{
-		//プレイヤーの死亡処理
-		m_pPlayer->Die();
-		//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
-		if (m_pPlayer->GetLife() == 0)
-		{
-			ReSet();
-			m_NextGameState = GameState::GAMEOVER;
-		}
-		else
-		{
-			ReStart();
-			m_NextGameState = GameState::RESULT;
-		}
+		m_NextGameState = KillPlayer();
 	}
 }
 
@@ -190,4 +173,24 @@ void PlayScene::ReSet()
 	MakeStageObj();
 
 	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
+}
+
+/// <summary>
+/// プレイヤーを殺す
+/// </summary>
+GameState PlayScene::KillPlayer()
+{
+	//プレイヤーの死亡処理
+	m_pPlayer->Die();
+	//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
+	if (m_pPlayer->GetLife() == 0)
+	{
+		ReSet();
+		return GameState::GAMEOVER;
+	}
+	else
+	{
+		ReStart();
+		return GameState::RESULT;
+	}
 }
