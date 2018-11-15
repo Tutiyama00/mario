@@ -72,7 +72,7 @@ void PlayScene::MakeStageObj()
 		}
 	}
 
-	Vector3 pos = { 1.75f,-0.115f,m_StandardZpos };
+	Vector3 pos  = { 1.75f,-0.115f,m_StandardZpos };
 	Vector2 size = { 0.75f,0.75f };
 
 	m_pGoal = new Goal(pos, size);

@@ -2,12 +2,12 @@
 
 #include"IGameScene.h"
 #include<d3d11.h>
+#include"Stage.h"
 
 class Camera;
 class Player;
 template<class T> class Characters;
 class Block;
-class Stage;
 class Goal;
 
 class PlayScene : public IGameScene
@@ -15,8 +15,6 @@ class PlayScene : public IGameScene
 public:
 	PlayScene();
 	~PlayScene();
-
-
 
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
@@ -26,6 +24,7 @@ public:
 	Player* GetPlayer()        { return m_pPlayer; }
 	int     GetNowWorldLevel() { return m_NowWorldLevel; }
 	int     GetNowStageLevel() { return m_NowStageLevel; }
+	DWORD   GetStageTime()     { return m_pStage->GetStageTime(); }
 
 private:
 	void MakeStageObj();

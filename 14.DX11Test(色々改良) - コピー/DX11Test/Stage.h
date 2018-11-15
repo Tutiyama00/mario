@@ -14,7 +14,8 @@ public:
 public:
 	/* getter */
 	const int GetStageHeight() { return M_STAGE_HEIGHT; }
-	int       GetStageWidth()  { return m_StageWidth; }
+	int       GetStageWidth()  { return m_StageWidth;   }
+	DWORD     GetStageTime()   { return m_StageTime;    }
 
 public:
 	Object* m_pStageDataArray; //ステージデータを保存する配列のポインタ
@@ -26,4 +27,5 @@ private:
 	int         m_StageSize    = 0;  //ステージ配列の長さ
 	const int   M_STAGE_HEIGHT = 17; //配列の長さ（縦）
 	int         m_StageWidth   = 0;  //配列の長さ（幅）
+	DWORD       m_StageTime    = 0;  //ステージのタイム  
 };

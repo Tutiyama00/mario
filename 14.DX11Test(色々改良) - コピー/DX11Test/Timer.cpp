@@ -40,8 +40,8 @@ DWORD Timer::GetCount()
 		m_TimeStart = m_TimeEnd;
 
 		//c‚èŠÔ‚ğo—Í
-		std::stringstream stream;
-		stream << m_TimeRemaining << std::endl;
+		//std::stringstream stream;
+		//stream << m_TimeRemaining << std::endl;
 		//OutputDebugString(stream.str().c_str());
 
 		return m_TimeRemaining;

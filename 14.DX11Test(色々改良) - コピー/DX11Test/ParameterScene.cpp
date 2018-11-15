@@ -6,6 +6,7 @@
 #include"Dx11.h"
 #include"Image.h"
 #include<string>
+#include"GameManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -45,10 +46,10 @@ ParameterScene::ParameterScene(GameState nowGameState)
 	m_pTextOfCoinNamber = new TextCharacters(pos, size, "*00", TPS_WHITE);
 
 	m_pTimer = new Timer();
-	m_pTimer->SetTimeRemaining(110);
-	int time = m_pTimer->CountStart();
+	//m_pTimer->SetTimeRemaining(110);
+	//int time = m_pTimer->CountStart();
 
-	m_pTextOfTimeNamber->ChangeText(std::to_string(time));
+	//m_pTextOfTimeNamber->ChangeText(std::to_string(time));
 }
 
 /// <summary>
@@ -74,21 +75,40 @@ ParameterScene::~ParameterScene()
 /// <returns>次のゲームステート</returns>
 GameState ParameterScene::UpDateScene(InputFlag inputFlag)
 {
-	UINT time = m_pTimer->GetCount();
-	if (time < 100)
-	{
-		m_pTextOfTimeNamber->ChangeText("0" + std::to_string(time));
-	}
-	else
-	{
-		m_pTextOfTimeNamber->ChangeText(std::to_string(time));
-	}
-	
-
 	UpDateGame(inputFlag);
 	Draw();
 
 	return m_NextGameState;
+}
+
+void ParameterScene::UpDateGame(InputFlag inputFlag)
+{
+	/* ゲームステートがプレイだったら */
+	if(GameManager::Instance()->GetGameState() == GameState::PLAY)
+	{
+		/* timeを取得 */
+		UINT time = m_pTimer->GetCount();
+		if (time < 100 && time > 9)
+		{
+			/* ２桁の場合 */
+			m_pTextOfTimeNamber->ChangeText("0" + std::to_string(time));
+		}
+		else if (time <= 9)
+		{
+			/* １桁の場合 */
+			m_pTextOfTimeNamber->ChangeText("00" + std::to_string(time));
+		}
+		else
+		{
+			/* ３桁の場合 */
+			m_pTextOfTimeNamber->ChangeText(std::to_string(time));
+		}
+	}
+	else
+	{
+		/* プレイ状態ではなかったら、タイムを表示しない*/
+		m_pTextOfTimeNamber->ChangeText("   ");
+	}
 }
 
 /// <summary>
@@ -116,4 +136,19 @@ void ParameterScene::ChangeWorldNamber(int worldNamber, int stageNamber)
 	std::string filePas = std::to_string(worldNamber) + "-" + std::to_string(stageNamber);  //ステージのファイルパス
 
 	m_pTextOfWorldNamber->ChangeText(filePas);
+}
+
+void ParameterScene::StopTimer()
+{
+	m_pTimer->CountStop();
+}
+
+void ParameterScene::StartTimer()
+{
+	m_pTimer->CountStart();
+}
+
+void ParameterScene::SetTimer(DWORD time)
+{
+	m_pTimer->SetTimeRemaining(time);
 }

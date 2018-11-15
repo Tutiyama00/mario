@@ -43,8 +43,8 @@ void Camera::Shoot(float xPos)
 	XMMATRIX worldMatrix = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 
 	XMVECTOR eye        = XMVectorSet(xPos, 0.0f, -2.0f, 0.0f);  //カメラ位置
-	XMVECTOR focus      = XMVectorSet(xPos, 0.0f, 0.0f, 0.0f);   //見るポジション
-	XMVECTOR up         = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	XMVECTOR focus      = XMVectorSet(xPos, 0.0f, 0.0f, 0.0f);   //見るポジション（焦点の位置）
+	XMVECTOR up         = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);   //上方向
 	XMMATRIX viewMatrix = XMMatrixLookAtLH(eye, focus, up);
 
 	float    fov        = XMConvertToRadians(45.0f);

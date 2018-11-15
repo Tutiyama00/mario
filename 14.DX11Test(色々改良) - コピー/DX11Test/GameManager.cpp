@@ -92,6 +92,13 @@ void GameManager::UpDateGame()
 		/*シーンの更新*/
 		m_GameState = m_pTitleScene->UpDateScene(*m_pFlag);
 
+		/*更新の結果ゲームステートが変化しているか*/
+		if (m_GameState != oldGameState)
+		{
+			m_pParameterScene->SetTimer(m_pPlayScene->GetStageTime());
+			m_pParameterScene->StartTimer();
+		}
+
 		break;
 
 	/*プレイシーン*/
@@ -138,6 +145,13 @@ void GameManager::UpDateGame()
 
 		/*シーンの更新*/
 		m_GameState = m_pResultScene->UpDateScene(*m_pFlag);
+
+		/*更新の結果ゲームステートが変化しているか*/
+		if (m_GameState != oldGameState)
+		{
+			m_pParameterScene->SetTimer(m_pPlayScene->GetStageTime());
+			m_pParameterScene->StartTimer();
+		}
 
 		break;
 	}

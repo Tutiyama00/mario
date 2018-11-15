@@ -79,12 +79,26 @@ void Stage::LoadStage(const char* stageName)
 	//ステージデータの読み込み
 	ifs.read(loadStageData, m_StageSize);
 
+	//ステージの時間
+	char* time = new char;
+	ifs.seekg(ifs.beg);
+	ifs.read(time, 1);
+	m_StageTime += atoi(time) * 100;
+	ifs.seekg(ifs.beg + 1);
+	ifs.read(time, 1);
+	m_StageTime += atoi(time) * 10;
+	ifs.seekg(ifs.beg + 2);
+	ifs.read(time, 1);
+	m_StageTime += atoi(time);
+	delete time;
+	time = nullptr;
+
 	//ステージの幅の取得
 	char* width = new char;
-	ifs.seekg(ifs.beg);
+	ifs.seekg(ifs.beg + 5);
 	ifs.read(width, 1);
 	m_StageWidth += atoi(width) * 10;
-	ifs.seekg(ifs.beg + 1);
+	ifs.seekg(ifs.beg + 6);
 	ifs.read(width, 1);
 	m_StageWidth += atoi(width);
 	delete width;
@@ -116,5 +130,6 @@ void Stage::ChangeStage(const char* stageName)
 	Delete();
 	m_StageSize  = 0;
 	m_StageWidth = 0;
+	m_StageTime  = 0;
 	LoadStage(stageName);
 }

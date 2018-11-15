@@ -56,8 +56,8 @@
       <Path>
         <Point X="22" Y="11.531" />
         <Point X="21.625" Y="11.531" />
-        <Point X="21.625" Y="12.562" />
-        <Point X="17.25" Y="12.562" />
+        <Point X="21.625" Y="12.628" />
+        <Point X="17.25" Y="12.628" />
       </Path>
     </InheritanceLine>
     <AssociationLine Name="m_GameState" Type="GameState">
@@ -66,7 +66,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>ACiJAAABEBgAAQAAAAAAAAAAAAgAAAEAAAAAAABQAAI=</HashCode>
+      <HashCode>ACiJAAABEBgAAQAAAAAAAAIAAAgAAAEAAAAAAABQAAI=</HashCode>
       <FileName>GameManager.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -203,7 +203,7 @@
   <Class Name="Timer" Collapsed="true">
     <Position X="26" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAACAAAACQAAAAAAAgAAAEAAIAAAAAAEAFAAA=</HashCode>
+      <HashCode>AAQAAAAAACAAAACQAAAAACAgAAAEAAIAAAAAAEAFAAA=</HashCode>
       <FileName>Timer.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -294,7 +294,7 @@
   <Class Name="ParameterScene" Collapsed="true">
     <Position X="27.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIQAAAAAIQAgAABABCBAAAAkAAAAoAQAgAAAAAEAA=</HashCode>
+      <HashCode>AAAIQAAAAAIQAgAABABCBAAIAkAAAAoAQAgAAgAAFAA=</HashCode>
       <FileName>ParameterScene.h</FileName>
     </TypeIdentifier>
   </Class>

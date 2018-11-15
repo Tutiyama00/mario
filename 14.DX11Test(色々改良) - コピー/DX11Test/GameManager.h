@@ -30,6 +30,10 @@ public:
 public:
 	Dsound*   m_pDsound   = nullptr;
 
+public:
+	/* getter */
+	GameState GetGameState() { return m_GameState; }
+
 private:
 	GameManager() {};  //コンストラクタ
 	GameManager(const GameManager &gameManager) {};  //コピーコンストラクタ

@@ -2,6 +2,7 @@
 
 #include"IGameScene.h"
 #include<d3d11.h>
+#include"Flag.h"
 
 class Timer;
 class TextCharacters;
@@ -14,7 +15,10 @@ public:
 	~ParameterScene();
 
 	void ChangeWorldNamber(int worldNamber, int stageNamber);
-	void StopTimer
+	void StopTimer();
+	void StartTimer();
+	void SetTimer(DWORD time);
+
 
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
@@ -32,7 +36,7 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag) {};
+	void UpDateGame(InputFlag inputFlag);
 	void Draw();
 
 protected:
