@@ -7,6 +7,10 @@
 #include"Image.h"
 #include<string>
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="nowGameState">現在のゲームステート</param>
 ParameterScene::ParameterScene(GameState nowGameState)
 {
 	m_NextGameState = nowGameState;
@@ -47,6 +51,9 @@ ParameterScene::ParameterScene(GameState nowGameState)
 	m_pTextOfTimeNamber->ChangeText(std::to_string(time));
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 ParameterScene::~ParameterScene()
 {
 	if (m_pTimer             != nullptr) { delete m_pTimer;             m_pTimer             = nullptr; }
@@ -60,6 +67,11 @@ ParameterScene::~ParameterScene()
 	if (m_pTextOfWorldNamber != nullptr) { delete m_pTextOfWorldNamber; m_pTextOfWorldNamber = nullptr; }
 }
 
+/// <summary>
+/// シーンの更新
+/// </summary>
+/// <param name="inputFlag"></param>
+/// <returns>次のゲームステート</returns>
 GameState ParameterScene::UpDateScene(InputFlag inputFlag)
 {
 	UINT time = m_pTimer->GetCount();
@@ -79,8 +91,9 @@ GameState ParameterScene::UpDateScene(InputFlag inputFlag)
 	return m_NextGameState;
 }
 
-void ParameterScene::UpDateGame(InputFlag inputFlag){}
-
+/// <summary>
+/// 描画
+/// </summary>
 void ParameterScene::Draw()
 {
 	m_pTextOfMARIO      ->Render       ();
@@ -93,6 +106,11 @@ void ParameterScene::Draw()
 	m_pTextOfWorldNamber->Render       ();
 }
 
+/// <summary>
+/// ステージ番号の表示を変える
+/// </summary>
+/// <param name="worldNamber">変化後のワールド番号</param>
+/// <param name="stageNamber">変化後のステージ番号</param>
 void ParameterScene::ChangeWorldNamber(int worldNamber, int stageNamber)
 {
 	std::string filePas = std::to_string(worldNamber) + "-" + std::to_string(stageNamber);  //ステージのファイルパス

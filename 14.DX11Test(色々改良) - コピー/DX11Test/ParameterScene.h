@@ -14,6 +14,7 @@ public:
 	~ParameterScene();
 
 	void ChangeWorldNamber(int worldNamber, int stageNamber);
+	void StopTimer
 
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
@@ -31,7 +32,7 @@ private:
 
 protected:
 	//---IGameScene---
-	void UpDateGame(InputFlag inputFlag);
+	void UpDateGame(InputFlag inputFlag) {};
 	void Draw();
 
 protected:
