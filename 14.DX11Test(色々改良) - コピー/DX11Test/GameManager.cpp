@@ -109,7 +109,7 @@ void GameManager::UpDateGame()
 
 		if (m_pParameterScene->GetNowTime() <= 0)
 		{
-			m_GameState = m_pPlayScene->KillPlayer();
+			m_pPlayScene->KillPlayer();
 		}
 
 		/*更新の結果ゲームステートが変化しているか*/

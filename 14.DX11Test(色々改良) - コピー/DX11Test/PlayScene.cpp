@@ -9,10 +9,13 @@
 #include"Math.h"
 #include"Goal.h"
 #include<string>
+#include"Kuribo.h"
 
 using namespace OriginalMath;
 
-/*コンストラクタ*/
+/// <summary>
+/// コンストラクタ
+/// </summary>
 PlayScene::PlayScene()
 {
 	m_NextGameState = GameState::PLAY;
@@ -28,7 +31,9 @@ PlayScene::PlayScene()
 	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
 }
 
-/*デストラクタ*/
+/// <summary>
+/// デストラクタ
+/// </summary>
 PlayScene::~PlayScene()
 {
 	if (m_pStage        != nullptr) { delete m_pStage;        m_pStage        = nullptr; }
@@ -36,9 +41,12 @@ PlayScene::~PlayScene()
 	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
 	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
+	if (m_pKuribo       != nullptr) { delete m_pKuribo;       m_pKuribo       = nullptr; }
 }
 
-/*ステージ上のオブジェクトの生成*/
+/// <summary>
+/// ステージ上のオブジェクトの生成
+/// </summary>
 void PlayScene::MakeStageObj()
 {
 	m_pBlocks = new Characters<Block>(L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
@@ -68,6 +76,9 @@ void PlayScene::MakeStageObj()
 			case Object::NORMAL_BLOCK:
 				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
+			case Object::KURIBOU:
+				m_pKuribo = new Kuribo(pos, size);
+				break;
 			}
 		}
 	}
@@ -83,6 +94,11 @@ void PlayScene::MakeStageObj()
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
 }
 
+/// <summary>
+/// シーンの更新
+/// </summary>
+/// <param name="inputFlag"></param>
+/// <returns></returns>
 GameState PlayScene::UpDateScene(InputFlag inputFlag)
 {
 	UpDateGame(inputFlag);
@@ -91,6 +107,10 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag)
 	return m_NextGameState;
 }
 
+/// <summary>
+/// ゲームの更新
+/// </summary>
+/// <param name="inputFlag"></param>
 void PlayScene::UpDateGame(InputFlag inputFlag)
 {
 	m_NextGameState = GameState::PLAY;
@@ -100,6 +120,8 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	{
 		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer, &inputFlag);
 	}
+
+	m_pKuribo->CheckPlayer(m_pPlayer, &inputFlag);
 
 	//プレイヤー移動
 	m_pPlayer->Move(&inputFlag);
@@ -124,28 +146,39 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	//落下チェック
 	if (m_UnderDeathLine > m_pPlayer->GetyPos())
 	{
-		m_NextGameState = KillPlayer();
+		KillPlayer();
+	}
+
+	/* プレイヤーが死んでいるかどうか */
+	if (m_pPlayer->GetLivibgFlag() == false)
+	{
+		/* 死んでいたらシーン遷移 */
+		MoveScene();
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void PlayScene::Draw()
 {
 	m_pCamera->Shoot(m_pPlayer->GetxPos());
 	m_pPlayer->ThisObjRender();
 	m_pBlocks->ThisObjRender();
 	m_pGoal  ->ThisObjRender();
+	m_pKuribo->ThisObjRender();
 }
 
-/*ゲームのリスタート*/
+/// <summary>
+/// ゲームのリスタート
+/// </summary>
 void PlayScene::ReStart()
 {
 	/*再生成後のプレイヤーに残機を設定するためにデリート前に値を保存*/
 	m_OldPlayerLife = m_pPlayer->GetLife();
 
 	/*ステージ上のオブジェクトのデリート*/
-	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
-	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
-	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
+	StageObjDelete();
 
 	/*ステージオブジェクト再生成*/
 	MakeStageObj();
@@ -160,9 +193,7 @@ void PlayScene::ReStart()
 /// <param name="pDevice"></param>
 void PlayScene::ReSet()
 {
-	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
-	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
-	if (m_pGoal != nullptr) { delete m_pGoal;         m_pGoal = nullptr; }
+	StageObjDelete();
 
 	m_NowWorldLevel = 1;
 	m_NowStageLevel = 1;
@@ -178,19 +209,34 @@ void PlayScene::ReSet()
 /// <summary>
 /// プレイヤーを殺す
 /// </summary>
-GameState PlayScene::KillPlayer()
+void PlayScene::KillPlayer()
 {
 	//プレイヤーの死亡処理
 	m_pPlayer->Die();
+}
+
+/// <summary>
+/// シーンを遷移する
+/// </summary>
+void PlayScene::MoveScene()
+{
 	//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
 	if (m_pPlayer->GetLife() == 0)
 	{
 		ReSet();
-		return GameState::GAMEOVER;
+		m_NextGameState = GameState::GAMEOVER;
 	}
 	else
 	{
 		ReStart();
-		return GameState::RESULT;
+		m_NextGameState = GameState::RESULT;
 	}
+}
+
+void PlayScene::StageObjDelete()
+{
+	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
+	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
+	if (m_pGoal != nullptr) { delete m_pGoal;         m_pGoal = nullptr; }
+	if (m_pKuribo != nullptr) { delete m_pKuribo;       m_pKuribo = nullptr; }
 }

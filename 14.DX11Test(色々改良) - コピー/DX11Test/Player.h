@@ -20,17 +20,18 @@ public:
 
 	void Die(); //死亡処理
 
-	//---IMoveObj---
+	/*---IMoveObj---*/
 	void Move(InputFlag* inputFlag);  //プレイヤーの動き（入力情報)
 
-	//---RenderObj---
+	/*---RenderObj---*/
 	void ThisObjRender();
 	void ThisObjCreateBuffer();
 
 public:
 	/* getter */
-	unsigned char GetLife()           { return m_Life; }
+	unsigned char GetLife()       { return m_Life; }
 	unsigned char GetSTART_LIFE() { return M_START_LIFE; }
+	bool          GetLivibgFlag() { return m_LivingFlag; }
 
 	/* setter */
 	void SetLife        (UINT  value) { m_Life         = value; }

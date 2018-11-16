@@ -9,6 +9,7 @@ class Player;
 template<class T> class Characters;
 class Block;
 class Goal;
+class Kuribo;
 
 class PlayScene : public IGameScene
 {
@@ -16,7 +17,7 @@ public:
 	PlayScene();
 	~PlayScene();
 
-	GameState KillPlayer();
+	void KillPlayer();
 
 	//---IGameScene---
 	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
@@ -29,9 +30,11 @@ public:
 	DWORD   GetStageTime()     { return m_pStage->GetStageTime(); }
 
 private:
-	void MakeStageObj();
-	void ReStart     ();
-	void ReSet       ();
+	void MakeStageObj();  //ステージオブジェクトの生成
+	void ReStart     ();  //ゲームのリスタート
+	void ReSet       ();  //ゲームのリセット
+	void MoveScene   ();  //シーンの遷移
+	void StageObjDelete();  //ステージ上のオブジェクトのデリート
 
 private:
 	Stage*             m_pStage        = nullptr;
@@ -39,6 +42,7 @@ private:
 	Player*            m_pPlayer       = nullptr;
 	Characters<Block>* m_pBlocks       = nullptr;
 	Goal*              m_pGoal         = nullptr;
+	Kuribo*            m_pKuribo       = nullptr;
 
 	float     m_StandardSize    = 0.075f;  //基準のサイズ
 	float     m_StandardZpos    = -0.5f;   //基準のオブジェクトZポジション

@@ -125,12 +125,14 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Dx11.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Kuribo.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="ParameterScene.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -150,6 +152,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Characters.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Flag.h" />
@@ -159,6 +162,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="IMoveObj.h" />
     <ClInclude Include="INotPlayer.h" />
+    <ClInclude Include="Kuribo.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="ParameterScene.h" />
     <ClInclude Include="Player.h" />

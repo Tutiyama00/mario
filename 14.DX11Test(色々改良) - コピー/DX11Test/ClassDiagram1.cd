@@ -4,16 +4,18 @@
     <Position X="8.75" Y="9.5" Width="1.5" />
     <InheritanceLine Type="Square" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6.125" Y="3.691" />
-        <Point X="6.125" Y="9.875" />
+        <Point X="6.875" Y="3.691" />
+        <Point X="6.875" Y="9.875" />
         <Point X="8.75" Y="9.875" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="INotPlayer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="8.5" Y="11.188" />
-        <Point X="9.125" Y="11.188" />
-        <Point X="9.125" Y="10.32" />
+        <Point X="13.375" Y="9.562" />
+        <Point X="13.375" Y="9.938" />
+        <Point X="12.083" Y="9.938" Type="JumpStart" />
+        <Point X="11.917" Y="9.938" Type="JumpEnd" />
+        <Point X="10.25" Y="9.938" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -76,7 +78,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="INotPlayer" Collapsed="true">
-    <Position X="7" Y="11" Width="1.5" />
+    <Position X="13" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>INotPlayer.h</FileName>
@@ -86,8 +88,8 @@
     <Position X="8.75" Y="4.5" Width="1.5" />
     <InheritanceLine Type="Square" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.375" Y="3.691" />
-        <Point X="7.375" Y="4.938" />
+        <Point X="7.438" Y="3.691" />
+        <Point X="7.438" Y="4.938" />
         <Point X="8.75" Y="4.938" />
       </Path>
     </InheritanceLine>
@@ -107,7 +109,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>CCEAAAENAoGAAQA4AAQABAgAgABAICAAAAADAwAgEBA=</HashCode>
+      <HashCode>CCEAAAENAoGAAQA4AAQABAgCgABAICAAAAADAwAgEBA=</HashCode>
       <FileName>Player.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -141,7 +143,7 @@
   <Class Name="Stage" Collapsed="true">
     <Position X="28" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgIAAAEAAiAAAAAAAAgAAAAAAAEQAABAAAgAAACAAAA=</HashCode>
+      <HashCode>AgIAAEEAAiAAAAAAAAgAAAAAAAEQAABAAAgAAACIAAA=</HashCode>
       <FileName>Stage.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -196,7 +198,7 @@
   <Class Name="PlayScene" Collapsed="true">
     <Position X="22" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GAIIQCAAAAABBgAAAAEQAAQBCgAAABAAAAAIAKIBBAY=</HashCode>
+      <HashCode>GAYIQCAAAAABBgAIAAEQAAQBKgAAABAAAAAIAKIJBAY=</HashCode>
       <FileName>PlayScene.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -211,15 +213,15 @@
     <Position X="8.75" Y="5.75" Width="1.5" />
     <InheritanceLine Type="Square" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.062" Y="3.691" />
-        <Point X="7.062" Y="6.188" />
+        <Point X="7.25" Y="3.691" />
+        <Point X="7.25" Y="6.188" />
         <Point X="8.75" Y="6.188" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="RenderObj" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="11.625" Y="3.562" />
-        <Point X="11.625" Y="6.125" />
+        <Point X="11.438" Y="3.562" />
+        <Point X="11.438" Y="6.125" />
         <Point X="10.25" Y="6.125" />
       </Path>
     </InheritanceLine>
@@ -232,15 +234,15 @@
     <Position X="8.75" Y="8.25" Width="1.5" />
     <InheritanceLine Type="Square" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6.375" Y="3.691" />
-        <Point X="6.375" Y="8.688" />
+        <Point X="7" Y="3.691" />
+        <Point X="7" Y="8.688" />
         <Point X="8.75" Y="8.688" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="RenderObj" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="12.25" Y="3.562" />
-        <Point X="12.25" Y="8.75" />
+        <Point X="11.812" Y="3.562" />
+        <Point X="11.812" Y="8.75" />
         <Point X="10.25" Y="8.75" />
       </Path>
     </InheritanceLine>
@@ -253,15 +255,15 @@
     <Position X="8.75" Y="7" Width="1.5" />
     <InheritanceLine Type="Square" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6.688" Y="3.691" />
-        <Point X="6.688" Y="7.312" />
+        <Point X="7.125" Y="3.691" />
+        <Point X="7.125" Y="7.312" />
         <Point X="8.75" Y="7.312" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="RenderObj" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="11.938" Y="3.562" />
-        <Point X="11.938" Y="7.312" />
+        <Point X="11.625" Y="3.562" />
+        <Point X="11.625" Y="7.312" />
         <Point X="10.25" Y="7.312" />
       </Path>
     </InheritanceLine>
@@ -294,7 +296,7 @@
   <Class Name="ParameterScene" Collapsed="true">
     <Position X="27.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIQAAAAAIQAgAABABCBAAIAkAAAAoAQAgAAgAAFAA=</HashCode>
+      <HashCode>AAAIQAAAAAIQAgAABABCBAAIAkgAAAoAQAgAAgAAFAA=</HashCode>
       <FileName>ParameterScene.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -303,6 +305,34 @@
     <TypeIdentifier>
       <HashCode>AQAIQAAAEAAEAgAgAAAAAAAAAiAAAAgAQAgAAAAAAgA=</HashCode>
       <FileName>ResultScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="8.75" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="Square" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.688" Y="3.691" />
+        <Point X="6.688" Y="11.125" />
+        <Point X="8.75" Y="11.125" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="RenderObj" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12" Y="3.562" />
+        <Point X="12" Y="11.188" />
+        <Point X="10.25" Y="11.188" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AggAAgABAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuribo" Collapsed="true">
+    <Position X="8.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Kuribo.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="CameraConstantBuffer">

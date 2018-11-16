@@ -114,6 +114,12 @@
     <ClCompile Include="Goal.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="Kuribo.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enum.h">
@@ -195,6 +201,12 @@
       <Filter>ヘッダー ファイル\Abstract</Filter>
     </ClInclude>
     <ClInclude Include="Characters.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="Kuribo.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>

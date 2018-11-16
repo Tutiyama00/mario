@@ -1,4 +1,4 @@
-010
+300
 30
 B                             
 B                             
@@ -14,6 +14,6 @@ B         B
 B       B                     
 B     B                       
 B   BB                        
-B M                           
-BBBB  BBBBBBBBBBBBBBBBBBBBBBBB
-BBBB  BBBBBBBBBBBBBBBBBBBBBBBB
+B M         K                 
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
