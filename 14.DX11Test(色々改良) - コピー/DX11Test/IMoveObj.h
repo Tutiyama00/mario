@@ -18,11 +18,11 @@ public:
 public:
 	/* getter */
 	virtual MoveObjState GetMoveObjState() { return m_MoveObjState; }
-	virtual InputFlag GetInputFlag() { return m_InputFlag; }
+	virtual InputFlag GetInputFlag      () { return m_InputFlag; }
 
 	/* setter */
 	virtual void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
-	virtual void SetInputFlag(InputFlag value) { m_InputFlag = value; }
+	virtual void SetInputFlag   (InputFlag value)    { m_InputFlag = value; }
 
 protected:
 	virtual void Walk(float xAmount) = 0;  //•à‚­

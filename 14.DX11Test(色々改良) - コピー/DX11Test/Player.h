@@ -29,9 +29,9 @@ public:
 
 public:
 	/* getter */
-	unsigned char GetLife()       { return m_Life; }
-	unsigned char GetSTART_LIFE() { return M_START_LIFE; }
-	bool          GetLivibgFlag() { return m_LivingFlag; }
+	unsigned char GetLife()const       { return m_Life; }
+	unsigned char GetSTART_LIFE()const { return M_START_LIFE; }
+	bool          GetLivibgFlag()const { return m_LivingFlag; }
 
 	/* setter */
 	void SetLife        (UINT  value) { m_Life         = value; }

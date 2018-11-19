@@ -77,7 +77,7 @@ void PlayScene::MakeStageObj()
 				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
 			case Object::KURIBOU:
-				m_pKuribo = new Kuribo(pos, size);
+				//m_pKuribo = new Kuribo(pos, size);
 				break;
 			}
 		}
@@ -115,15 +115,15 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 {
 	m_NextGameState = GameState::PLAY;
 
+	m_pPlayer->SetInputFlag(inputFlag);
+
 	//ブロック群のプレイヤーに対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
 		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 	}
 
-	m_pKuribo->CheckPlayer(m_pPlayer);
-
-	m_pPlayer->SetInputFlag(inputFlag);
+	//m_pKuribo->CheckPlayer(m_pPlayer);
 
 	//プレイヤー移動
 	m_pPlayer->Move();
@@ -168,7 +168,7 @@ void PlayScene::Draw()
 	m_pPlayer->ThisObjRender();
 	m_pBlocks->ThisObjRender();
 	m_pGoal  ->ThisObjRender();
-	m_pKuribo->ThisObjRender();
+	//m_pKuribo->ThisObjRender();
 }
 
 /// <summary>

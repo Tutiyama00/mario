@@ -3,9 +3,9 @@
 #include"IGameScene.h"
 #include<d3d11.h>
 #include"Stage.h"
+#include"Player.h"
 
 class Camera;
-class Player;
 template<class T> class Characters;
 class Block;
 class Goal;
@@ -24,7 +24,7 @@ public:
 
 public:
 	/* getter */
-	Player* GetPlayer()        { return m_pPlayer; }
+	const Player*  GetPlayer()const   { return m_pPlayer; }
 	int     GetNowWorldLevel() { return m_NowWorldLevel; }
 	int     GetNowStageLevel() { return m_NowStageLevel; }
 	DWORD   GetStageTime()     { return m_pStage->GetStageTime(); }

@@ -121,7 +121,7 @@ void GameManager::UpDateGame()
 			{
 			case GameState::RESULT:
 				m_pResultScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel());
-				m_pParameterScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel());
+				m_pParameterScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel());	
 				m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetLife());
 				break;
 			}
