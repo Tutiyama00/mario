@@ -6,6 +6,8 @@
       <Path>
         <Point X="6.875" Y="3.691" />
         <Point X="6.875" Y="9.875" />
+        <Point X="8.417" Y="9.875" Type="JumpStart" />
+        <Point X="8.583" Y="9.875" Type="JumpEnd" />
         <Point X="8.75" Y="9.875" />
       </Path>
     </InheritanceLine>
@@ -90,6 +92,8 @@
       <Path>
         <Point X="7.438" Y="3.691" />
         <Point X="7.438" Y="4.938" />
+        <Point X="8.417" Y="4.938" Type="JumpStart" />
+        <Point X="8.583" Y="4.938" Type="JumpEnd" />
         <Point X="8.75" Y="4.938" />
       </Path>
     </InheritanceLine>
@@ -215,6 +219,8 @@
       <Path>
         <Point X="7.25" Y="3.691" />
         <Point X="7.25" Y="6.188" />
+        <Point X="8.417" Y="6.188" Type="JumpStart" />
+        <Point X="8.583" Y="6.188" Type="JumpEnd" />
         <Point X="8.75" Y="6.188" />
       </Path>
     </InheritanceLine>
@@ -236,6 +242,8 @@
       <Path>
         <Point X="7" Y="3.691" />
         <Point X="7" Y="8.688" />
+        <Point X="8.417" Y="8.688" Type="JumpStart" />
+        <Point X="8.583" Y="8.688" Type="JumpEnd" />
         <Point X="8.75" Y="8.688" />
       </Path>
     </InheritanceLine>
@@ -257,6 +265,8 @@
       <Path>
         <Point X="7.125" Y="3.691" />
         <Point X="7.125" Y="7.312" />
+        <Point X="8.417" Y="7.312" Type="JumpStart" />
+        <Point X="8.583" Y="7.312" Type="JumpEnd" />
         <Point X="8.75" Y="7.312" />
       </Path>
     </InheritanceLine>
@@ -313,6 +323,8 @@
       <Path>
         <Point X="6.688" Y="3.691" />
         <Point X="6.688" Y="11.125" />
+        <Point X="8.417" Y="11.125" Type="JumpStart" />
+        <Point X="8.583" Y="11.125" Type="JumpEnd" />
         <Point X="8.75" Y="11.125" />
       </Path>
     </InheritanceLine>
@@ -331,7 +343,7 @@
   <Class Name="Kuribo" Collapsed="true">
     <Position X="8.75" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAABAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Kuribo.h</FileName>
     </TypeIdentifier>
   </Class>
