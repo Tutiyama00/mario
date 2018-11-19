@@ -4,8 +4,6 @@
 #include"Vertex.h"
 #include"RenderObj.h"
 
-class InputFlag;
-
 class Enemy : public Square, public RenderObj, public INotPlayer
 {
 public:
@@ -21,7 +19,4 @@ public:
 
 protected:
 	virtual void Abstract() = 0;  //純粋仮想関数（これによってこのクラスはインスタンスできない)
-
-protected:
-	InputFlag* m_pInputFlag = nullptr;
 };

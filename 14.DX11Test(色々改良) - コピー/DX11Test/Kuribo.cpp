@@ -1,5 +1,4 @@
 #include"Kuribo.h"
-#include"Flag.h"
 
 /// <summary>
 /// コンストラクタ
@@ -19,5 +18,4 @@ Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 /// <param name="inputFlag"></param>
 void Kuribo::Move()
 {
-
 }

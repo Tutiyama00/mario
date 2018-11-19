@@ -55,20 +55,20 @@ private:
 	const UINT M_START_LIFE = 3;  //ゲームスタート時のプレイヤーの残機
 
 	/*---IMoveObj---*/
-	//bool m_LivingFlag             = true;                         //生きているかのフラグ
-	//MoveObjState m_MoveObjState   = MoveObjState::ON_THE_GROUND;  //プレイヤーのステート
-	//int m_MaxJumpLevel            = 50;              //ジャンプのレベルカウントの上限
-	//int m_JumpLevelCount          = m_MaxJumpLevel;  //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
-	//const int m_JumpAbjustPoint   = 2;               //ジャンプ力計算に使う調整値
-	//const float m_MaxWalkSpeed    = 0.003f;          //歩く最大スピード
-	//float m_WalkFluctuationAmount = 0.0005f;         //歩くスピードを変える
+	bool m_LivingFlag             = true;                         //生きているかのフラグ
+	MoveObjState m_MoveObjState   = MoveObjState::ON_THE_GROUND;  //プレイヤーのステート
+	int m_MaxJumpLevel            = 50;              //ジャンプのレベルカウントの上限
+	int m_JumpLevelCount          = m_MaxJumpLevel;  //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
+	const int m_JumpAbjustPoint   = 2;               //ジャンプ力計算に使う調整値
+	const float m_MaxWalkSpeed    = 0.003f;          //歩く最大スピード
+	float m_WalkFluctuationAmount = 0.0005f;         //歩くスピードを変える
 
- //   float m_SlipStopAmount        = 0.0001f;       //滑りを抑制する値
-	//float m_SlipStopThreshold     = 0.001f;        //滑りを０にするしきい値
+    float m_SlipStopAmount        = 0.0001f;       //滑りを抑制する値
+	float m_SlipStopThreshold     = 0.001f;        //滑りを０にするしきい値
 
 	unsigned char m_Life = 0; //残り残機
 
-	//bool  m_JumpFlag     = true;    //ジャンプ可能かどうかのフラグ
-	//float m_NowWalkSpeed = 0.0f;    //今の歩く速度
-	//float m_JumpPower    = 0.0005f; //ジャンプ量
+	bool  m_JumpFlag     = true;    //ジャンプ可能かどうかのフラグ
+	float m_NowWalkSpeed = 0.0f;    //今の歩く速度
+	float m_JumpPower    = 0.0005f; //ジャンプ量
 };
