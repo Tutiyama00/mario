@@ -13,7 +13,7 @@ public:
 	~Enemy() {};
 
 	/*---INotPlayer---*/
-	void CheckPlayer(Player* pPlayer, InputFlag* pInputFlag);
+	void CheckPlayer(Player* pPlayer);
 
 	/*---RenderObj---*/
 	void ThisObjRender();

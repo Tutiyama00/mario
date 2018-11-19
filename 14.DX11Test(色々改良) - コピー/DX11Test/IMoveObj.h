@@ -1,9 +1,9 @@
 #pragma once
 
 #include<d3d11.h>
+#include"Flag.h"
 
 //前方宣言
-class InputFlag;
 enum class MoveObjState : unsigned char;
 
 
@@ -13,14 +13,16 @@ class IMoveObj
 public:
 	virtual ~IMoveObj() {};
 
-	virtual void Move(InputFlag* inputFlag) = 0;
+	virtual void Move() = 0;
 
 public:
 	/* getter */
-	virtual MoveObjState GetMoveObjState() { return m_MoveObjState; };
+	virtual MoveObjState GetMoveObjState() { return m_MoveObjState; }
+	virtual InputFlag GetInputFlag() { return m_InputFlag; }
 
 	/* setter */
-	virtual void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; };
+	virtual void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
+	virtual void SetInputFlag(InputFlag value) { m_InputFlag = value; }
 
 protected:
 	virtual void Walk(float xAmount) = 0;  //歩く
@@ -44,4 +46,6 @@ protected:
 	bool  m_JumpFlag;             //ジャンプ可能かどうかのフラグ
 	float m_NowWalkSpeed;         //今の歩く速度
 	float m_JumpPower;            //ジャンプ量
+
+	InputFlag m_InputFlag;
 };

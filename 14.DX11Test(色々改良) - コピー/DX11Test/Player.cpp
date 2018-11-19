@@ -35,7 +35,7 @@ void Player::Die()
 void Player::Abstract() {}
 
 /*“®ìŠÖ”*/
-void Player::Move(InputFlag* inputFlag)
+void Player::Move()
 {
 	/*¶‚«‚Ä‚¢‚È‚¢ó‘Ô‚¾‚Á‚½‚çƒŠƒ^[ƒ“‚µ‚Ä“®‚©‚³‚È‚¢*/
 	if (!m_LivingFlag)
@@ -55,7 +55,7 @@ void Player::Move(InputFlag* inputFlag)
 			m_JumpLevelCount = m_MaxJumpLevel;
 		}
 
-		if (inputFlag->Check(InputFlagCode::INPUT_SPACE))
+		if (m_InputFlag.Check(InputFlagCode::INPUT_SPACE))
 		{
 			if (m_JumpFlag)
 			{
@@ -72,7 +72,7 @@ void Player::Move(InputFlag* inputFlag)
 		break;
 
 	case MoveObjState::JUMP:
-		if (!inputFlag->Check(InputFlagCode::INPUT_SPACE) || !Jump())
+		if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE) || !Jump())
 		{
 			m_JumpFlag = false;
 			m_MoveObjState = MoveObjState::FALL;
@@ -84,7 +84,7 @@ void Player::Move(InputFlag* inputFlag)
 
 		Fall();
 
-		if (!inputFlag->Check(InputFlagCode::INPUT_SPACE) && !m_JumpFlag)
+		if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE) && !m_JumpFlag)
 		{
 			m_JumpFlag = true;
 		}
@@ -92,7 +92,7 @@ void Player::Move(InputFlag* inputFlag)
 		break;
 	}
 
-	if (inputFlag->Check(InputFlagCode::INPUT_RIGHT))
+	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
 		if (m_NowWalkSpeed >= m_MaxWalkSpeed)
 		{
@@ -104,7 +104,7 @@ void Player::Move(InputFlag* inputFlag)
 		}
 	}
 
-	if (inputFlag->Check(InputFlagCode::INPUT_LEFT))
+	if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
 	{
 		if (m_NowWalkSpeed <= -m_MaxWalkSpeed)
 		{
@@ -117,7 +117,7 @@ void Player::Move(InputFlag* inputFlag)
 	}
 
 	//‰¡“ü—Í‚³‚ê‚Ä‚¢‚È‚¢‚Æ‚«‚ÉˆÚ“®—Ê‚ÌŒ¸Š‚ð‚·‚é
-	if (!inputFlag->Check(InputFlagCode::INPUT_LEFT) && !inputFlag->Check(InputFlagCode::INPUT_RIGHT))
+	if (!m_InputFlag.Check(InputFlagCode::INPUT_LEFT) && !m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
 		if (m_NowWalkSpeed > m_SlipStopThreshold)
 		{

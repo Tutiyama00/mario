@@ -10,30 +10,33 @@
 /// <param name="size">サイズ</param>
 Block::Block(Vector3 pos, Vector2 size) : Square::Square(pos, size){}
 
-void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
+void Block::CheckPlayer(Player* pPlayer)
 {
 	if (CollisionCheck(pPlayer))
 	{
+		//プレイヤーのインプットフラグの取得
+		InputFlag playerInput = pPlayer->GetInputFlag();
+
 		//プレイヤーが右に進もうとしているかどうか
-		if (pInputFlag->Check(InputFlagCode::INPUT_RIGHT))
+		if (playerInput.Check(InputFlagCode::INPUT_RIGHT))
 		{
 			//このプレイヤーがこのブロックの左側に衝突しているか
-			if (LeftCheck(pPlayer, pInputFlag))
+			if (LeftCheck(pPlayer))
 			{
 				//もしそうなら右に進めなくする
-				pInputFlag->ReSet(InputFlagCode::INPUT_RIGHT);
+				playerInput.ReSet(InputFlagCode::INPUT_RIGHT);
 				pPlayer->SetNowWalkSpeed(0.0f);
 			}
 		}
 
 		//プレイヤーが左に進もうとしているかどうか
-		if (pInputFlag->Check(InputFlagCode::INPUT_LEFT))
+		if (playerInput.Check(InputFlagCode::INPUT_LEFT))
 		{
 			//このプレイヤーがこのブロックの右側に衝突しているか
-			if (RightCheck(pPlayer, pInputFlag))
+			if (RightCheck(pPlayer))
 			{
 				//もしそうなら左に進めなくする
-				pInputFlag->ReSet(InputFlagCode::INPUT_LEFT);
+				playerInput.ReSet(InputFlagCode::INPUT_LEFT);
 				pPlayer->SetNowWalkSpeed(0.0f);
 			}
 		}
@@ -41,7 +44,7 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 		//プレイヤーがジャンプ中かどうか
 		if (pPlayer->GetMoveObjState() == MoveObjState::JUMP)
 		{
-			if (DownCheck(pPlayer, pInputFlag))
+			if (DownCheck(pPlayer))
 			{
 				//もしそうならステートをFALLに変える
 				pPlayer->SetMoveObjState(MoveObjState::FALL);
@@ -54,7 +57,7 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 		//プレイヤーがFALL中かどうか
 		if (pPlayer->GetMoveObjState() == MoveObjState::FALL || pPlayer->GetMoveObjState() == MoveObjState::CHECK_GROUND)
 		{
-			if (UpCheck(pPlayer, pInputFlag))
+			if (UpCheck(pPlayer))
 			{
 				//もしそうならステートを接地中に変える
 				pPlayer->SetMoveObjState(MoveObjState::ON_THE_GROUND);
@@ -62,10 +65,13 @@ void Block::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
 				return;
 			}
 		}
+
+		//更新後のインプットフラグを同期
+		pPlayer->SetInputFlag(playerInput);
 	}
 }
 
-bool Block::LeftCheck(Player* pPlayer, InputFlag* pInputFlag)
+bool Block::LeftCheck(Player* pPlayer)
 {
 	//プレイヤーがこのブロックの左側にあるか
 	if (pPlayer->GetxPos() <= m_xPos)
@@ -84,7 +90,7 @@ bool Block::LeftCheck(Player* pPlayer, InputFlag* pInputFlag)
 	return false;
 }
 
-bool Block::RightCheck(Player* pPlayer, InputFlag* pInputFlag)
+bool Block::RightCheck(Player* pPlayer)
 {
 	//プレイヤーがこのブロックの右側にあるか
 	if (pPlayer->GetxPos() >= m_xPos)
@@ -103,7 +109,7 @@ bool Block::RightCheck(Player* pPlayer, InputFlag* pInputFlag)
 	return false;
 }
 
-bool Block::DownCheck(Player* pPlayer, InputFlag* pInputFlag)
+bool Block::DownCheck(Player* pPlayer)
 {
 	//プレイヤーがこのブロックの下にあるか
 	if (pPlayer->GetyPos() <= m_yPos)
@@ -122,7 +128,7 @@ bool Block::DownCheck(Player* pPlayer, InputFlag* pInputFlag)
 	return false;
 }
 
-bool Block::UpCheck(Player* pPlayer, InputFlag* pInputFlag)
+bool Block::UpCheck(Player* pPlayer)
 {
 	//プレイヤーがこのブロックの上にあるか
 	if (pPlayer->GetyPos() >= m_yPos)

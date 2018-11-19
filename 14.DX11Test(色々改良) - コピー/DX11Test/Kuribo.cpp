@@ -17,7 +17,7 @@ Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 /// 
 /// </summary>
 /// <param name="inputFlag"></param>
-void Kuribo::Move(InputFlag* inputFlag)
+void Kuribo::Move()
 {
 
 }

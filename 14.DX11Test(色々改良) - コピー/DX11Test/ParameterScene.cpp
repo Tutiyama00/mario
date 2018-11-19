@@ -46,10 +46,6 @@ ParameterScene::ParameterScene(GameState nowGameState)
 	m_pTextOfCoinNamber = new TextCharacters(pos, size, "*00", TPS_WHITE);
 
 	m_pTimer = new Timer();
-	//m_pTimer->SetTimeRemaining(110);
-	//int time = m_pTimer->CountStart();
-
-	//m_pTextOfTimeNamber->ChangeText(std::to_string(time));
 }
 
 /// <summary>

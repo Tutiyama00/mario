@@ -118,13 +118,15 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	//ブロック群のプレイヤーに対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
-		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer, &inputFlag);
+		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 	}
 
-	m_pKuribo->CheckPlayer(m_pPlayer, &inputFlag);
+	m_pKuribo->CheckPlayer(m_pPlayer);
+
+	m_pPlayer->SetInputFlag(inputFlag);
 
 	//プレイヤー移動
-	m_pPlayer->Move(&inputFlag);
+	m_pPlayer->Move();
 
 	/*ゴールチェック*/
 	if (m_pGoal->CollisionCheck(m_pPlayer))

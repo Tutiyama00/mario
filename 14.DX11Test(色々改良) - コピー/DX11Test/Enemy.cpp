@@ -6,7 +6,7 @@
 /// </summary>
 /// <param name="pPlayer">チェックするプレイヤーのポインター</param>
 /// <param name="pInputFlag">入力情報</param>
-void Enemy::CheckPlayer(Player* pPlayer, InputFlag* pInputFlag)
+void Enemy::CheckPlayer(Player* pPlayer)
 {
 	/* プレイヤーと衝突していたら */
 	if (CollisionCheck(pPlayer))

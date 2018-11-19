@@ -21,7 +21,7 @@ public:
 	void Die(); //死亡処理
 
 	/*---IMoveObj---*/
-	void Move(InputFlag* inputFlag);  //プレイヤーの動き（入力情報)
+	void Move();  //プレイヤーの動き（入力情報)
 
 	/*---RenderObj---*/
 	void ThisObjRender();

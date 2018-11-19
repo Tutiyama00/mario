@@ -10,7 +10,7 @@ public:
 	~Kuribo() {};
 
 	/*---IMoveObj---*/
-	void Move(InputFlag* inputFlag);
+	void Move();
 
 protected:
 	/*---Enemy---*/

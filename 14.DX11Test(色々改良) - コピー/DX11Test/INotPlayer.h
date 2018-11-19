@@ -9,5 +9,5 @@ class INotPlayer
 {
 public:
 	virtual ~INotPlayer() {};
-	virtual void CheckPlayer(Player* player, InputFlag* pInputFlag) = 0;
+	virtual void CheckPlayer(Player* player) = 0;
 };
