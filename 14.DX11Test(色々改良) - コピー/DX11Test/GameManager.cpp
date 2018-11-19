@@ -46,7 +46,7 @@ void GameManager::Initialize(HWND hwnd)
 		m_pTitleScene     = new TitleScene();
 		m_pParameterScene = new ParameterScene(m_GameState);
 		m_pPlayScene      = new PlayScene();
-		m_pResultScene    = new ResultScene(m_pPlayScene->GetPlayer()->GetSTART_LIFE());
+		m_pResultScene    = new ResultScene(m_pPlayScene->GetPplayer()->GetSTART_LIFE());
 		m_pGameOverScene  = new GameOverScene();
 
 		m_InitializedFlag = true;
@@ -122,7 +122,7 @@ void GameManager::UpDateGame()
 			case GameState::RESULT:
 				m_pResultScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel());
 				m_pParameterScene->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel());	
-				m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetLife());
+				m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPplayer()->GetLife());
 				break;
 			}
 		}
@@ -139,7 +139,7 @@ void GameManager::UpDateGame()
 		if (m_GameState != oldGameState)
 		{
 			m_pResultScene->ChangeWorldNamber(1, 1);
-			m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetSTART_LIFE());
+			m_pResultScene->ChangeMarioLife(m_pPlayScene->GetPplayer()->GetSTART_LIFE());
 			m_pParameterScene->ChangeWorldNamber(1, 1);
 		}
 

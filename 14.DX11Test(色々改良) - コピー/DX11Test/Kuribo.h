@@ -12,6 +12,12 @@ public:
 	/*---IMoveObj---*/
 	void Move();
 
+private:
+	/*---IMoveObj---*/
+	void Walk(float xAmount);      //•à‚­
+	bool Jump() { return false; };  //ƒWƒƒƒ“ƒv
+	void Fall();                   //—Ž‰º
+
 protected:
 	/*---Enemy---*/
 	void Abstract() {};

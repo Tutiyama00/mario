@@ -24,7 +24,7 @@ public:
 
 public:
 	/* getter */
-	const Player*  GetPlayer()const   { return m_pPlayer; }
+	const Player*  GetPplayer()const   { return m_pPlayer; }
 	int     GetNowWorldLevel() { return m_NowWorldLevel; }
 	int     GetNowStageLevel() { return m_NowStageLevel; }
 	DWORD   GetStageTime()     { return m_pStage->GetStageTime(); }
