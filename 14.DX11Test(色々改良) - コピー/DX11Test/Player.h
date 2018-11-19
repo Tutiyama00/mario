@@ -3,7 +3,7 @@
 #include"Vertex.h"
 #include"RenderObj.h"
 #include"Enum.h"
-#include"IMoveObj.h"
+#include"MoveObj.h"
 #include"Math.h"
 
 using namespace OriginalMath;
@@ -12,11 +12,11 @@ using namespace OriginalMath;
 class InputFlag;
 class Block;
 
-class Player : public Square, public RenderObj, public IMoveObj
+class Player : public Square, public RenderObj, public MoveObj
 {
 public:
 	Player(Vector3 pos, Vector2 size);  //コンストラクタ
-	~Player() {}; //デストラクタ
+	~Player(); //デストラクタ
 
 	void Die(); //死亡処理
 
@@ -49,7 +49,7 @@ private:
 	void Fall();               //落下
 
 	/*---RenderObj---*/
-	void Abstract() {};
+	void Abstract();
 
 private:
 	const UINT M_START_LIFE = 3;  //ゲームスタート時のプレイヤーの残機
