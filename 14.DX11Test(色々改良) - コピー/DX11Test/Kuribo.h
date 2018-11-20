@@ -1,9 +1,9 @@
 #pragma once
 
 #include"Enemy.h"
-#include"MoveObj.h"
+#include"IMoveObj.h"
 
-class Kuribo : public Enemy, public MoveObj
+class Kuribo : public Enemy, public IMoveObj
 {
 public:
 	Kuribo(Vector3 pos, Vector2 size);
