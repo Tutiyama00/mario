@@ -6,8 +6,8 @@
       <Path>
         <Point X="6.875" Y="3.691" />
         <Point X="6.875" Y="9.875" />
-        <Point X="8.417" Y="9.875" Type="JumpStart" />
-        <Point X="8.583" Y="9.875" Type="JumpEnd" />
+        <Point X="8.167" Y="9.875" Type="JumpStart" />
+        <Point X="8.333" Y="9.875" Type="JumpEnd" />
         <Point X="8.75" Y="9.875" />
       </Path>
     </InheritanceLine>
@@ -92,8 +92,6 @@
       <Path>
         <Point X="7.438" Y="3.691" />
         <Point X="7.438" Y="4.938" />
-        <Point X="8.417" Y="4.938" Type="JumpStart" />
-        <Point X="8.583" Y="4.938" Type="JumpEnd" />
         <Point X="8.75" Y="4.938" />
       </Path>
     </InheritanceLine>
@@ -104,16 +102,15 @@
         <Point X="10.25" Y="5" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="IMoveObj" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+    <InheritanceLine Type="IMoveObj" FixedToPoint="true">
       <Path>
-        <Point X="9.5" Y="3.812" />
-        <Point X="9.5" Y="3.875" />
-        <Point X="9.5" Y="3.875" />
-        <Point X="9.5" Y="4.5" />
+        <Point X="8.25" Y="12.5" />
+        <Point X="8.25" Y="5.25" />
+        <Point X="8.75" Y="5.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>CCEAAAENAoGAAQA4AAQABAgCgABAICAAAAADAwAgEBA=</HashCode>
+      <HashCode>CCEAAAENCoGAAQA4AAQABAgCgADAICAAAABDAwAgEBA=</HashCode>
       <FileName>Player.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -179,9 +176,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="IMoveObj" Collapsed="true">
-    <Position X="8.75" Y="3.25" Width="1.5" />
+    <Position X="7.5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CCAAAAEEAoCAAQAYAAQABAgAAABAICgAAAAAAQAAEAA=</HashCode>
+      <HashCode>CCAAAAEECoCAAQAYAAQABAgAAADAICgAAABAAQAAEAA=</HashCode>
       <FileName>IMoveObj.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -219,8 +216,8 @@
       <Path>
         <Point X="7.25" Y="3.691" />
         <Point X="7.25" Y="6.188" />
-        <Point X="8.417" Y="6.188" Type="JumpStart" />
-        <Point X="8.583" Y="6.188" Type="JumpEnd" />
+        <Point X="8.167" Y="6.188" Type="JumpStart" />
+        <Point X="8.333" Y="6.188" Type="JumpEnd" />
         <Point X="8.75" Y="6.188" />
       </Path>
     </InheritanceLine>
@@ -242,8 +239,8 @@
       <Path>
         <Point X="7" Y="3.691" />
         <Point X="7" Y="8.688" />
-        <Point X="8.417" Y="8.688" Type="JumpStart" />
-        <Point X="8.583" Y="8.688" Type="JumpEnd" />
+        <Point X="8.167" Y="8.688" Type="JumpStart" />
+        <Point X="8.333" Y="8.688" Type="JumpEnd" />
         <Point X="8.75" Y="8.688" />
       </Path>
     </InheritanceLine>
@@ -265,8 +262,8 @@
       <Path>
         <Point X="7.125" Y="3.691" />
         <Point X="7.125" Y="7.312" />
-        <Point X="8.417" Y="7.312" Type="JumpStart" />
-        <Point X="8.583" Y="7.312" Type="JumpEnd" />
+        <Point X="8.167" Y="7.312" Type="JumpStart" />
+        <Point X="8.333" Y="7.312" Type="JumpEnd" />
         <Point X="8.75" Y="7.312" />
       </Path>
     </InheritanceLine>
@@ -322,10 +319,10 @@
     <InheritanceLine Type="Square" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="6.688" Y="3.691" />
-        <Point X="6.688" Y="11.125" />
-        <Point X="8.417" Y="11.125" Type="JumpStart" />
-        <Point X="8.583" Y="11.125" Type="JumpEnd" />
-        <Point X="8.75" Y="11.125" />
+        <Point X="6.688" Y="11.188" />
+        <Point X="8.167" Y="11.188" Type="JumpStart" />
+        <Point X="8.333" Y="11.188" Type="JumpEnd" />
+        <Point X="8.75" Y="11.188" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="RenderObj" FixedFromPoint="true" FixedToPoint="true">
@@ -335,13 +332,29 @@
         <Point X="10.25" Y="11.188" />
       </Path>
     </InheritanceLine>
+    <InheritanceLine Type="IMoveObj" FixedToPoint="true">
+      <Path>
+        <Point X="8.25" Y="12.5" />
+        <Point X="8.25" Y="12.204" />
+        <Point X="9.188" Y="12.204" />
+        <Point X="9.188" Y="11.829" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AggAAgABAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <HashCode>AggAAgABAoEAAAAAAAAAAAgAAAAAIAAAAAABAAAAAAA=</HashCode>
       <FileName>Enemy.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kuribo" Collapsed="true">
-    <Position X="8.75" Y="12.5" Width="1.5" />
+    <Position X="10" Y="12.5" Width="1.5" />
+    <InheritanceLine Type="Enemy" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.75" Y="11.829" />
+        <Point X="9.75" Y="12.125" />
+        <Point X="10.375" Y="12.125" />
+        <Point X="10.375" Y="12.5" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAABAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Kuribo.h</FileName>

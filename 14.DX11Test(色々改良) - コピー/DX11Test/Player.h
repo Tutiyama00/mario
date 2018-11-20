@@ -3,7 +3,7 @@
 #include"Vertex.h"
 #include"RenderObj.h"
 #include"Enum.h"
-#include"MoveObj.h"
+#include"IMoveObj.h"
 #include"Math.h"
 
 using namespace OriginalMath;
@@ -12,7 +12,7 @@ using namespace OriginalMath;
 class InputFlag;
 class Block;
 
-class Player : public Square, public RenderObj, public MoveObj
+class Player : public Square, public RenderObj, public IMoveObj
 {
 public:
 	Player(Vector3 pos, Vector2 size);  //コンストラクタ
