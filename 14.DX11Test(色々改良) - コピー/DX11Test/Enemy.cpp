@@ -8,12 +8,14 @@
 /// <param name="pInputFlag">入力情報</param>
 void Enemy::CheckPlayer(Player* pPlayer)
 {
+	if (!m_LivingFlag) { return; }
+
 	/* プレイヤーと衝突していたら */
 	if (CollisionCheck(pPlayer))
 	{
 		if (UpCheck(pPlayer))
 		{
-
+			Die();
 		}
 		else
 		{
@@ -29,6 +31,8 @@ void Enemy::CheckPlayer(Player* pPlayer)
 /// <param name="pEnemy">チェックする対象</param>
 void Enemy::CheckEnemy(Enemy* pEnemy)
 {
+	if (!m_LivingFlag) { return; }
+
 	if (CollisionCheck(pEnemy))
 	{
 		//エネミーのインプットフラグの取得
@@ -88,6 +92,8 @@ void Enemy::ThisObjCreateBuffer()
 /// </summary>
 void Enemy::ThisObjRender()
 {
+	if (!m_LivingFlag) { return; }
+
 	Render(m_pVertexArray, m_IndexArraySize);
 }
 
@@ -97,6 +103,8 @@ void Enemy::ThisObjRender()
 /// <param name="xAmount">移動量（X軸）</param>
 void Enemy::Walk(float xAmount)
 {
+	if (!m_LivingFlag) { return; }
+
 	m_xPos += xAmount;
 
 	m_pVertexArray[0] = {
@@ -122,6 +130,8 @@ void Enemy::Walk(float xAmount)
 /// <returns>ジャンプできたかどうか　true=できた　false=できなかった</returns>
 bool Enemy::Jump()
 {
+	if (!m_LivingFlag) { return false; }
+
 	if (m_JumpLevelCount > 0)
 	{
 		float jumpAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
@@ -156,6 +166,8 @@ bool Enemy::Jump()
 /// </summary>
 void Enemy::Fall()
 {
+	if (!m_LivingFlag) { return; }
+
 	float fallAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
 	m_yPos -= fallAmount;
 
@@ -179,4 +191,12 @@ void Enemy::Fall()
 	{
 		m_JumpLevelCount++;
 	}
+}
+
+/// <summary>
+/// 死亡処理
+/// </summary>
+void Enemy::Die()
+{
+	m_LivingFlag = false;
 }

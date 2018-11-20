@@ -12,6 +12,8 @@ public:
 	Enemy(Vector3 pos, Vector2 size) : NotPlayer(pos, size) {};
 	~Enemy() {};
 
+	void Die();
+
 	/*---INotPlayer---*/
 	void CheckPlayer(Player* pPlayer);
 	void CheckEnemy(Enemy* pEnemy);
