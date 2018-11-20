@@ -7,11 +7,12 @@ class Image : public Square,public RenderObj
 {
 public:
 	Image(Vector3 pos, Vector2 size, const wchar_t* pTextureFileName);
-	~Image();
+	~Image() {};
 
+	/*---RenderObj---*/
 	void ThisObjRender();
 	void ThisObjCreateBuffer();
 
 protected:
-	virtual void Abstract();
+	virtual void Abstract() {};
 };

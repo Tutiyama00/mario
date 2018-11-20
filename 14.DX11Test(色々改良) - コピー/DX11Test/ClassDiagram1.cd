@@ -196,22 +196,6 @@
   </Class>
   <Class Name="Goal" Collapsed="true">
     <Position X="3.75" Y="5" Width="1.5" />
-    <InheritanceLine Type="Square" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2.25" Y="2.941" />
-        <Point X="2.25" Y="5.438" />
-        <Point X="3.75" Y="5.438" />
-      </Path>
-    </InheritanceLine>
-    <InheritanceLine Type="RenderObj" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.438" Y="2.812" />
-        <Point X="6.438" Y="5.375" />
-        <Point X="5.708" Y="5.375" Type="JumpStart" />
-        <Point X="5.542" Y="5.375" Type="JumpEnd" />
-        <Point X="5.25" Y="5.375" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AQAAAAEBAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>Goal.h</FileName>
@@ -307,14 +291,6 @@
         <Point X="5.25" Y="12.188" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="IMoveObj" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="5.25" Y="2.562" />
-        <Point X="5.625" Y="2.562" />
-        <Point X="5.625" Y="11.812" />
-        <Point X="5.25" Y="11.812" />
-      </Path>
-    </InheritanceLine>
     <InheritanceLine Type="NotPlayer" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="3.75" Y="9.25" />
@@ -323,8 +299,16 @@
         <Point X="3.75" Y="11.875" />
       </Path>
     </InheritanceLine>
+    <InheritanceLine Type="IMoveObj" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.25" Y="2.562" />
+        <Point X="5.625" Y="2.562" />
+        <Point X="5.625" Y="11.812" />
+        <Point X="5.25" Y="11.812" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>CigAAgEFCoGAAQAYAgQABAgAAADAICAAAABBAQAgEAA=</HashCode>
+      <HashCode>CigAAgEFCoGAAQA4AgQABAgAAADAICAAAABBAQAgEAA=</HashCode>
       <FileName>Enemy.h</FileName>
     </TypeIdentifier>
   </Class>

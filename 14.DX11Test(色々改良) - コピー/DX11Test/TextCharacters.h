@@ -7,6 +7,7 @@
 
 using namespace OriginalMath;
 
+/* 前方宣言 */
 template<class T> class Characters;
 
 class TextCharacters
@@ -19,8 +20,8 @@ public:
 	void ChangeText(std::string text);
 
 private:
-	Characters<TextChar>* m_pCharacters = nullptr;
-	const Vector3 M_POS;
-	const Vector2 M_SIZE;
-	const LPCWSTR M_TPS_COLOR;
+	Characters<TextChar>* m_pCharacters = nullptr;  //文字列用の配列
+	const Vector3 M_POS;        //文字のポジション（先頭文字基準）
+	const Vector2 M_SIZE;       //文字のサイズ
+	const LPCWSTR M_TPS_COLOR;  //文字の色（ピクセルシェーダのパス）
 };

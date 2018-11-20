@@ -15,7 +15,7 @@ public:
 	Block(Vector3 pos, Vector2 size) : NotPlayer(pos, size) {};
 	~Block() {};
 
-	//---INotPlayer---
+	/*---NotPlayer---*/
 	void CheckPlayer(Player* pPlayer);
 	void CheckEnemy (Enemy*  pEnemy );
 

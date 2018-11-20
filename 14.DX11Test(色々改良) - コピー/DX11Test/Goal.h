@@ -3,18 +3,18 @@
 #include"Vertex.h"
 #include"RenderObj.h"
 
-class Goal : public Square,public RenderObj
+class Goal : public Square, public RenderObj
 {
 public:
 	Goal(Vector3 pos, Vector2 size);
 	~Goal();
 
-	//---RenderObj---
+	/*---RenderObj---*/
 	void ThisObjRender();
 	void ThisObjCreateBuffer();
 
 protected:
 
-	//---RenderObj---
-	void Abstract();
+	/*---RenderObj---*/
+	void Abstract() {};
 };

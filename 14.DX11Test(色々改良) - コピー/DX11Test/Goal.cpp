@@ -1,6 +1,16 @@
 #include"Goal.h"
 
-/*コンストラクタ*/
+
+/*#####################################          #####################################*/
+/*#####################################  PUBLIC  #####################################*/
+/*#####################################          #####################################*/
+
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="pos">ポジション</param>
+/// <param name="size">サイズ</param>
 Goal::Goal(Vector3 pos, Vector2 size) : Square(pos,size)
 {
 	LoadTexture(L"Texture/MARIO_GOAL.png");
@@ -8,19 +18,28 @@ Goal::Goal(Vector3 pos, Vector2 size) : Square(pos,size)
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 
-/*デストラクタ*/
+/// <summary>
+/// デストラクタ
+/// </summary>
 Goal::~Goal() {};
 
-/*描画*/
+
+/*-------------------------------------             ----------------------------------*/
+/*-------------------------------------  RenderObj  ----------------------------------*/
+/*-------------------------------------             ----------------------------------*/
+
+/// <summary>
+/// このオブジェクトの描画
+/// </summary>
 void Goal::ThisObjRender()
 {
 	Render(m_pVertexArray, m_IndexArraySize);
 }
 
-/*バッファの生成*/
+/// <summary>
+/// このオブジェクトのバッファの生成
+/// </summary>
 void Goal::ThisObjCreateBuffer()
 {
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
-
-void Goal::Abstract() {};

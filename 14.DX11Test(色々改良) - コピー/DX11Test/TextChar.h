@@ -13,22 +13,22 @@ class TextChar : public Square,public RenderObj
 {
 public:
 	TextChar(Vector3 pos, Vector2 size, LPCWSTR TPS_COLOR, char setChar);
-	~TextChar();
+	~TextChar() {};
 
 	void CherTexSet(char setChar);
 
-	//---RenderObj---
+	/*---RenderObj---*/
 	void ThisObjRender();
 	void ThisObjCreateBuffer();
 
 private:
-	//---RenderObj---
-	void Abstract();
+	/*---RenderObj---*/
+	void Abstract() {};
 
 private:
-	ID3D11Buffer*   m_pTextureConstantBuffer = nullptr;
-	const UINT m_FontHeight    = 10;
-	const UINT m_FontWidth     = 10;
-	const UINT m_MinFontNamber = 32;
-	const UINT m_MaxFontNamber = 125;
+	ID3D11Buffer*   m_pTextureConstantBuffer = nullptr;  //このオブジェクトのバッファ
+	const UINT      m_FontHeight             = 10;       //1文字分の高さ
+	const UINT      m_FontWidth              = 10;       //1文字分の幅
+	const UINT      m_MinFontNamber          = 32;       //文字コード変換用に使用する最小文字番号
+	const UINT      m_MaxFontNamber          = 125;      //文字コード変換用に使用する最大文字番号
 };

@@ -31,7 +31,11 @@ protected:
 
 protected:
 	bool m_LivingFlag;            //生きているかのフラグ
+
 	MoveObjState m_MoveObjState;  //ステート
+
+	InputFlag m_InputFlag;
+
 	int m_MaxJumpLevel;           //ジャンプのレベルカウントの上限
 	int m_JumpLevelCount;         //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
 	int m_JumpAbjustPoint;        //ジャンプ力計算に使う調整値
@@ -46,6 +50,4 @@ protected:
 	bool  m_JumpFlag;             //ジャンプ可能かどうかのフラグ
 	float m_NowWalkSpeed;         //今の歩く速度
 	float m_JumpPower;            //ジャンプ量
-
-	InputFlag m_InputFlag;
 };

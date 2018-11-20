@@ -14,7 +14,7 @@ public:
 
 	void Die();
 
-	/*---INotPlayer---*/
+	/*---NotPlayer---*/
 	void CheckPlayer(Player* pPlayer);
 	void CheckEnemy(Enemy* pEnemy);
 
@@ -35,7 +35,7 @@ public:
 	void SetInputFlag   (InputFlag    value) { m_InputFlag    = value; }
 
 protected:
-	virtual void Abstract() = 0;  //純粋仮想関数（これによってこのクラスはインスタンスできない)
+	virtual void Abstract() = 0;
 
 	/*---IMoveObj---*/
 	virtual void Walk(float xAmount);  //歩く
@@ -52,14 +52,14 @@ protected:
 	const float  m_MaxWalkSpeed          = 0.001f;          //歩く最大スピード
 	float        m_WalkFluctuationAmount = 0.0005f;         //歩くスピードを変える
 
-	float m_SlipStopAmount        = 0.0001f;         //滑りを抑制する値
-	float m_SlipStopThreshold     = 0.001f;          //滑りを０にするしきい値
+	float m_SlipStopAmount        = 0.0001f;  //滑りを抑制する値
+	float m_SlipStopThreshold     = 0.001f;   //滑りを０にするしきい値
 
-	unsigned char m_Life          = 0;               //残り残機
+	unsigned char m_Life          = 0;        //残り残機
 
-	bool  m_JumpFlag              = true;            //ジャンプ可能かどうかのフラグ
-	float m_NowWalkSpeed          = 0.0f;            //今の歩く速度
-	float m_JumpPower             = 0.0005f;         //ジャンプ量
+	bool  m_JumpFlag              = true;     //ジャンプ可能かどうかのフラグ
+	float m_NowWalkSpeed          = 0.0f;     //今の歩く速度
+	float m_JumpPower             = 0.0005f;  //ジャンプ量
 
 	InputFlag m_InputFlag;
 
