@@ -77,7 +77,7 @@ void PlayScene::MakeStageObj()
 				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
 			case Object::KURIBOU:
-				//m_pKuribo = new Kuribo(pos, size);
+				m_pKuribo = new Kuribo(pos, size);
 				break;
 			}
 		}
@@ -123,7 +123,8 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 	}
 
-	//m_pKuribo->CheckPlayer(m_pPlayer);
+	m_pKuribo->CheckPlayer(m_pPlayer);
+	m_pKuribo->Move();
 
 	//ƒvƒŒƒCƒ„[ˆÚ“®
 	m_pPlayer->Move();
@@ -168,7 +169,7 @@ void PlayScene::Draw()
 	m_pPlayer->ThisObjRender();
 	m_pBlocks->ThisObjRender();
 	m_pGoal  ->ThisObjRender();
-	//m_pKuribo->ThisObjRender();
+	m_pKuribo->ThisObjRender();
 }
 
 /// <summary>
@@ -239,6 +240,6 @@ void PlayScene::StageObjDelete()
 {
 	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
 	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
-	if (m_pGoal != nullptr) { delete m_pGoal;         m_pGoal = nullptr; }
+	if (m_pGoal   != nullptr) { delete m_pGoal;         m_pGoal   = nullptr; }
 	if (m_pKuribo != nullptr) { delete m_pKuribo;       m_pKuribo = nullptr; }
 }

@@ -14,6 +14,7 @@ public:
 
 	/*---INotPlayer---*/
 	void CheckPlayer(Player* pPlayer);
+	void CheckEnemy(Enemy* pEnemy);
 
 	/*---RenderObj---*/
 	void ThisObjRender();

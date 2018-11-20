@@ -2,6 +2,7 @@
 #include"Player.h"
 #include"Flag.h"
 #include"Enum.h"
+#include"Enemy.h"
 
 /// <summary>
 /// コンストラクタ
@@ -71,17 +72,65 @@ void Block::CheckPlayer(Player* pPlayer)
 	}
 }
 
-bool Block::LeftCheck(Player* pPlayer)
+void Block::CheckEnemy(Enemy* pEnemy)
+{
+	if (CollisionCheck(pEnemy))
+	{
+		//エネミーのインプットフラグの取得
+		InputFlag enemyInput = pEnemy->GetInputFlag();
+
+		//プレイヤーが右に進もうとしているかどうか
+		if (enemyInput.Check(InputFlagCode::INPUT_RIGHT))
+		{
+			//このプレイヤーがこのブロックの左側に衝突しているか
+			if (LeftCheck(pEnemy))
+			{
+				//もしそうなら左に進ませる
+				enemyInput.ReSet(InputFlagCode::INPUT_RIGHT);
+				enemyInput.Set(InputFlagCode::INPUT_LEFT);
+			}
+		}
+
+		//プレイヤーが左に進もうとしているかどうか
+		if (enemyInput.Check(InputFlagCode::INPUT_LEFT))
+		{
+			//このプレイヤーがこのブロックの右側に衝突しているか
+			if (RightCheck(pEnemy))
+			{
+				//もしそうなら右に進ませる
+				enemyInput.ReSet(InputFlagCode::INPUT_LEFT);
+				enemyInput.Set(InputFlagCode::INPUT_RIGHT);
+			}
+		}
+
+		//プレイヤーがFALL中かどうか
+		if (pEnemy->GetMoveObjState() == MoveObjState::FALL || pEnemy->GetMoveObjState() == MoveObjState::CHECK_GROUND)
+		{
+			if (UpCheck(pEnemy))
+			{
+				//もしそうならステートを接地中に変える
+				pEnemy->SetMoveObjState(MoveObjState::ON_THE_GROUND);
+
+				return;
+			}
+		}
+
+		//更新後のインプットフラグを同期
+		pEnemy->SetInputFlag(enemyInput);
+	}
+}
+
+bool Block::LeftCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの左側にあるか
-	if (pPlayer->GetxPos() <= m_xPos)
+	if (pSquare->GetxPos() <= m_xPos)
 	{
 		//プレイヤーの右上か右下の頂点がこのブロックの左上、左下の間にあるか
-		if (pPlayer->m_pVertexArray[3].pos[1] - m_Threshold <= m_pVertexArray[0].pos[1] && pPlayer->m_pVertexArray[3].pos[1] - m_Threshold >= m_pVertexArray[2].pos[1])
+		if (pSquare->m_pVertexArray[3].pos[1] - m_Threshold <= m_pVertexArray[0].pos[1] && pSquare->m_pVertexArray[3].pos[1] - m_Threshold >= m_pVertexArray[2].pos[1])
 		{
 			return true;
 		}
-		else if (pPlayer->m_pVertexArray[1].pos[1] + m_Threshold <= m_pVertexArray[0].pos[1] && pPlayer->m_pVertexArray[1].pos[1] + m_Threshold >= m_pVertexArray[2].pos[1])
+		else if (pSquare->m_pVertexArray[1].pos[1] + m_Threshold <= m_pVertexArray[0].pos[1] && pSquare->m_pVertexArray[1].pos[1] + m_Threshold >= m_pVertexArray[2].pos[1])
 		{
 			return true;
 		}
@@ -90,17 +139,17 @@ bool Block::LeftCheck(Player* pPlayer)
 	return false;
 }
 
-bool Block::RightCheck(Player* pPlayer)
+bool Block::RightCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの右側にあるか
-	if (pPlayer->GetxPos() >= m_xPos)
+	if (pSquare->GetxPos() >= m_xPos)
 	{
 		//プレイヤーの左上か左下の頂点がこのブロックの右上、右下の間にあるか
-		if (pPlayer->m_pVertexArray[0].pos[1] - m_Threshold <= m_pVertexArray[3].pos[1] && pPlayer->m_pVertexArray[3].pos[1] - m_Threshold >= m_pVertexArray[1].pos[1])
+		if (pSquare->m_pVertexArray[0].pos[1] - m_Threshold <= m_pVertexArray[3].pos[1] && pSquare->m_pVertexArray[3].pos[1] - m_Threshold >= m_pVertexArray[1].pos[1])
 		{
 			return true;
 		}
-		else if (pPlayer->m_pVertexArray[2].pos[1] + m_Threshold <= m_pVertexArray[3].pos[1] && pPlayer->m_pVertexArray[1].pos[1] + m_Threshold >= m_pVertexArray[1].pos[1])
+		else if (pSquare->m_pVertexArray[2].pos[1] + m_Threshold <= m_pVertexArray[3].pos[1] && pSquare->m_pVertexArray[1].pos[1] + m_Threshold >= m_pVertexArray[1].pos[1])
 		{
 			return true;
 		}
@@ -109,17 +158,17 @@ bool Block::RightCheck(Player* pPlayer)
 	return false;
 }
 
-bool Block::DownCheck(Player* pPlayer)
+bool Block::DownCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの下にあるか
-	if (pPlayer->GetyPos() <= m_yPos)
+	if (pSquare->GetyPos() <= m_yPos)
 	{
 		//プレイヤーの左上か右上の頂点がこのブロックの左下、右下の間にあるか
-		if (pPlayer->m_pVertexArray[0].pos[0] + m_Threshold >= m_pVertexArray[2].pos[0] && pPlayer->m_pVertexArray[0].pos[0] + m_Threshold <= m_pVertexArray[1].pos[0])
+		if (pSquare->m_pVertexArray[0].pos[0] + m_Threshold >= m_pVertexArray[2].pos[0] && pSquare->m_pVertexArray[0].pos[0] + m_Threshold <= m_pVertexArray[1].pos[0])
 		{
 			return true;
 		}
-		else if (pPlayer->m_pVertexArray[3].pos[0] - m_Threshold >= m_pVertexArray[2].pos[0] && pPlayer->m_pVertexArray[3].pos[0] - m_Threshold <= m_pVertexArray[1].pos[0])
+		else if (pSquare->m_pVertexArray[3].pos[0] - m_Threshold >= m_pVertexArray[2].pos[0] && pSquare->m_pVertexArray[3].pos[0] - m_Threshold <= m_pVertexArray[1].pos[0])
 		{
 			return true;
 		}
@@ -128,17 +177,17 @@ bool Block::DownCheck(Player* pPlayer)
 	return false;
 }
 
-bool Block::UpCheck(Player* pPlayer)
+bool Block::UpCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの上にあるか
-	if (pPlayer->GetyPos() >= m_yPos)
+	if (pSquare->GetyPos() >= m_yPos)
 	{
 		//プレイヤーの左下か右下の頂点がこのブロックの左上、右上の間にあるか
-		if (pPlayer->m_pVertexArray[2].pos[0] + m_Threshold >= m_pVertexArray[0].pos[0] && pPlayer->m_pVertexArray[2].pos[0] + m_Threshold <= m_pVertexArray[3].pos[0])
+		if (pSquare->m_pVertexArray[2].pos[0] + m_Threshold >= m_pVertexArray[0].pos[0] && pSquare->m_pVertexArray[2].pos[0] + m_Threshold <= m_pVertexArray[3].pos[0])
 		{
 			return true;
 		}
-		else if (pPlayer->m_pVertexArray[1].pos[0] - m_Threshold >= m_pVertexArray[0].pos[0] && pPlayer->m_pVertexArray[1].pos[0] - m_Threshold <= m_pVertexArray[3].pos[0])
+		else if (pSquare->m_pVertexArray[1].pos[0] - m_Threshold >= m_pVertexArray[0].pos[0] && pSquare->m_pVertexArray[1].pos[0] - m_Threshold <= m_pVertexArray[3].pos[0])
 		{
 			return true;
 		}

@@ -21,7 +21,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAkEAAAACAAIAAAAAAAAAAAACAAAAAAAAAAAABAAAAE=</HashCode>
+      <HashCode>AAkEAAAACAAIAAAAAgAAAAAACAAAAAAAAAAAABAAAAE=</HashCode>
       <FileName>Block.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -82,7 +82,7 @@
   <Class Name="INotPlayer" Collapsed="true">
     <Position X="8" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>INotPlayer.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -332,16 +332,16 @@
         <Point X="5.25" Y="10.438" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="IMoveObj" FixedToPoint="true">
+    <InheritanceLine Type="IMoveObj" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="3.25" Y="11.75" />
-        <Point X="3.25" Y="11.454" />
+        <Point X="3.875" Y="11.75" />
+        <Point X="3.875" Y="11.454" />
         <Point X="4.188" Y="11.454" />
         <Point X="4.188" Y="11.079" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>CigAAgEFCoGAAQAYAAQABAgAAADAICAAAABBAQAgEAA=</HashCode>
+      <HashCode>CigAAgEFCoGAAQAYAgQABAgAAADAICAAAABBAQAgEAA=</HashCode>
       <FileName>Enemy.h</FileName>
     </TypeIdentifier>
   </Class>

@@ -17,6 +17,58 @@ void Enemy::CheckPlayer(Player* pPlayer)
 }
 
 /// <summary>
+/// Enemyのチェック
+/// </summary>
+/// <param name="pEnemy">チェックする対象</param>
+void Enemy::CheckEnemy(Enemy* pEnemy)
+{
+	if (CollisionCheck(pEnemy))
+	{
+		//エネミーのインプットフラグの取得
+		InputFlag enemyInput = pEnemy->GetInputFlag();
+
+		//プレイヤーが右に進もうとしているかどうか
+		if (enemyInput.Check(InputFlagCode::INPUT_RIGHT))
+		{
+			//このプレイヤーがこのブロックの左側に衝突しているか
+			if (LeftCheck(pEnemy))
+			{
+				//もしそうなら左に進ませる
+				enemyInput.ReSet(InputFlagCode::INPUT_RIGHT);
+				enemyInput.Set(InputFlagCode::INPUT_LEFT);
+			}
+		}
+
+		//プレイヤーが左に進もうとしているかどうか
+		if (enemyInput.Check(InputFlagCode::INPUT_LEFT))
+		{
+			//このプレイヤーがこのブロックの右側に衝突しているか
+			if (RightCheck(pEnemy))
+			{
+				//もしそうなら右に進ませる
+				enemyInput.ReSet(InputFlagCode::INPUT_LEFT);
+				enemyInput.Set(InputFlagCode::INPUT_RIGHT);
+			}
+		}
+
+		//プレイヤーがFALL中かどうか
+		if (pEnemy->GetMoveObjState() == MoveObjState::FALL || pEnemy->GetMoveObjState() == MoveObjState::CHECK_GROUND)
+		{
+			if (UpCheck(pEnemy))
+			{
+				//もしそうならステートを接地中に変える
+				pEnemy->SetMoveObjState(MoveObjState::ON_THE_GROUND);
+
+				return;
+			}
+		}
+
+		//更新後のインプットフラグを同期
+		pEnemy->SetInputFlag(enemyInput);
+	}
+}
+
+/// <summary>
 /// このオブジェクトのバッファの作成
 /// </summary>
 void Enemy::ThisObjCreateBuffer()
