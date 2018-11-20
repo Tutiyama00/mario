@@ -120,6 +120,9 @@
     <ClCompile Include="Kuribo.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
+    <ClCompile Include="NotPlayer.cpp">
+      <Filter>ソース ファイル\Abstract</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enum.h">
@@ -156,9 +159,6 @@
       <Filter>ヘッダー ファイル\Abstract</Filter>
     </ClInclude>
     <ClInclude Include="IMoveObj.h">
-      <Filter>ヘッダー ファイル\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="INotPlayer.h">
       <Filter>ヘッダー ファイル\Interface</Filter>
     </ClInclude>
     <ClInclude Include="IGameScene.h">
@@ -208,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="Kuribo.h">
       <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="NotPlayer.h">
+      <Filter>ヘッダー ファイル\Abstract</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -134,6 +134,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Kuribo.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="NotPlayer.cpp" />
     <ClCompile Include="ParameterScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -161,7 +162,7 @@
     <ClInclude Include="IGameScene.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="IMoveObj.h" />
-    <ClInclude Include="INotPlayer.h" />
+    <ClInclude Include="NotPlayer.h" />
     <ClInclude Include="Kuribo.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="ParameterScene.h" />

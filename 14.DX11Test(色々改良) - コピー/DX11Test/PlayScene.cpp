@@ -121,6 +121,7 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
 		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
+		m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuribo);
 	}
 
 	m_pKuribo->CheckPlayer(m_pPlayer);

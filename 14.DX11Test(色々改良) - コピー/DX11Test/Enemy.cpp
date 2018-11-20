@@ -11,8 +11,15 @@ void Enemy::CheckPlayer(Player* pPlayer)
 	/* プレイヤーと衝突していたら */
 	if (CollisionCheck(pPlayer))
 	{
-		/* プレイヤーを殺す */
-		pPlayer->Die();
+		if (UpCheck(pPlayer))
+		{
+
+		}
+		else
+		{
+			/* プレイヤーを殺す */
+			pPlayer->Die();
+		}
 	}
 }
 
