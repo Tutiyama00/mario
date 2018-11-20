@@ -152,8 +152,10 @@ void Player::ThisObjCreateBuffer()
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 }
 
-/*歩く
- *第一引数・移動量横*/
+/// <summary>
+/// 歩く
+/// </summary>
+/// <param name="xAmount">移動量（X軸）</param>
 void Player::Walk(float xAmount)
 {
 	m_xPos += xAmount;
@@ -175,7 +177,10 @@ void Player::Walk(float xAmount)
 	{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
 }
 
-/*ジャンプ(マリオ式)*/
+/// <summary>
+/// ジャンプ(マリオ式)
+/// </summary>
+/// <returns>ジャンプできたかどうか　true=できた　false=できなかった</returns>
 bool Player::Jump()
 {
 	if (m_JumpLevelCount > 0)
@@ -207,7 +212,9 @@ bool Player::Jump()
 	return false;
 }
 
-/*落下（マリオ式）*/
+/// <summary>
+/// 落下（マリオ式）
+/// </summary>
 void Player::Fall()
 {
 	float fallAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);

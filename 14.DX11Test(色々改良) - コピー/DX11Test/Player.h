@@ -39,8 +39,10 @@ public:
 	void SetNowWalkSpeed(float value) { m_NowWalkSpeed = value; }
 
 	/*---IMoveObj---*/
-	MoveObjState GetMoveObjState() { return m_MoveObjState; };
-	void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; };
+	MoveObjState GetMoveObjState()const { return m_MoveObjState; }
+	InputFlag GetInputFlag      ()const { return m_InputFlag; }
+	void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
+	void SetInputFlag   (InputFlag value)    { m_InputFlag    = value; }
 	
 private:
 	/*---IMoveObj---*/
@@ -71,4 +73,6 @@ private:
 	bool  m_JumpFlag     = true;    //ジャンプ可能かどうかのフラグ
 	float m_NowWalkSpeed = 0.0f;    //今の歩く速度
 	float m_JumpPower    = 0.0005f; //ジャンプ量
+
+	InputFlag m_InputFlag;
 };

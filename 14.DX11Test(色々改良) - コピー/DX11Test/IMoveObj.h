@@ -17,8 +17,8 @@ public:
 
 public:
 	/* getter */
-	virtual MoveObjState GetMoveObjState() { return m_MoveObjState; }
-	virtual InputFlag GetInputFlag      () { return m_InputFlag; }
+	virtual MoveObjState GetMoveObjState()const { return m_MoveObjState; }
+	virtual InputFlag GetInputFlag      ()const { return m_InputFlag; }
 
 	/* setter */
 	virtual void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
