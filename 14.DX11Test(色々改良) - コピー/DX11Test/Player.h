@@ -19,6 +19,7 @@ public:
 	~Player() {}; //デストラクタ
 
 	void Die(); //死亡処理
+	void MiniJumpStart();
 
 	/*---IMoveObj---*/
 	void Move();  //プレイヤーの動き（入力情報)
@@ -46,6 +47,8 @@ public:
 	void         SetInputFlag   (InputFlag value)    { m_InputFlag    = value; }
 	
 private:
+	bool MiniJump();
+
 	/*---IMoveObj---*/
 	void Walk(float xAmount);  //歩く
 	bool Jump();               //ジャンプ
@@ -55,7 +58,12 @@ private:
 	void Abstract() {};
 
 private:
-	const UINT M_START_LIFE = 3;  //ゲームスタート時のプレイヤーの残機
+	const UINT M_START_LIFE = 3;      //ゲームスタート時のプレイヤーの残機
+	bool m_InvincibleFlag   = false;  //無敵状態フラグ　true=無敵、false=通常
+	unsigned char m_MiniJumpCount = 0;
+	const unsigned char M_MINI_JUMP_COUNT_MAX = 50;
+	bool m_MiniJumpFlag = false;
+	const unsigned char M_MINI_JUMP_COUNT_INVINCIBLE_MAX = 5;  //ミニジャンプ中の無敵時間（フレーム数）
 
 	/*---IMoveObj---*/
 	bool          m_LivingFlag  = true;  //生きているかのフラグ

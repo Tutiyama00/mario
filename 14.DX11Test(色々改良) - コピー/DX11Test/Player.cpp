@@ -83,15 +83,29 @@ void Player::Move()
 		break;
 
 	case MoveObjState::JUMP:
-		if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE) || !Jump())
+
+		if (m_MiniJumpFlag)
 		{
-			m_JumpFlag = false;
-			m_MoveObjState = MoveObjState::FALL;
+			if (!MiniJump())
+			{
+				m_JumpFlag = false;
+				m_MoveObjState = MoveObjState::FALL;
+			}
+		}
+		else
+		{
+			if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE) || !Jump())
+			{
+				m_JumpFlag = false;
+				m_MoveObjState = MoveObjState::FALL;
+			}
 		}
 
 		break;
 
 	case MoveObjState::FALL:
+
+		if (m_MiniJumpFlag) { m_MiniJumpFlag = false; }
 
 		Fall();
 
@@ -273,4 +287,32 @@ void Player::Fall()
 	{
 		m_JumpLevelCount++;
 	}
+}
+
+void Player::MiniJumpStart()
+{
+	m_MiniJumpFlag   = true;
+	m_InvincibleFlag = true;
+	m_MoveObjState   = MoveObjState::JUMP;
+	m_MiniJumpCount = 0;
+	m_JumpLevelCount = m_MaxJumpLevel;
+}
+
+bool Player::MiniJump()
+{
+	if (m_MiniJumpCount <= M_MINI_JUMP_COUNT_MAX)
+	{
+		m_MiniJumpCount++;
+
+		/* éwíËÇµÇΩÉtÉåÅ[ÉÄà»è„Ç…Ç»Ç¡ÇΩÇÁ */
+		if (m_MiniJumpCount > M_MINI_JUMP_COUNT_INVINCIBLE_MAX)
+		{
+			/* ñ≥ìGèÛë‘ÇâèúÇ∑ÇÈ */
+			m_InvincibleFlag = false;
+		}
+
+		return Jump();
+	}
+
+	return false;
 }

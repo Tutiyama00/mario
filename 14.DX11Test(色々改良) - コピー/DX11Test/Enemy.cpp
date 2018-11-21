@@ -33,6 +33,7 @@ void Enemy::CheckPlayer(Player* pPlayer)
 	{
 		if (UpCheck(pPlayer))
 		{
+			pPlayer->MiniJumpStart();
 			Die();
 		}
 		else

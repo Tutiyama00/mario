@@ -29,7 +29,6 @@ Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 /// </summary>
 void Nokonoko::Move()
 {
-
 	/*¶‚«‚Ä‚¢‚È‚¢ó‘Ô‚¾‚Á‚½‚çƒŠƒ^[ƒ“‚µ‚Ä“®‚©‚³‚È‚¢*/
 	if (!m_LivingFlag) { return; }
 
@@ -102,6 +101,7 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 			/* ã‚©‚çÕ“Ë‚µ‚Ä‚¢‚é‚Ì‚©‚Ç‚¤‚© */
 			if (UpCheck(pPlayer))
 			{
+				pPlayer->MiniJumpStart();
 				LoadTexture(L"Texture/KOURA.png");
 				m_NokonokoState = NokonokoState::KOURA_STOP;
 				m_InputFlag.AllReSet();
