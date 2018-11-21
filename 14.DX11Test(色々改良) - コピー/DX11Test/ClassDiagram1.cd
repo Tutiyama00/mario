@@ -14,7 +14,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Camera" Collapsed="true">
-    <Position X="21.5" Y="4.25" Width="1.5" />
+    <Position X="14.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAABAAAQAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Camera.h</FileName>
@@ -36,20 +36,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="InputFlag" Collapsed="true">
-    <Position X="10.75" Y="13.25" Width="1.5" />
+    <Position X="9.75" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAgAAAAABAAAAAAIAAAAIAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>Flag.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameManager">
-    <Position X="11.5" Y="8.75" Width="1.5" />
+    <Position X="10.5" Y="4.75" Width="1.5" />
     <InheritanceLine Type="Singleton&lt;T&gt;" FixedToPoint="true">
       <Path>
-        <Point X="17.75" Y="9.031" />
-        <Point X="17.375" Y="9.031" />
-        <Point X="17.375" Y="10.128" />
-        <Point X="13" Y="10.128" />
+        <Point X="12.75" Y="5.031" />
+        <Point X="12.375" Y="5.031" />
+        <Point X="12.375" Y="6.128" />
+        <Point X="12" Y="6.128" />
       </Path>
     </InheritanceLine>
     <AssociationLine Name="m_GameState" Type="GameState">
@@ -106,18 +106,18 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Dsound" Collapsed="true">
-    <Position X="12.5" Y="13.25" Width="1.5" />
+    <Position X="11.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAAQAAAAAAAAABAAAABAAIAAAAA=</HashCode>
       <FileName>Sound.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dx11" Collapsed="true">
-    <Position X="17.75" Y="10" Width="1.5" />
+    <Position X="12.75" Y="6" Width="1.5" />
     <InheritanceLine Type="Singleton&lt;T&gt;" FixedToPoint="true">
       <Path>
-        <Point X="18.5" Y="9.312" />
-        <Point X="18.5" Y="10" />
+        <Point X="13.5" Y="5.312" />
+        <Point X="13.5" Y="6" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -126,7 +126,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Stage" Collapsed="true">
-    <Position X="27" Y="4.25" Width="1.5" />
+    <Position X="20.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgIAAEEAAiAAAAAAAAgAAAAAAAEQAABAAAgAAACIAAA=</HashCode>
       <FileName>Stage.h</FileName>
@@ -153,7 +153,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OriginalMath::Math" Collapsed="true">
-    <Position X="21.5" Y="5.25" Width="1.5" />
+    <Position X="14.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Math.h</FileName>
@@ -167,28 +167,28 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TitleScene" Collapsed="true">
-    <Position X="12" Y="4.75" Width="1.5" />
+    <Position X="9" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIQCAAAAAAAgAAAAAAAKAAAgAAAIAAAAAAAEAAAAA=</HashCode>
       <FileName>TitleScene.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IGameScene" Collapsed="true">
-    <Position X="15" Y="3.25" Width="1.5" />
+    <Position X="12" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIQAAAAAAAAgAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IGameScene.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PlayScene" Collapsed="true">
-    <Position X="13.75" Y="4.75" Width="1.5" />
+    <Position X="10.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GAYIQCAAAAABBgAIAAEQAAQBKgAAABAAAAAIAKIJBAY=</HashCode>
+      <HashCode>GAYIQCAAAAABBgAIAAEQBAQBKgAAABAAAAAIAKIJBAY=</HashCode>
       <FileName>PlayScene.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Timer" Collapsed="true">
-    <Position X="25" Y="4.25" Width="1.5" />
+    <Position X="18.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAACAAAACQAAAAACAgAAAEAAIAAAAAAEAFAAA=</HashCode>
       <FileName>Timer.h</FileName>
@@ -196,6 +196,22 @@
   </Class>
   <Class Name="Goal" Collapsed="true">
     <Position X="3.75" Y="5" Width="1.5" />
+    <InheritanceLine Type="Square" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.25" Y="2.941" />
+        <Point X="2.25" Y="5.562" />
+        <Point X="3.75" Y="5.562" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="RenderObj" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.375" Y="2.812" />
+        <Point X="6.375" Y="5.5" />
+        <Point X="5.708" Y="5.5" Type="JumpStart" />
+        <Point X="5.542" Y="5.5" Type="JumpEnd" />
+        <Point X="5.25" Y="5.5" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AQAAAAEBAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>Goal.h</FileName>
@@ -212,8 +228,8 @@
     </InheritanceLine>
     <InheritanceLine Type="RenderObj" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6.812" Y="2.812" />
-        <Point X="6.812" Y="8" />
+        <Point X="6.875" Y="2.812" />
+        <Point X="6.875" Y="8" />
         <Point X="5.708" Y="8" Type="JumpStart" />
         <Point X="5.542" Y="8" Type="JumpEnd" />
         <Point X="5.25" Y="8" />
@@ -235,8 +251,8 @@
     </InheritanceLine>
     <InheritanceLine Type="RenderObj" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6.625" Y="2.812" />
-        <Point X="6.625" Y="6.562" />
+        <Point X="6.562" Y="2.812" />
+        <Point X="6.562" Y="6.562" />
         <Point X="5.708" Y="6.562" Type="JumpStart" />
         <Point X="5.542" Y="6.562" Type="JumpEnd" />
         <Point X="5.25" Y="6.562" />
@@ -248,35 +264,35 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TextCharacters" Collapsed="true">
-    <Position X="23.25" Y="4.25" Width="1.5" />
+    <Position X="16.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAACEAAAAAABAAgAAAAAAAAAABABAAAAAACAA=</HashCode>
       <FileName>TextCharacters.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Singleton&lt;T&gt;" Collapsed="true">
-    <Position X="17.75" Y="8.75" Width="1.5" />
+    <Position X="12.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAABAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Singleton.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameOverScene" Collapsed="true">
-    <Position X="17.25" Y="4.75" Width="1.5" />
+    <Position X="14.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIQCAAAAAEAgAgAAACACAAAgAAAAEAAAAAAAAAAAA=</HashCode>
       <FileName>GameOverScene.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ParameterScene" Collapsed="true">
-    <Position X="19" Y="4.75" Width="1.5" />
+    <Position X="16" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIQAAAAAIQAgAABABCBAAIAkgAAAoAQAgAAgAAFAA=</HashCode>
       <FileName>ParameterScene.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResultScene" Collapsed="true">
-    <Position X="15.5" Y="4.75" Width="1.5" />
+    <Position X="12.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAIQAAAEAAEAgAgAAAAAAAAAiAAAAgAQAgAAAAAAgA=</HashCode>
       <FileName>ResultScene.h</FileName>
@@ -313,11 +329,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Kuribo" Collapsed="true">
-    <Position X="3.75" Y="13.25" Width="1.5" />
+    <Position X="5.5" Y="13.5" Width="1.5" />
     <InheritanceLine Type="Enemy" FixedFromPoint="true">
       <Path>
-        <Point X="4.5" Y="12.45" />
-        <Point X="4.5" Y="13.25" />
+        <Point X="5" Y="12.45" />
+        <Point X="5" Y="13.125" />
+        <Point X="6.25" Y="13.125" />
+        <Point X="6.25" Y="13.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -339,57 +357,72 @@
       <FileName>NotPlayer.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Nokonoko" Collapsed="true">
+    <Position X="2.5" Y="13.5" Width="1.5" />
+    <InheritanceLine Type="Enemy" FixedFromPoint="true">
+      <Path>
+        <Point X="4.062" Y="12.45" />
+        <Point X="4.062" Y="13.125" />
+        <Point X="3.25" Y="13.125" />
+        <Point X="3.25" Y="13.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAABAIAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nokonoko.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="CameraConstantBuffer">
-    <Position X="21.5" Y="6.25" Width="1.5" />
+    <Position X="14.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Camera.cpp</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="vertex">
-    <Position X="23.25" Y="6.25" Width="1.5" />
+    <Position X="16.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAYAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Vertex.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="OriginalMath::Vector3" Collapsed="true">
-    <Position X="25" Y="5.25" Width="1.5" />
+    <Position X="18.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
       <FileName>Math.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="OriginalMath::Vector2" Collapsed="true">
-    <Position X="23.25" Y="5.25" Width="1.5" />
+    <Position X="16.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>Math.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Enum Name="GameState" Collapsed="true">
-    <Position X="11.5" Y="7.25" Width="1.5" />
+    <Position X="10.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAABAAAAAAAAEAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Enum.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="MoveObjState" Collapsed="true">
-    <Position X="23.25" Y="8" Width="1.5" />
+    <Position X="16.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAgAAAAAAAAAAAAAIAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Enum.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="Object" Collapsed="true">
-    <Position X="21.5" Y="8.75" Width="1.5" />
+    <Position X="14.75" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAABAAQAAAAEAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>Enum.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="InputFlagCode" Collapsed="true">
-    <Position X="21.5" Y="8" Width="1.5" />
+    <Position X="14.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAAAAAAAAAAgAAAAAAAIAAAAAAAQAAA=</HashCode>
       <FileName>Flag.h</FileName>

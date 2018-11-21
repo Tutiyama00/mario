@@ -21,5 +21,6 @@ enum class Object : unsigned char
 	MARIO,
 	NORMAL_BLOCK,
 	KURIBOU,
+	NOKONOKO,
 	SPACE
 };

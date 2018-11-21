@@ -123,6 +123,9 @@
     <ClCompile Include="NotPlayer.cpp">
       <Filter>ソース ファイル\Abstract</Filter>
     </ClCompile>
+    <ClCompile Include="Nokonoko.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enum.h">
@@ -211,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="NotPlayer.h">
       <Filter>ヘッダー ファイル\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="Nokonoko.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

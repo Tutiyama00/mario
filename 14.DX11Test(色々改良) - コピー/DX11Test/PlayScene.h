@@ -10,6 +10,7 @@ template<class T> class Characters;
 class Block;
 class Goal;
 class Kuribo;
+class Nokonoko;
 
 class PlayScene : public IGameScene
 {
@@ -24,10 +25,10 @@ public:
 
 public:
 	/* getter */
-	const Player*  GetPlayer()const   { return m_pPlayer; }
-	int     GetNowWorldLevel() { return m_NowWorldLevel; }
-	int     GetNowStageLevel() { return m_NowStageLevel; }
-	DWORD   GetStageTime()     { return m_pStage->GetStageTime(); }
+	const Player*  GetPlayer       ()const { return m_pPlayer; }
+	int            GetNowWorldLevel()const { return m_NowWorldLevel; }
+	int            GetNowStageLevel()const { return m_NowStageLevel; }
+	DWORD          GetStageTime    ()const { return m_pStage->GetStageTime(); }
 
 private:
 	void MakeStageObj();  //ステージオブジェクトの生成
@@ -43,6 +44,7 @@ private:
 	Characters<Block>* m_pBlocks       = nullptr;
 	Goal*              m_pGoal         = nullptr;
 	Kuribo*            m_pKuribo       = nullptr;
+	Nokonoko*          m_pNokonoko     = nullptr;
 
 	float     m_StandardSize    = 0.075f;  //基準のサイズ
 	float     m_StandardZpos    = -0.5f;   //基準のオブジェクトZポジション

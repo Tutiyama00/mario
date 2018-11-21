@@ -10,6 +10,7 @@
 #include"Goal.h"
 #include<string>
 #include"Kuribo.h"
+#include"Nokonoko.h"
 
 using namespace OriginalMath;
 
@@ -42,6 +43,7 @@ PlayScene::~PlayScene()
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
 	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 	if (m_pKuribo       != nullptr) { delete m_pKuribo;       m_pKuribo       = nullptr; }
+	if (m_pNokonoko != nullptr) { delete m_pNokonoko;       m_pNokonoko = nullptr; }
 }
 
 /// <summary>
@@ -76,8 +78,13 @@ void PlayScene::MakeStageObj()
 			case Object::NORMAL_BLOCK:
 				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
+
 			case Object::KURIBOU:
 				m_pKuribo = new Kuribo(pos, size);
+				break;
+
+			case Object::NOKONOKO:
+				m_pNokonoko = new Nokonoko(pos, size);
 				break;
 			}
 		}
@@ -122,9 +129,15 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	{
 		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 		m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuribo);
+		m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonoko);
 	}
 
+	m_pNokonoko->CheckPlayer(m_pPlayer);
+	m_pNokonoko->CheckEnemy(m_pKuribo);
+	m_pNokonoko->Move();
+
 	m_pKuribo->CheckPlayer(m_pPlayer);
+	m_pKuribo->CheckEnemy(m_pNokonoko);
 	m_pKuribo->Move();
 
 	//ƒvƒŒƒCƒ„[ˆÚ“®
@@ -171,6 +184,7 @@ void PlayScene::Draw()
 	m_pBlocks->ThisObjRender();
 	m_pGoal  ->ThisObjRender();
 	m_pKuribo->ThisObjRender();
+	m_pNokonoko->ThisObjRender();
 }
 
 /// <summary>
@@ -243,4 +257,5 @@ void PlayScene::StageObjDelete()
 	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
 	if (m_pGoal   != nullptr) { delete m_pGoal;         m_pGoal   = nullptr; }
 	if (m_pKuribo != nullptr) { delete m_pKuribo;       m_pKuribo = nullptr; }
+	if (m_pNokonoko != nullptr) { delete m_pNokonoko;       m_pNokonoko = nullptr; }
 }

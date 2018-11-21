@@ -25,8 +25,8 @@ public:
 	ID3D11Device*            m_pDevice        = nullptr;        //DirectX11の中心になるクラス。全体の管理とバッファ、シェーダ、テクスチャなどのリソース作成などを行う。
 
 private:
-	const UINT M_WINDOW_WIDTH                         = 1000;
-	const UINT M_WINDOW_HEIGHT                        = 750;
+	const UINT M_WINDOW_WIDTH  = 1000;
+	const UINT M_WINDOW_HEIGHT = 750;
 
 	IDXGISwapChain*          m_pSwapChain             = nullptr;        //ウィンドウのへの表示やダブルバッファリングなどを行うクラス。
 	                                                                    //GPUがレンダリングコマンドを解析することで実際の描画処理が行われる。
