@@ -2,6 +2,13 @@
 
 #include"Enemy.h"
 
+enum class NokonokoState : unsigned char
+{
+	NORMAL,
+	KOURA_STOP,
+	KOURA_RUN
+};
+
 class Nokonoko : public Enemy
 {
 public:
@@ -10,8 +17,12 @@ public:
 
 	/*---Enemy---*/
 	void Move();
+	virtual void CheckPlayer(Player* pPlayer);
+	virtual void CheckEnemy(Enemy* pEnemy);
 
 protected:
 	/*---Enemy---*/
 	void Abstract() {};
+
+	NokonokoState m_NokonokoState = NokonokoState::NORMAL;
 };

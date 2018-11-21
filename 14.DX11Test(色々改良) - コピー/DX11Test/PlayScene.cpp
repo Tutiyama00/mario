@@ -132,13 +132,19 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 		m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonoko);
 	}
 
-	m_pNokonoko->CheckPlayer(m_pPlayer);
-	m_pNokonoko->CheckEnemy(m_pKuribo);
-	m_pNokonoko->Move();
-
-	m_pKuribo->CheckPlayer(m_pPlayer);
-	m_pKuribo->CheckEnemy(m_pNokonoko);
-	m_pKuribo->Move();
+	if (m_pNokonoko->GetLivingFlag())
+	{
+		m_pNokonoko->Move();
+		m_pNokonoko->CheckPlayer(m_pPlayer);
+		m_pNokonoko->CheckEnemy(m_pKuribo);
+	}
+	
+	if (m_pKuribo->GetLivingFlag())
+	{
+		m_pKuribo->Move();
+		m_pKuribo->CheckPlayer(m_pPlayer);
+		m_pKuribo->CheckEnemy(m_pNokonoko);
+	}
 
 	//ƒvƒŒƒCƒ„[ˆÚ“®
 	m_pPlayer->Move();

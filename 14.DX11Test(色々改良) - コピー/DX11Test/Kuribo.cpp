@@ -29,7 +29,6 @@ Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 /// </summary>
 void Kuribo::Move()
 {
-
 	/*¶‚«‚Ä‚¢‚È‚¢ó‘Ô‚¾‚Á‚½‚çƒŠƒ^[ƒ“‚µ‚Ä“®‚©‚³‚È‚¢*/
 	if (!m_LivingFlag){ return; }
 

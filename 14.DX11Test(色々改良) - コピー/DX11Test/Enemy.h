@@ -15,8 +15,8 @@ public:
 	void Die();
 
 	/*---NotPlayer---*/
-	void CheckPlayer(Player* pPlayer);
-	void CheckEnemy(Enemy* pEnemy);
+	virtual void CheckPlayer(Player* pPlayer);
+	virtual void CheckEnemy(Enemy* pEnemy);
 
 	/*---RenderObj---*/
 	void ThisObjRender();
@@ -26,6 +26,8 @@ public:
 	virtual void Move() = 0;
 
 public:
+	bool GetLivingFlag() { return m_LivingFlag; }
+
 	/*---IMoveObj---*/
 	/* getter */
 	MoveObjState GetMoveObjState()const { return m_MoveObjState; }
