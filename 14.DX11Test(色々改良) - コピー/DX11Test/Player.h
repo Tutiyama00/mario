@@ -61,7 +61,7 @@ private:
 	const UINT M_START_LIFE = 3;      //ゲームスタート時のプレイヤーの残機
 	bool m_InvincibleFlag   = false;  //無敵状態フラグ　true=無敵、false=通常
 	unsigned char m_MiniJumpCount = 0;
-	const unsigned char M_MINI_JUMP_COUNT_MAX = 50;
+	const unsigned char M_MINI_JUMP_COUNT_MAX = 25;
 	bool m_MiniJumpFlag = false;
 	const unsigned char M_MINI_JUMP_COUNT_INVINCIBLE_MAX = 5;  //ミニジャンプ中の無敵時間（フレーム数）
 

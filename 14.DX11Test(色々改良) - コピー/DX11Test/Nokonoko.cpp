@@ -53,11 +53,18 @@ void Nokonoko::Move()
 		break;
 	}
 
+	/* 甲羅が止まっている状態だったら左右に動かなくする */
+	if (m_NokonokoState == NokonokoState::KOURA_STOP)
+	{
+		m_InputFlag.ReSet(InputFlagCode::INPUT_LEFT);
+		m_InputFlag.ReSet(InputFlagCode::INPUT_RIGHT);
+	}
+
 	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
 		if (m_NokonokoState == NokonokoState::KOURA_RUN)
 		{
-			Walk(m_MaxWalkSpeed * 10);
+			Walk(m_MaxWalkSpeed * 7);
 		}
 		else
 		{
@@ -69,7 +76,7 @@ void Nokonoko::Move()
 	{
 		if (m_NokonokoState == NokonokoState::KOURA_RUN)
 		{
-			Walk(-m_MaxWalkSpeed * 10);
+			Walk(-m_MaxWalkSpeed * 7);
 		}
 		else
 		{
@@ -98,6 +105,14 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 		switch (m_NokonokoState)
 		{
 		case NokonokoState::NORMAL:
+
+
+			if (m_StateKeepFlag)
+			{
+				StateKeepFlame();
+				break;
+			}
+
 			/* 上から衝突しているのかどうか */
 			if (UpCheck(pPlayer))
 			{
@@ -105,6 +120,7 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 				LoadTexture(L"Texture/KOURA.png");
 				m_NokonokoState = NokonokoState::KOURA_STOP;
 				m_InputFlag.AllReSet();
+				StateKeepFlameStart();
 			}
 			else
 			{
@@ -116,6 +132,13 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 
 		case NokonokoState::KOURA_STOP:
 
+			if (m_StateKeepFlag)
+			{
+				StateKeepFlame();
+				break;
+			}
+
+			StateKeepFlameStart();
 			m_NokonokoState = NokonokoState::KOURA_RUN;
 
 			/* 左右どちら側に衝突しているか */
@@ -132,14 +155,23 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 
 		case NokonokoState::KOURA_RUN:
 
+
+			if (m_StateKeepFlag)
+			{
+				StateKeepFlame();
+				break;
+			}
+
 			if (UpCheck(pPlayer))
 			{
+				pPlayer->MiniJumpStart();
 				m_NokonokoState = NokonokoState::KOURA_STOP;
 				m_InputFlag.AllReSet();
+				StateKeepFlameStart();
 			}
 			else
 			{
-				//pPlayer->Die();
+				pPlayer->Die();
 			}
 
 			break;
@@ -176,6 +208,10 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 					/* もしそうなら左に進ませる */
 					enemyInput.ReSet(InputFlagCode::INPUT_RIGHT);
 					enemyInput.Set(InputFlagCode::INPUT_LEFT);
+
+					/* 自分は右に進む */
+					m_InputFlag.ReSet(InputFlagCode::INPUT_LEFT);
+					m_InputFlag.Set(InputFlagCode::INPUT_RIGHT);
 				}
 			}
 
@@ -188,6 +224,10 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 					/* もしそうなら右に進ませる */
 					enemyInput.ReSet(InputFlagCode::INPUT_LEFT);
 					enemyInput.Set(InputFlagCode::INPUT_RIGHT);
+
+					/* 自分は左に進む */
+					m_InputFlag.ReSet(InputFlagCode::INPUT_RIGHT);
+					m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
 				}
 			}
 
@@ -206,5 +246,28 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 
 		/* 更新後のインプットフラグを同期 */
 		pEnemy->SetInputFlag(enemyInput);
+	}
+}
+
+
+/*#####################################           #####################################*/
+/*#####################################  PRIVATE  #####################################*/
+/*#####################################           #####################################*/
+
+void Nokonoko::StateKeepFlameStart()
+{
+	m_StateKeepFlag = true;
+	m_StateKeepFlameCount = 0;
+}
+
+void Nokonoko::StateKeepFlame()
+{
+	if (m_StateKeepFlameCount <= M_STATE_KEEP_FLAME)
+	{
+		m_StateKeepFlameCount++;
+	}
+	else
+	{
+		m_StateKeepFlag = false;
 	}
 }

@@ -25,6 +25,9 @@ Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 /// </summary>
 void Player::Die()
 {
+	/* –³“Gó‘Ô‚¾‚Á‚½‚ç•Ô‚· */
+	if (m_InvincibleFlag) { return; }
+
 	/*‚Ü‚¾¶‚«‚Ä‚¢‚½ê‡ˆ—‚·‚é*/
 	if (m_LivingFlag)
 	{
@@ -294,8 +297,8 @@ void Player::MiniJumpStart()
 	m_MiniJumpFlag   = true;
 	m_InvincibleFlag = true;
 	m_MoveObjState   = MoveObjState::JUMP;
-	m_MiniJumpCount = 0;
-	m_JumpLevelCount = m_MaxJumpLevel;
+	m_MiniJumpCount  = 0;
+	m_JumpLevelCount = M_MINI_JUMP_COUNT_MAX;
 }
 
 bool Player::MiniJump()

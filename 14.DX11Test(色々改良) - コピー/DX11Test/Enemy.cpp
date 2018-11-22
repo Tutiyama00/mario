@@ -57,31 +57,39 @@ void Enemy::CheckEnemy(Enemy* pEnemy)
 		/* エネミーのインプットフラグの取得 */
 		InputFlag enemyInput = pEnemy->GetInputFlag();
 
-		/* プレイヤーが右に進もうとしているかどうか */
+		/* エネミーが右に進もうとしているかどうか */
 		if (enemyInput.Check(InputFlagCode::INPUT_RIGHT))
 		{
-			/* このプレイヤーがこのブロックの左側に衝突しているか */
+			/* このエネミーがこのブロックの左側に衝突しているか */
 			if (LeftCheck(pEnemy))
 			{
 				/* もしそうなら左に進ませる */
 				enemyInput.ReSet(InputFlagCode::INPUT_RIGHT);
 				enemyInput.Set(InputFlagCode::INPUT_LEFT);
+
+				/* 自分は右に進む */
+				m_InputFlag.ReSet(InputFlagCode::INPUT_LEFT);
+				m_InputFlag.Set(InputFlagCode::INPUT_RIGHT);
 			}
 		}
 
-		/* プレイヤーが左に進もうとしているかどうか */
+		/* エネミーが左に進もうとしているかどうか */
 		if (enemyInput.Check(InputFlagCode::INPUT_LEFT))
 		{
-			/* このプレイヤーがこのブロックの右側に衝突しているか */
+			/* このエネミーがこのブロックの右側に衝突しているか */
 			if (RightCheck(pEnemy))
 			{
 				/* もしそうなら右に進ませる */
 				enemyInput.ReSet(InputFlagCode::INPUT_LEFT);
 				enemyInput.Set(InputFlagCode::INPUT_RIGHT);
+
+				/* 自分は左に進む */
+				m_InputFlag.ReSet(InputFlagCode::INPUT_RIGHT);
+				m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
 			}
 		}
 
-		/* プレイヤーがFALL中かどうか */
+		/* エネミーがFALL中かどうか */
 		if (pEnemy->GetMoveObjState() == MoveObjState::FALL || pEnemy->GetMoveObjState() == MoveObjState::CHECK_GROUND)
 		{
 			if (UpCheck(pEnemy))
