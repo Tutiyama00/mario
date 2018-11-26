@@ -4,6 +4,9 @@
 #include<d3d11.h>
 #include"Stage.h"
 #include"Player.h"
+#include<vector>
+
+using namespace std;
 
 class Camera;
 template<class T> class Characters;
@@ -43,8 +46,8 @@ private:
 	Player*            m_pPlayer       = nullptr;
 	Characters<Block>* m_pBlocks       = nullptr;
 	Goal*              m_pGoal         = nullptr;
-	Kuribo*            m_pKuribo       = nullptr;
-	Nokonoko*          m_pNokonoko     = nullptr;
+	vector<Kuribo*>    m_pKuriboVector;
+	vector<Nokonoko*>  m_pNokonokoVector;
 
 	float     m_StandardSize    = 0.075f;  //基準のサイズ
 	float     m_StandardZpos    = -0.5f;   //基準のオブジェクトZポジション

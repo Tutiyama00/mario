@@ -67,7 +67,7 @@ bool NotPlayer::DownCheck(Square* pSquare)
 bool NotPlayer::UpCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの上にあるか
-	if (pSquare->GetyPos() >= m_yPos)
+	if (pSquare->GetyPos() >= m_pVertexArray[0].pos[1])
 	{
 		//プレイヤーの左下か右下の頂点がこのブロックの左上、右上の間にあるか
 		if (pSquare->m_pVertexArray[2].pos[0] + m_Threshold >= m_pVertexArray[0].pos[0] && pSquare->m_pVertexArray[2].pos[0] + m_Threshold <= m_pVertexArray[3].pos[0])

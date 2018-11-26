@@ -106,7 +106,6 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 		{
 		case NokonokoState::NORMAL:
 
-
 			if (m_StateKeepFlag)
 			{
 				StateKeepFlame();

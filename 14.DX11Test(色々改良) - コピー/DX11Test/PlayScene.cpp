@@ -42,8 +42,18 @@ PlayScene::~PlayScene()
 	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
 	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
-	if (m_pKuribo       != nullptr) { delete m_pKuribo;       m_pKuribo       = nullptr; }
-	if (m_pNokonoko != nullptr) { delete m_pNokonoko;       m_pNokonoko = nullptr; }
+
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
+	{
+		if (m_pKuriboVector[i] != nullptr) { delete m_pKuriboVector[i]; m_pKuriboVector[i] = nullptr; }
+	}
+	m_pKuriboVector.clear();
+
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	{
+		if (m_pNokonokoVector[i] != nullptr) { delete m_pNokonokoVector[i]; m_pNokonokoVector[i] = nullptr; }
+	}
+	m_pNokonokoVector.clear();
 }
 
 /// <summary>
@@ -80,11 +90,11 @@ void PlayScene::MakeStageObj()
 				break;
 
 			case Object::KURIBOU:
-				m_pKuribo = new Kuribo(pos, size);
+				m_pKuriboVector.push_back( new Kuribo(pos, size));
 				break;
 
 			case Object::NOKONOKO:
-				m_pNokonoko = new Nokonoko(pos, size);
+				m_pNokonokoVector.push_back( new Nokonoko(pos, size));
 				break;
 			}
 		}
@@ -128,27 +138,57 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
 		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
-		m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuribo);
-		m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonoko);
-	}
 
-	m_pKuribo->Move();
-	m_pNokonoko->Move();
+		for (int j = 0; j < m_pKuriboVector.size(); j++)
+		{
+			m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
+		}
 
-	if (m_pNokonoko->GetLivingFlag())
-	{
-		m_pNokonoko->CheckPlayer(m_pPlayer);
-		m_pNokonoko->CheckEnemy(m_pKuribo);
-	}
-	
-	if (m_pKuribo->GetLivingFlag())
-	{
-		m_pKuribo->CheckPlayer(m_pPlayer);
-		m_pKuribo->CheckEnemy(m_pNokonoko);
+		for (int j = 0; j < m_pNokonokoVector.size(); j++)
+		{
+			m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+		}
 	}
 
 	//プレイヤー移動
 	m_pPlayer->Move();
+
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
+	{
+		m_pKuriboVector[i]->Move();
+	}
+
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	{
+		m_pNokonokoVector[i]->Move();
+	}
+
+
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
+	{
+		if (m_pKuriboVector[i]->GetLivingFlag())
+		{
+			m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
+
+			for (int j = 0; j < m_pNokonokoVector.size(); j++)
+			{
+				m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			}
+		}
+	}
+
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	{
+		if (m_pNokonokoVector[i]->GetLivingFlag())
+		{
+			m_pNokonokoVector[i]->CheckPlayer(m_pPlayer);
+
+			for (int j = 0; j < m_pKuriboVector.size(); j++)
+			{
+				m_pNokonokoVector[i]->CheckEnemy(m_pKuriboVector[j]);
+			}
+		}
+	}
 
 	/*ゴールチェック*/
 	if (m_pGoal->CollisionCheck(m_pPlayer))
@@ -190,8 +230,16 @@ void PlayScene::Draw()
 	m_pPlayer->ThisObjRender();
 	m_pBlocks->ThisObjRender();
 	m_pGoal  ->ThisObjRender();
-	m_pKuribo->ThisObjRender();
-	m_pNokonoko->ThisObjRender();
+
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
+	{
+		m_pKuriboVector[i]->ThisObjRender();
+	}
+
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	{
+		m_pNokonokoVector[i]->ThisObjRender();
+	}
 }
 
 /// <summary>
@@ -263,6 +311,16 @@ void PlayScene::StageObjDelete()
 	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
 	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
 	if (m_pGoal   != nullptr) { delete m_pGoal;         m_pGoal   = nullptr; }
-	if (m_pKuribo != nullptr) { delete m_pKuribo;       m_pKuribo = nullptr; }
-	if (m_pNokonoko != nullptr) { delete m_pNokonoko;       m_pNokonoko = nullptr; }
+
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
+	{
+		if (m_pKuriboVector[i] != nullptr) { delete m_pKuriboVector[i]; m_pKuriboVector[i] = nullptr; }
+	}
+	m_pKuriboVector.clear();
+
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	{
+		if (m_pNokonokoVector[i] != nullptr) { delete m_pNokonokoVector[i]; m_pNokonokoVector[i] = nullptr; }
+	}
+	m_pNokonokoVector.clear();
 }

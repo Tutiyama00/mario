@@ -21,7 +21,7 @@ public:
 		}
 
 		if (m_pVertexArray != nullptr) { delete[] m_pVertexArray; m_pVertexArray = nullptr; }
-		if (m_pIndexArray  != nullptr) { delete[] m_pIndexArray;  m_pIndexArray = nullptr; }
+		if (m_pIndexArray  != nullptr) { delete[] m_pIndexArray;  m_pIndexArray  = nullptr; }
 	}
 
 	void UpdateVIBuffer()
@@ -41,7 +41,7 @@ public:
 
 		//前のバッファをリリース
 		if (m_pVertexBuffer != nullptr) { m_pVertexBuffer->Release(); m_pVertexBuffer = nullptr; }
-		if (m_pIndexBuffer != nullptr) { m_pIndexBuffer->Release(); m_pIndexBuffer = nullptr; }
+		if (m_pIndexBuffer  != nullptr) { m_pIndexBuffer ->Release(); m_pIndexBuffer  = nullptr; }
 
 		//新しくバッファを作成
 		hr = Dx11::Instance()->m_pDevice->CreateBuffer(&m_VertexBufferDesc, &m_VertexSubResourData, &m_pVertexBuffer);
@@ -75,16 +75,16 @@ private:
 	void SetVertexIndex()
 	{
 		//このクラスの配列数を確定
-		int size = m_ObjectVector.size();
+		int size       = m_ObjectVector.size();
 		int vertexSize = m_ObjectVector[0]->GetVertexArraySize();
 
 		if (m_pVertexArray != nullptr) { delete[] m_pVertexArray; m_pVertexArray = nullptr; }
-		if (m_pIndexArray != nullptr) { delete[] m_pIndexArray;  m_pIndexArray = nullptr; }
+		if (m_pIndexArray  != nullptr) { delete[] m_pIndexArray;  m_pIndexArray  = nullptr; }
 		m_VertexArraySize = 0;
-		m_IndexArraySize = 0;
+		m_IndexArraySize  = 0;
 
 		m_pVertexArray = new vertex[vertexSize * size]();
-		m_pIndexArray = new WORD[(vertexSize * size - 3) * 3 + 3]();
+		m_pIndexArray  = new WORD[(vertexSize * size - 3) * 3 + 3]();
 
 		//すべてのオブジェクトの頂点、インデックス情報の格納
 		for (int i = 0; i < m_ObjectVector.size(); i++)
