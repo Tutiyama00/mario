@@ -34,11 +34,13 @@ public:
 	DWORD          GetStageTime    ()const { return m_pStage->GetStageTime(); }
 
 private:
-	void MakeStageObj();  //ステージオブジェクトの生成
-	void ReStart     ();  //ゲームのリスタート
-	void ReSet       ();  //ゲームのリセット
-	void MoveScene   ();  //シーンの遷移
+	void MakeStageObj  ();  //ステージオブジェクトの生成
+	void ReStart       ();  //ゲームのリスタート
+	void ReSet         ();  //ゲームのリセット
+	void MoveScene     ();  //シーンの遷移
 	void StageObjDelete();  //ステージ上のオブジェクトのデリート
+	void MoveOrder     ();  //キャラ達の移動命令
+	void ObjCheckOrder ();  //キャラ達のチェック命令
 
 private:
 	Stage*             m_pStage        = nullptr;

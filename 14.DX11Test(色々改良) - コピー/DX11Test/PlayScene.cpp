@@ -14,6 +14,11 @@
 
 using namespace OriginalMath;
 
+
+/*#####################################          #####################################*/
+/*#####################################  PUBLIC  #####################################*/
+/*#####################################          #####################################*/
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -55,6 +60,37 @@ PlayScene::~PlayScene()
 	}
 	m_pNokonokoVector.clear();
 }
+
+/// <summary>
+/// プレイヤーを殺す
+/// </summary>
+void PlayScene::KillPlayer()
+{
+	//プレイヤーの死亡処理
+	m_pPlayer->Die();
+}
+
+/*-------------------------------------              ----------------------------------*/
+/*-------------------------------------  IGameScene  ----------------------------------*/
+/*-------------------------------------              ----------------------------------*/
+
+/// <summary>
+/// シーンの更新
+/// </summary>
+/// <param name="inputFlag"></param>
+/// <returns></returns>
+GameState PlayScene::UpDateScene(InputFlag inputFlag)
+{
+	UpDateGame(inputFlag);
+	Draw();
+
+	return m_NextGameState;
+}
+
+
+/*#####################################           #####################################*/
+/*#####################################  PRIVATE  #####################################*/
+/*#####################################           #####################################*/
 
 /// <summary>
 /// ステージ上のオブジェクトの生成
@@ -111,29 +147,101 @@ void PlayScene::MakeStageObj()
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
 }
 
-/// <summary>
-/// シーンの更新
-/// </summary>
-/// <param name="inputFlag"></param>
-/// <returns></returns>
-GameState PlayScene::UpDateScene(InputFlag inputFlag)
-{
-	UpDateGame(inputFlag);
-	Draw();
 
-	return m_NextGameState;
+
+/// <summary>
+/// ゲームのリスタート
+/// </summary>
+void PlayScene::ReStart()
+{
+	/*再生成後のプレイヤーに残機を設定するためにデリート前に値を保存*/
+	m_OldPlayerLife = m_pPlayer->GetLife();
+
+	/*ステージ上のオブジェクトのデリート*/
+	StageObjDelete();
+
+	/*ステージオブジェクト再生成*/
+	MakeStageObj();
+
+	/*プレイヤーの残機設定*/
+	m_pPlayer->SetLife(m_OldPlayerLife);
 }
 
 /// <summary>
-/// ゲームの更新
+/// ゲーム状態のリセット
 /// </summary>
-/// <param name="inputFlag"></param>
-void PlayScene::UpDateGame(InputFlag inputFlag)
+/// <param name="pDevice"></param>
+void PlayScene::ReSet()
 {
-	m_NextGameState = GameState::PLAY;
+	StageObjDelete();
 
-	m_pPlayer->SetInputFlag(inputFlag);
+	m_NowWorldLevel = 1;
+	m_NowStageLevel = 1;
 
+	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+
+	m_pStage->ChangeStage(filePas.data());
+	MakeStageObj();
+
+	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
+}
+
+/// <summary>
+/// シーンを遷移する
+/// </summary>
+void PlayScene::MoveScene()
+{
+	//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
+	if (m_pPlayer->GetLife() == 0)
+	{
+		ReSet();
+		m_NextGameState = GameState::GAMEOVER;
+	}
+	else
+	{
+		ReStart();
+		m_NextGameState = GameState::RESULT;
+	}
+}
+
+void PlayScene::StageObjDelete()
+{
+	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
+	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
+	if (m_pGoal   != nullptr) { delete m_pGoal;         m_pGoal   = nullptr; }
+
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
+	{
+		if (m_pKuriboVector[i] != nullptr) { delete m_pKuriboVector[i]; m_pKuriboVector[i] = nullptr; }
+	}
+	m_pKuriboVector.clear();
+
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	{
+		if (m_pNokonokoVector[i] != nullptr) { delete m_pNokonokoVector[i]; m_pNokonokoVector[i] = nullptr; }
+	}
+	m_pNokonokoVector.clear();
+}
+
+void PlayScene::MoveOrder()
+{
+	//プレイヤー移動
+	m_pPlayer->Move();
+
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
+	{
+		m_pKuriboVector[i]->Move();
+	}
+
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	{
+		m_pNokonokoVector[i]->Move();
+	}
+
+}
+
+void PlayScene::ObjCheckOrder()
+{
 	//ブロック群のプレイヤーに対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
@@ -149,20 +257,6 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 			m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 		}
 	}
-
-	//プレイヤー移動
-	m_pPlayer->Move();
-
-	for (int i = 0; i < m_pKuriboVector.size(); i++)
-	{
-		m_pKuriboVector[i]->Move();
-	}
-
-	for (int i = 0; i < m_pNokonokoVector.size(); i++)
-	{
-		m_pNokonokoVector[i]->Move();
-	}
-
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -218,7 +312,7 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
 						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
 					}
-					else if(m_pNokonokoVector[x]->GetNokonokoState() == NokonokoState::KOURA_RUN)
+					else if (m_pNokonokoVector[x]->GetNokonokoState() == NokonokoState::KOURA_RUN)
 					{
 						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
 						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
@@ -232,6 +326,29 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 			}
 		}
 	}
+}
+
+/*#####################################             #####################################*/
+/*#####################################  PROTECTED  #####################################*/
+/*#####################################             #####################################*/
+
+/*-------------------------------------              ----------------------------------*/
+/*-------------------------------------  IGameScene  ----------------------------------*/
+/*-------------------------------------              ----------------------------------*/
+
+/// <summary>
+/// ゲームの更新
+/// </summary>
+/// <param name="inputFlag"></param>
+void PlayScene::UpDateGame(InputFlag inputFlag)
+{
+	m_NextGameState = GameState::PLAY;
+
+	m_pPlayer->SetInputFlag(inputFlag);
+
+	ObjCheckOrder();
+
+	MoveOrder();
 
 	/*ゴールチェック*/
 	if (m_pGoal->CollisionCheck(m_pPlayer))
@@ -272,7 +389,7 @@ void PlayScene::Draw()
 	m_pCamera->Shoot(m_pPlayer->GetxPos());
 	m_pPlayer->ThisObjRender();
 	m_pBlocks->ThisObjRender();
-	m_pGoal  ->ThisObjRender();
+	m_pGoal->ThisObjRender();
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -283,87 +400,4 @@ void PlayScene::Draw()
 	{
 		m_pNokonokoVector[i]->ThisObjRender();
 	}
-}
-
-/// <summary>
-/// ゲームのリスタート
-/// </summary>
-void PlayScene::ReStart()
-{
-	/*再生成後のプレイヤーに残機を設定するためにデリート前に値を保存*/
-	m_OldPlayerLife = m_pPlayer->GetLife();
-
-	/*ステージ上のオブジェクトのデリート*/
-	StageObjDelete();
-
-	/*ステージオブジェクト再生成*/
-	MakeStageObj();
-
-	/*プレイヤーの残機設定*/
-	m_pPlayer->SetLife(m_OldPlayerLife);
-}
-
-/// <summary>
-/// ゲーム状態のリセット
-/// </summary>
-/// <param name="pDevice"></param>
-void PlayScene::ReSet()
-{
-	StageObjDelete();
-
-	m_NowWorldLevel = 1;
-	m_NowStageLevel = 1;
-
-	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
-
-	m_pStage->ChangeStage(filePas.data());
-	MakeStageObj();
-
-	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
-}
-
-/// <summary>
-/// プレイヤーを殺す
-/// </summary>
-void PlayScene::KillPlayer()
-{
-	//プレイヤーの死亡処理
-	m_pPlayer->Die();
-}
-
-/// <summary>
-/// シーンを遷移する
-/// </summary>
-void PlayScene::MoveScene()
-{
-	//残り残機が０だったらゲームオーバー画面に行く、まだ残機があったらリザルトに飛ぶ
-	if (m_pPlayer->GetLife() == 0)
-	{
-		ReSet();
-		m_NextGameState = GameState::GAMEOVER;
-	}
-	else
-	{
-		ReStart();
-		m_NextGameState = GameState::RESULT;
-	}
-}
-
-void PlayScene::StageObjDelete()
-{
-	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
-	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
-	if (m_pGoal   != nullptr) { delete m_pGoal;         m_pGoal   = nullptr; }
-
-	for (int i = 0; i < m_pKuriboVector.size(); i++)
-	{
-		if (m_pKuriboVector[i] != nullptr) { delete m_pKuriboVector[i]; m_pKuriboVector[i] = nullptr; }
-	}
-	m_pKuriboVector.clear();
-
-	for (int i = 0; i < m_pNokonokoVector.size(); i++)
-	{
-		if (m_pNokonokoVector[i] != nullptr) { delete m_pNokonokoVector[i]; m_pNokonokoVector[i] = nullptr; }
-	}
-	m_pNokonokoVector.clear();
 }
