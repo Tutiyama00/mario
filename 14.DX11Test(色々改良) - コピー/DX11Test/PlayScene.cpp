@@ -168,24 +168,42 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	{
 		if (m_pKuriboVector[i]->GetLivingFlag())
 		{
+			/* クリボーとプレイヤーの比較 */
 			m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
 
 			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
-				m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+				if (m_pNokonokoVector[j]->GetLivingFlag())
+				{
+					/* クリボーとノコノコの比較 */
+					m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+					m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
+				}
+			}
+
+			if (i >= m_pKuriboVector.size())
+			{
+				/* クリボーとクリボーの比較 */
+				for (int c = i + 1; c < m_pKuriboVector.size(); c++)
+				{
+					m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
+					m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
+				}
 			}
 		}
 	}
 
-	for (int i = 0; i < m_pNokonokoVector.size(); i++)
+	for (int i = 0; i < m_pNokonokoVector.size() - 1; i++)
 	{
-		if (m_pNokonokoVector[i]->GetLivingFlag())
+		if (m_pKuriboVector[i]->GetLivingFlag())
 		{
 			m_pNokonokoVector[i]->CheckPlayer(m_pPlayer);
 
-			for (int j = 0; j < m_pKuriboVector.size(); j++)
+			/*　ノコノコとノコノコの比較 */
+			for (int x = i + 1; x < m_pNokonokoVector.size(); x++)
 			{
-				m_pNokonokoVector[i]->CheckEnemy(m_pKuriboVector[j]);
+				m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
+				m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
 			}
 		}
 	}

@@ -209,8 +209,8 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 					enemyInput.Set(InputFlagCode::INPUT_LEFT);
 
 					/* é©ï™ÇÕâEÇ…êiÇﬁ */
-					m_InputFlag.ReSet(InputFlagCode::INPUT_LEFT);
-					m_InputFlag.Set(InputFlagCode::INPUT_RIGHT);
+					//m_InputFlag.ReSet(InputFlagCode::INPUT_LEFT);
+					//m_InputFlag.Set(InputFlagCode::INPUT_RIGHT);
 				}
 			}
 
@@ -225,8 +225,8 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 					enemyInput.Set(InputFlagCode::INPUT_RIGHT);
 
 					/* é©ï™ÇÕç∂Ç…êiÇﬁ */
-					m_InputFlag.ReSet(InputFlagCode::INPUT_RIGHT);
-					m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
+					//m_InputFlag.ReSet(InputFlagCode::INPUT_RIGHT);
+					//m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
 				}
 			}
 
