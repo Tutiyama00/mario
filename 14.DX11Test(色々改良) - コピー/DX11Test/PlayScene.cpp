@@ -176,12 +176,12 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 				if (m_pNokonokoVector[j]->GetLivingFlag())
 				{
 					/* クリボーとノコノコの比較 */
-					m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 					m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
+					m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 				}
 			}
 
-			if (i >= m_pKuriboVector.size())
+			if (i + 1 < m_pKuriboVector.size())
 			{
 				/* クリボーとクリボーの比較 */
 				for (int c = i + 1; c < m_pKuriboVector.size(); c++)
@@ -193,17 +193,42 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 		}
 	}
 
-	for (int i = 0; i < m_pNokonokoVector.size() - 1; i++)
+	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
-		if (m_pKuriboVector[i]->GetLivingFlag())
+		if (m_pNokonokoVector[i]->GetLivingFlag())
 		{
 			m_pNokonokoVector[i]->CheckPlayer(m_pPlayer);
 
-			/*　ノコノコとノコノコの比較 */
-			for (int x = i + 1; x < m_pNokonokoVector.size(); x++)
+			if (i + 1 < m_pNokonokoVector.size())
 			{
-				m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
-				m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
+				/*　ノコノコとノコノコの比較 */
+				for (int x = i + 1; x < m_pNokonokoVector.size(); x++)
+				{
+					if (m_pNokonokoVector[i]->GetNokonokoState() == NokonokoState::KOURA_RUN)
+					{
+						if (m_pNokonokoVector[x]->GetNokonokoState() == NokonokoState::KOURA_RUN)
+						{
+							if (m_pNokonokoVector[x]->CollisionCheck(m_pNokonokoVector[i]) && m_pNokonokoVector[x]->CollisionCheck(m_pNokonokoVector[i]))
+							{
+								m_pNokonokoVector[i]->Die();
+								m_pNokonokoVector[x]->Die();
+							}
+						}
+
+						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
+						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
+					}
+					else if(m_pNokonokoVector[x]->GetNokonokoState() == NokonokoState::KOURA_RUN)
+					{
+						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
+						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
+					}
+					else
+					{
+						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
+						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
+					}
+				}
 			}
 		}
 	}

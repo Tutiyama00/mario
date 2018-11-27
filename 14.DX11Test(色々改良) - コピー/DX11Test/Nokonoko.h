@@ -20,6 +20,10 @@ public:
 	virtual void CheckPlayer(Player* pPlayer);
 	virtual void CheckEnemy(Enemy* pEnemy);
 
+public:
+	/* getter */
+	NokonokoState GetNokonokoState()const { return m_NokonokoState; }
+
 private:
 	void StateKeepFlameStart();
 	void StateKeepFlame();
