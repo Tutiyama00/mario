@@ -204,6 +204,9 @@ void PlayScene::MoveScene()
 	}
 }
 
+/// <summary>
+/// ステージを構成するオブジェクトのデリート
+/// </summary>
 void PlayScene::StageObjDelete()
 {
 	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
@@ -223,6 +226,9 @@ void PlayScene::StageObjDelete()
 	m_pNokonokoVector.clear();
 }
 
+/// <summary>
+/// キャラ達の移動命令
+/// </summary>
 void PlayScene::MoveOrder()
 {
 	//プレイヤー移動
@@ -240,6 +246,9 @@ void PlayScene::MoveOrder()
 
 }
 
+/// <summary>
+/// キャラ達のチェック命令
+/// </summary>
 void PlayScene::ObjCheckOrder()
 {
 	//ブロック群のプレイヤーに対して衝突判定
@@ -260,70 +269,79 @@ void PlayScene::ObjCheckOrder()
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
-		if (m_pKuriboVector[i]->GetLivingFlag())
+	    /* クリボーとプレイヤーの比較 */
+		m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
+
+		for (int j = 0; j < m_pNokonokoVector.size(); j++)
 		{
-			/* クリボーとプレイヤーの比較 */
-			m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
-
-			for (int j = 0; j < m_pNokonokoVector.size(); j++)
+			if (m_pNokonokoVector[j]->GetLivingFlag())
 			{
-				if (m_pNokonokoVector[j]->GetLivingFlag())
-				{
-					/* クリボーとノコノコの比較 */
-					m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
-					m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-				}
+				/* クリボーとノコノコの比較 */
+				m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
+				m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 			}
+		}
 
-			if (i + 1 < m_pKuriboVector.size())
+		if (i + 1 < m_pKuriboVector.size())
+		{
+			/* クリボーとクリボーの比較 */
+			for (int c = i + 1; c < m_pKuriboVector.size(); c++)
 			{
-				/* クリボーとクリボーの比較 */
-				for (int c = i + 1; c < m_pKuriboVector.size(); c++)
-				{
-					m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
-					m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
-				}
+				m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
+				m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
 			}
 		}
 	}
 
 	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
-		if (m_pNokonokoVector[i]->GetLivingFlag())
+		/* ノコノコとプレイヤーの比較 */
+		m_pNokonokoVector[i]->CheckPlayer(m_pPlayer);
+
+		/* チェックしているのが配列の最後のノコノコだった場合ノコノコ同士の処理しない */
+		if (i + 1 >= m_pNokonokoVector.size()) { continue; }
+
+		/*　ノコノコとノコノコの比較 */
+		for (int j = i + 1; j < m_pNokonokoVector.size(); j++)
 		{
-			m_pNokonokoVector[i]->CheckPlayer(m_pPlayer);
+			/* ノコノコが甲羅走りしているのかチェック */
+			bool NokonokoRunStateFlagI = m_pNokonokoVector[i]->GetNokonokoState() == NokonokoState::KOURA_RUN;
+			bool NokonokoRunStateFlagJ = m_pNokonokoVector[j]->GetNokonokoState() == NokonokoState::KOURA_RUN;
 
-			if (i + 1 < m_pNokonokoVector.size())
+			/* 両方のノコノコが甲羅走り */
+			if (NokonokoRunStateFlagI && NokonokoRunStateFlagJ)
 			{
-				/*　ノコノコとノコノコの比較 */
-				for (int x = i + 1; x < m_pNokonokoVector.size(); x++)
+				if (m_pNokonokoVector[j]->CollisionCheck(m_pNokonokoVector[i]) && m_pNokonokoVector[i]->CollisionCheck(m_pNokonokoVector[j]))
 				{
-					if (m_pNokonokoVector[i]->GetNokonokoState() == NokonokoState::KOURA_RUN)
-					{
-						if (m_pNokonokoVector[x]->GetNokonokoState() == NokonokoState::KOURA_RUN)
-						{
-							if (m_pNokonokoVector[x]->CollisionCheck(m_pNokonokoVector[i]) && m_pNokonokoVector[x]->CollisionCheck(m_pNokonokoVector[i]))
-							{
-								m_pNokonokoVector[i]->Die();
-								m_pNokonokoVector[x]->Die();
-							}
-						}
+					m_pNokonokoVector[i]->Die();
+					m_pNokonokoVector[j]->Die();
 
-						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
-						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
-					}
-					else if (m_pNokonokoVector[x]->GetNokonokoState() == NokonokoState::KOURA_RUN)
-					{
-						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
-						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
-					}
-					else
-					{
-						m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[x]);
-						m_pNokonokoVector[x]->CheckEnemy(m_pNokonokoVector[i]);
-					}
+					continue;
 				}
 			}
+
+			/* Iの方のノコノコだけが甲羅走り */
+			if(NokonokoRunStateFlagI && !NokonokoRunStateFlagJ)
+			{
+				m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+				m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
+
+				continue;
+			}
+
+			/* Jの方のノコノコだけが甲羅走り */
+			if (!NokonokoRunStateFlagI && NokonokoRunStateFlagJ)
+			{
+				m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
+				m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+
+				continue;
+			}
+
+			/* どのパターンにも当てはまらなかった場合 */
+			m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
+			m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			
 		}
 	}
 }
