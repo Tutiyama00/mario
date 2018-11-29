@@ -148,7 +148,6 @@ void PlayScene::MakeStageObj()
 }
 
 
-
 /// <summary>
 /// ゲームのリスタート
 /// </summary>
