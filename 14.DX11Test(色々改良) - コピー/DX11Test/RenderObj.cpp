@@ -46,7 +46,7 @@ void RenderObj::LoadTexture(const wchar_t* pFileName)
 	CoInitialize(NULL);   //COMライブラリの初期化が必要(絶対ここでしばらく詰んだ)
 
 	//テクスチャの読み込み
-	hr = CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, pFileName, &m_pMainTextureResource, &m_pMainTextureSRV);
+	hr = DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, pFileName, &m_pMainTextureResource, &m_pMainTextureSRV);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "Error : CreateWICTextureFromFile() Failed.", "ERRER", MB_OK);

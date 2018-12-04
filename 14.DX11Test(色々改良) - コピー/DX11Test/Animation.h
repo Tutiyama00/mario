@@ -1,6 +1,8 @@
 #pragma once
 #include<d3d11.h>
 #include<vector>
+#include<string>
+
 
 using namespace std;
 
@@ -14,12 +16,21 @@ struct AnimResource
 class Animation
 {
 public:
-	Animation();
-	~Animation();
+	Animation() {};
+	~Animation() {};
+
+	AnimResource AnimPlay();
+	void AnimReset();
+	void AddAnimResource(const wchar_t* pFileNames);
+
+public:
+	/* setter */
+	void SetAnimIntervalFlame(unsigned int value) { m_AnimIntervalFlame = value; }
 
 private:
-	void CreateAnimResource(const wchar_t* pFileName, AnimResource* pAnimResource);
-
-private:
-	vector<AnimResource> m_AnimRsrcVector;  //アニメーション用のリソース構造体の配列
+	vector<AnimResource> m_AnimRsrcVector;           //アニメーション用のリソース構造体の配列
+	unsigned int m_AnimIntervalFlame       = 5;      //アニメーションとアニメ―ションの間のフレーム数
+	unsigned int m_FlameCount              = 0;      //比較用のフレームカウンタ
+	unsigned int m_NowAnimNamber           = 0;      //現在のアニメーションの番号（配列番号）
+	bool         m_AnimPlayFlag            = false;  //アニメーション中かどうかのフラグ（true＝プレイ中、false＝プレイしていない）
 };

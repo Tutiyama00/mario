@@ -2,7 +2,8 @@
 #include"Block.h"
 #include"Enum.h"
 #include"Flag.h"
-
+#include"Animation.h"
+#include<string>
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -18,6 +19,16 @@ Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 	LoadTexture(L"Texture/Mario.png");
 	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+
+	m_pAnimation = new Animation();
+	m_pAnimation->AddAnimResource(L"Texture/Mario.png");
+	m_pAnimation->AddAnimResource(L"Texture/KURIBO.png");
+	m_pAnimation->AddAnimResource(L"Texture/NOKONOKO.png");
+}
+
+Player::~Player()
+{
+	if (m_pAnimation != nullptr) { delete m_pAnimation; m_pAnimation = nullptr; }
 }
 
 /// <summary>
@@ -180,6 +191,10 @@ void Player::Move()
 /// </summary>
 void Player::ThisObjRender()
 {
+	AnimResource animRsc = m_pAnimation->AnimPlay();
+	m_pMainTextureResource = animRsc.m_pAnimTextureResource;
+	m_pMainTextureSRV = animRsc.m_pAnimTextureSRV;
+
 	Render(m_pVertexArray, m_IndexArraySize);
 }
 
