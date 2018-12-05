@@ -78,9 +78,6 @@
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="RenderObj.cpp">
-      <Filter>ソース ファイル\Abstract</Filter>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
@@ -128,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObj.cpp">
+      <Filter>ソース ファイル\Abstract</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -11,12 +11,13 @@ using namespace OriginalMath;
 //前方宣言
 class InputFlag;
 class Block;
+class Animation;
 
 class Player : public Square, public RenderObj, public IMoveObj
 {
 public:
 	Player(Vector3 pos, Vector2 size);  //コンストラクタ
-	~Player() {}; //デストラクタ
+	~Player(); //デストラクタ
 
 	void Die(); //死亡処理
 	void MiniJumpStart();
@@ -85,4 +86,6 @@ private:
 
     float        m_SlipStopAmount     = 0.0001f;  //滑りを抑制する値
 	float        m_SlipStopThreshold  = 0.001f;   //滑りを０にするしきい値
+
+	Animation* m_pAnimation = nullptr;
 };
