@@ -59,17 +59,17 @@ bool Square::CollisionCheck(Polygon* checkPolygon)
 		for (int i = 0; i < checkPolygon->GetVertexArraySize(); i++)
 		{
 			//é©ï™ÇÃì‡ë§Ç…èdÇ»Ç¡ÇƒÇ¢ÇΩèÍçá
-			if (m_pVertexArray[0].pos[0] <= checkPolygon->m_pVertexArray[i].pos[0] && m_pVertexArray[1].pos[0] >= checkPolygon->m_pVertexArray[i].pos[0])
+			if (m_pVertexArray[0].pos[0] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[i].pos[0] && m_pVertexArray[1].pos[0] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[i].pos[0])
 			{
-				if (m_pVertexArray[0].pos[1] >= checkPolygon->m_pVertexArray[i].pos[1] && m_pVertexArray[1].pos[1] <= checkPolygon->m_pVertexArray[i].pos[1])
+				if (m_pVertexArray[0].pos[1] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[i].pos[1] && m_pVertexArray[1].pos[1] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[i].pos[1])
 				{
 					return true;
 				}
 			}
 
-			if (m_pVertexArray[i].pos[0] >= checkPolygon->m_pVertexArray[0].pos[0] && m_pVertexArray[i].pos[0] <= checkPolygon->m_pVertexArray[1].pos[0])
+			if (m_pVertexArray[i].pos[0] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[0].pos[0] && m_pVertexArray[i].pos[0] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[1].pos[0])
 			{
-				if (m_pVertexArray[i].pos[1] <= checkPolygon->m_pVertexArray[0].pos[1] && m_pVertexArray[i].pos[1] >= checkPolygon->m_pVertexArray[1].pos[1])
+				if (m_pVertexArray[i].pos[1] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[0].pos[1] && m_pVertexArray[i].pos[1] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[1].pos[1])
 				{
 					return true;
 				}

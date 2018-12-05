@@ -12,7 +12,7 @@
 /// <param name="size">ÉTÉCÉY</param>
 Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 {
-	LoadTexture(L"Texture/NOKONOKO.png");
+	LoadTexture(L"Texture/NOKONOKO1.png");
 	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
@@ -116,7 +116,7 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 			if (UpCheck(pPlayer))
 			{
 				pPlayer->MiniJumpStart();
-				LoadTexture(L"Texture/KOURA.png");
+				LoadTexture(L"Texture/KOURA1.png");
 				m_NokonokoState = NokonokoState::KOURA_STOP;
 				m_InputFlag.AllReSet();
 				StateKeepFlameStart();

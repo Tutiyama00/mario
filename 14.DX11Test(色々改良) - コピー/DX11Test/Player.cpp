@@ -16,7 +16,7 @@
 /// <param name="size">ÉTÉCÉY</param>
 Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 {
-	LoadTexture(L"Texture/Mario.png");
+	LoadTexture(L"Texture/MARIO_STAND.png");
 	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 

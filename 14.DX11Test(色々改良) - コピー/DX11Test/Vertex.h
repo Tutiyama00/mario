@@ -59,5 +59,6 @@ public:
 	virtual bool CollisionCheck(Polygon* checkPolygon); //衝突判定
 
 private:
-	float m_DiagonalLength = 0; //この四角形の対角線の長さ
+	float m_DiagonalLength = 0.0f; //この四角形の対角線の長さ
+	float m_ColAdjustedValue = 0.001f;  //衝突の調整値
 };

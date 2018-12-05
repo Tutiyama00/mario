@@ -97,7 +97,7 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag)
 /// </summary>
 void PlayScene::MakeStageObj()
 {
-	m_pBlocks = new Characters<Block>(L"Texture/Block2.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlocks = new Characters<Block>(L"Texture/BLOCK.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
 	int halfHeight = m_pStage->GetStageHeight() / 2;
@@ -405,7 +405,6 @@ void PlayScene::Draw()
 {
 	m_pCamera->Shoot(m_pPlayer->GetxPos());
 	m_pPlayer->ThisObjRender();
-	m_pBlocks->ThisObjRender();
 	m_pGoal->ThisObjRender();
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
@@ -417,4 +416,5 @@ void PlayScene::Draw()
 	{
 		m_pNokonokoVector[i]->ThisObjRender();
 	}
+	m_pBlocks->ThisObjRender();
 }
