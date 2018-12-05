@@ -1,5 +1,6 @@
 #include"Nokonoko.h"
 #include"Player.h"
+#include"Animation.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -17,6 +18,10 @@ Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
+
+	m_pWalkAnimation = new Animation();
+	m_pWalkAnimation->AddAnimResource(L"Texture/NOKONOKO1.png");
+	m_pWalkAnimation->AddAnimResource(L"Texture/NOKONOKO2.png");
 }
 
 
@@ -87,6 +92,15 @@ void Nokonoko::Move()
 	if (m_MoveObjState == MoveObjState::ON_THE_GROUND)
 	{
 		m_MoveObjState = MoveObjState::CHECK_GROUND;
+	}
+
+	if (m_NokonokoState == NokonokoState::NORMAL)
+	{
+		AnimResource animResource;
+		animResource = m_pWalkAnimation->AnimPlay();
+
+		m_pMainTextureResource = animResource.m_pAnimTextureResource;
+		m_pMainTextureSRV      = animResource.m_pAnimTextureSRV;
 	}
 }
 

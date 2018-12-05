@@ -1,5 +1,5 @@
 #include"Kuribo.h"
-
+#include"Animation.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -17,6 +17,10 @@ Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
+
+	m_pWalkAnimation = new Animation();
+	m_pWalkAnimation->AddAnimResource(L"Texture/KURIBO1.png");
+	m_pWalkAnimation->AddAnimResource(L"Texture/KURIBO2.png");
 }
 
 
@@ -67,4 +71,10 @@ void Kuribo::Move()
 	{
 		m_MoveObjState = MoveObjState::CHECK_GROUND;
 	}
+
+	AnimResource animResource;
+	animResource = m_pWalkAnimation->AnimPlay();
+
+	m_pMainTextureResource = animResource.m_pAnimTextureResource;
+	m_pMainTextureSRV = animResource.m_pAnimTextureSRV;
 }

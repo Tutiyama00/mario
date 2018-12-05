@@ -3,6 +3,9 @@
 #include"Enemy.h"
 #include"IMoveObj.h"
 
+/* ‘O•ûéŒ¾ */
+class Animation;
+
 class Kuribo : public Enemy
 {
 public:
@@ -11,6 +14,9 @@ public:
 
 	/*---Enemy---*/
 	void Move();
+
+private:
+	Animation* m_pWalkAnimation = nullptr;
 
 protected:
 	/*---Enemy---*/
