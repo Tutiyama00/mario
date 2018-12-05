@@ -29,7 +29,7 @@ public:
 
 private:
 	vector<AnimResource> m_AnimRsrcVector;           //アニメーション用のリソース構造体の配列
-	unsigned int m_AnimIntervalFlame       = 5;      //アニメーションとアニメ―ションの間のフレーム数
+	unsigned int m_AnimIntervalFlame       = 10;      //アニメーションとアニメ―ションの間のフレーム数
 	unsigned int m_FlameCount              = 0;      //比較用のフレームカウンタ
 	unsigned int m_NowAnimNamber           = 0;      //現在のアニメーションの番号（配列番号）
 	bool         m_AnimPlayFlag            = false;  //アニメーション中かどうかのフラグ（true＝プレイ中、false＝プレイしていない）

@@ -21,9 +21,10 @@ Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	m_pAnimation = new Animation();
-	m_pAnimation->AddAnimResource(L"Texture/Mario.png");
-	m_pAnimation->AddAnimResource(L"Texture/KURIBO.png");
-	m_pAnimation->AddAnimResource(L"Texture/NOKONOKO.png");
+	m_pAnimation->AddAnimResource(L"Texture/MARIO_STAND.png");
+	m_pAnimation->AddAnimResource(L"Texture/MARIO_RUN1.png");
+	m_pAnimation->AddAnimResource(L"Texture/MARIO_RUN2.png");
+	m_pAnimation->AddAnimResource(L"Texture/MARIO_RUN3.png");
 }
 
 Player::~Player()
@@ -191,9 +192,16 @@ void Player::Move()
 /// </summary>
 void Player::ThisObjRender()
 {
-	AnimResource animRsc = m_pAnimation->AnimPlay();
-	m_pMainTextureResource = animRsc.m_pAnimTextureResource;
-	m_pMainTextureSRV = animRsc.m_pAnimTextureSRV;
+	if (m_NowWalkSpeed > 0)
+	{
+		AnimResource animRsc = m_pAnimation->AnimPlay();
+		m_pMainTextureResource = animRsc.m_pAnimTextureResource;
+		m_pMainTextureSRV = animRsc.m_pAnimTextureSRV;
+	}
+	else
+	{
+		m_pAnimation->AnimReset();
+	}
 
 	Render(m_pVertexArray, m_IndexArraySize);
 }

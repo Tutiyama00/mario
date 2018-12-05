@@ -26,12 +26,19 @@ AnimResource Animation::AnimPlay()
 	return m_AnimRsrcVector[m_NowAnimNamber];
 }
 
+/// <summary>
+/// アニメーションを初期状態に戻す
+/// </summary>
 void Animation::AnimReset()
 {
-	m_FlameCount = 0;
+	m_FlameCount    = 0;
 	m_NowAnimNamber = 0;
 }
 
+/// <summary>
+/// アニメーション１カットを追加する
+/// </summary>
+/// <param name="pFileNames">追加したいカットのテクスチャファイルのパス</param>
 void Animation::AddAnimResource(const wchar_t* pFileNames)
 {
 	//テクスチャの読み込み
@@ -47,6 +54,7 @@ void Animation::AddAnimResource(const wchar_t* pFileNames)
 		MessageBox(NULL, "Error : CreateWICTextureFromFile() Anime Failed.", "ERRER", MB_OK);
 	}
 
+	/* 配列に追加 */
 	m_AnimRsrcVector.push_back(animResource);
 
 
