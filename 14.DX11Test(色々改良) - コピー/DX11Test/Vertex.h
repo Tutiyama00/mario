@@ -60,5 +60,7 @@ public:
 
 private:
 	float m_DiagonalLength = 0.0f; //この四角形の対角線の長さ
-	float m_ColAdjustedValue = 0.001f;  //衝突の調整値
+
+protected:
+	float m_ColAdjustedValue = 0.0f;  //衝突の調整値
 };
