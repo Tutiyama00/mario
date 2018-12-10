@@ -23,6 +23,13 @@ Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 	m_pWalkAnimation->AddAnimResource(L"Texture/KURIBO2.png");
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
+Kuribo::~Kuribo()
+{
+	if (m_pWalkAnimation != nullptr) { delete m_pWalkAnimation; m_pWalkAnimation = nullptr; }
+}
 
 /*-------------------------------------         ----------------------------------*/
 /*-------------------------------------  Enemy  ----------------------------------*/
@@ -72,9 +79,29 @@ void Kuribo::Move()
 		m_MoveObjState = MoveObjState::CHECK_GROUND;
 	}
 
-	AnimResource animResource;
-	animResource = m_pWalkAnimation->AnimPlay();
+   /* AnimResource pAnimResource;
+	pAnimResource = m_pWalkAnimation->AnimPlay();
 
-	m_pMainTextureResource = animResource.m_pAnimTextureResource;
-	m_pMainTextureSRV = animResource.m_pAnimTextureSRV;
+	m_pMainTextureResource = pAnimResource->m_pAnimTextureResource;
+	m_pMainTextureSRV = pAnimResource->m_pAnimTextureSRV;*/
+}
+
+void Kuribo::ThisObjRender()
+{
+	if (!m_LivingFlag) { return; }
+
+	const AnimResource* pAnimResource = nullptr;
+
+	/*pAnimResource          = m_pWalkAnimation->AnimPlay();
+
+	m_pMainTextureResource = pAnimResource->m_pAnimTextureResource;
+	m_pMainTextureSRV      = pAnimResource->m_pAnimTextureSRV;*/
+
+	Render(m_pVertexArray, m_IndexArraySize);
+
+	if (pAnimResource != nullptr)
+	{
+		delete pAnimResource;
+		pAnimResource = nullptr;
+	}
 }

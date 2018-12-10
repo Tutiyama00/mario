@@ -88,4 +88,8 @@ private:
 	float        m_SlipStopThreshold  = 0.001f;   //ŠŠ‚è‚ð‚O‚É‚·‚é‚µ‚«‚¢’l
 
 	Animation* m_pAnimation = nullptr;
+
+
+	ID3D11Resource*           m_pAnimTextureResource = nullptr;
+	ID3D11ShaderResourceView* m_pAnimTextureSRV = nullptr;
 };

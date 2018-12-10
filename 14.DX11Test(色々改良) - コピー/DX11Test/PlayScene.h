@@ -29,9 +29,9 @@ public:
 public:
 	/* getter */
 	const Player*  GetPlayer       ()const { return m_pPlayer; }
-	int            GetNowWorldLevel()const { return m_NowWorldLevel; }
-	int            GetNowStageLevel()const { return m_NowStageLevel; }
-	DWORD          GetStageTime    ()const { return m_pStage->GetStageTime(); }
+	const int      GetNowWorldLevel()const { return m_NowWorldLevel; }
+	const int      GetNowStageLevel()const { return m_NowStageLevel; }
+	const DWORD    GetStageTime    ()const { return m_pStage->GetStageTime(); }
 
 private:
 	void MakeStageObj  ();  //ステージオブジェクトの生成

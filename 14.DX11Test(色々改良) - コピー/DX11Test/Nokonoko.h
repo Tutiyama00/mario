@@ -16,12 +16,13 @@ class Nokonoko : public Enemy
 {
 public:
 	Nokonoko(Vector3 pos, Vector2 size);
-	~Nokonoko() {};
+	~Nokonoko();
 
 	/*---Enemy---*/
 	void Move();
 	virtual void CheckPlayer(Player* pPlayer);
 	virtual void CheckEnemy(Enemy* pEnemy);
+	void ThisObjRender();
 
 public:
 	/* getter */

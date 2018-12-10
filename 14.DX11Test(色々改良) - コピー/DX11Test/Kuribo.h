@@ -10,10 +10,11 @@ class Kuribo : public Enemy
 {
 public:
 	Kuribo(Vector3 pos, Vector2 size);
-	~Kuribo() {};
+	~Kuribo();
 
 	/*---Enemy---*/
 	void Move();
+	void ThisObjRender();
 
 private:
 	Animation* m_pWalkAnimation = nullptr;

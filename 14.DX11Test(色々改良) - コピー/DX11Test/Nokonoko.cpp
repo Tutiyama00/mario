@@ -24,6 +24,13 @@ Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 	m_pWalkAnimation->AddAnimResource(L"Texture/NOKONOKO2.png");
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
+Nokonoko::~Nokonoko()
+{
+	if (m_pWalkAnimation != nullptr) { delete m_pWalkAnimation; m_pWalkAnimation = nullptr; }
+}
 
 /*-------------------------------------         ----------------------------------*/
 /*-------------------------------------  Enemy  ----------------------------------*/
@@ -92,15 +99,6 @@ void Nokonoko::Move()
 	if (m_MoveObjState == MoveObjState::ON_THE_GROUND)
 	{
 		m_MoveObjState = MoveObjState::CHECK_GROUND;
-	}
-
-	if (m_NokonokoState == NokonokoState::NORMAL)
-	{
-		AnimResource animResource;
-		animResource = m_pWalkAnimation->AnimPlay();
-
-		m_pMainTextureResource = animResource.m_pAnimTextureResource;
-		m_pMainTextureSRV      = animResource.m_pAnimTextureSRV;
 	}
 }
 
@@ -254,6 +252,22 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 	}
 }
 
+void Nokonoko::ThisObjRender()
+{
+	if (!m_LivingFlag) { return; }
+
+	AnimResource animResource;
+
+	if (m_NokonokoState == NokonokoState::NORMAL)
+	{
+		//animResource = m_pWalkAnimation->AnimPlay();
+
+		//m_pMainTextureResource = animResource.m_pAnimTextureResource;
+		//m_pMainTextureSRV = animResource.m_pAnimTextureSRV;
+	}
+
+	Render(m_pVertexArray, m_IndexArraySize);
+}
 
 /*#####################################           #####################################*/
 /*#####################################  PRIVATE  #####################################*/

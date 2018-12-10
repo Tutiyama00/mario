@@ -19,7 +19,7 @@ public:
 	virtual void CheckEnemy(Enemy* pEnemy);
 
 	/*---RenderObj---*/
-	void ThisObjRender();
+	virtual void ThisObjRender();
 	void ThisObjCreateBuffer();
 
 	/*---IMoveObj---*/

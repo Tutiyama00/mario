@@ -194,9 +194,9 @@ void Player::ThisObjRender()
 {
 	if (m_NowWalkSpeed > 0)
 	{
-		AnimResource animRsc = m_pAnimation->AnimPlay();
-		m_pMainTextureResource = animRsc.m_pAnimTextureResource;
-		m_pMainTextureSRV = animRsc.m_pAnimTextureSRV;
+		m_pAnimation->AnimPlay();
+		m_pMainTextureResource = m_pAnimation->GetAnimTextureResource();
+		m_pMainTextureSRV      = m_pAnimation->GetAnimTextureSRV();
 	}
 	else
 	{

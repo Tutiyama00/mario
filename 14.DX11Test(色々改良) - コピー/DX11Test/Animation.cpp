@@ -7,7 +7,7 @@
 /// アニメーションをプレイする
 /// </summary>
 /// <returns>このフレームのリソース</returns>
-AnimResource Animation::AnimPlay()
+void Animation::AnimPlay()
 {
 	unsigned int animAmount = 0;
 
@@ -22,8 +22,6 @@ AnimResource Animation::AnimPlay()
 
 	/* 現在のアニメーション番号　＝　総アニメーション数　％　１アニメーション数 */
 	m_NowAnimNamber = animAmount % m_AnimRsrcVector.size();
-
-	return m_AnimRsrcVector[m_NowAnimNamber];
 }
 
 /// <summary>
