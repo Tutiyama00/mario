@@ -26,6 +26,7 @@ Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 	m_pWalkAnimation = new Animation();
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetNOKONOKO1_TR(), TextureData::Instance()->GetNOKONOKO1_TSRV());
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetNOKONOKO2_TR(), TextureData::Instance()->GetNOKONOKO2_TSRV());
+	m_pWalkAnimation->SetAnimIntervalFlame(25);
 }
 
 /// <summary>
@@ -80,11 +81,11 @@ void Nokonoko::Move()
 	{
 		if (m_NokonokoState == NokonokoState::KOURA_RUN)
 		{
-			Walk(m_MaxWalkSpeed * 7);
+			m_NowWalkSpeed = m_MaxWalkSpeed * 7;
 		}
 		else
 		{
-			Walk(m_MaxWalkSpeed);
+			m_NowWalkSpeed = m_MaxWalkSpeed;
 		}
 	}
 
@@ -92,12 +93,17 @@ void Nokonoko::Move()
 	{
 		if (m_NokonokoState == NokonokoState::KOURA_RUN)
 		{
-			Walk(-m_MaxWalkSpeed * 7);
+			m_NowWalkSpeed = -m_MaxWalkSpeed * 7;
 		}
 		else
 		{
-			Walk(-m_MaxWalkSpeed);
+			m_NowWalkSpeed = -m_MaxWalkSpeed;
 		}
+	}
+
+	if (m_NokonokoState != NokonokoState::KOURA_STOP)
+	{
+		Walk(m_NowWalkSpeed);
 	}
 
 	if (m_MoveObjState == MoveObjState::ON_THE_GROUND)
@@ -255,18 +261,36 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 	}
 }
 
+/// <summary>
+/// •`‰æ
+/// </summary>
 void Nokonoko::ThisObjRender()
 {
 	if (!m_LivingFlag) { return; }
 
-	AnimResource animResource;
-
 	if (m_NokonokoState == NokonokoState::NORMAL)
 	{
-		//animResource = m_pWalkAnimation->AnimPlay();
+		m_pWalkAnimation->AnimPlay();
+		m_pMainTextureResource = m_pWalkAnimation->GetAnimTextureResource();
+		m_pMainTextureSRV = m_pWalkAnimation->GetAnimTextureSRV();
 
-		//m_pMainTextureResource = animResource.m_pAnimTextureResource;
-		//m_pMainTextureSRV = animResource.m_pAnimTextureSRV;
+		/* ‰E‚Æ¶‚Ç‚¿‚ç‚ÉŒü‚¢‚Ä‚¢‚é‚Ì‚©‚Ì”»’è */
+		if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
+		{
+			OutputDebugString("NOKONOKO RIGHT");
+
+			ParallelInverted();
+		}
+		else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
+		{
+			OutputDebugString("NOKONOKO LEFT");
+			ParallelInverted();
+		}
+	}
+	else
+	{
+		m_pMainTextureResource = TextureData::Instance()->GetKOURA1_TR();
+		m_pMainTextureSRV = TextureData::Instance()->GetKOURA1_TSRV();
 	}
 
 	Render(m_pVertexArray, m_IndexArraySize);

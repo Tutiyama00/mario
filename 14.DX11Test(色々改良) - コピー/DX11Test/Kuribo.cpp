@@ -24,6 +24,7 @@ Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 	m_pWalkAnimation = new Animation();
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetKURIBO1_TR(), TextureData::Instance()->GetKURIBO1_TSRV());
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetKURIBO2_TR(), TextureData::Instance()->GetKURIBO2_TSRV());
+	m_pWalkAnimation->SetAnimIntervalFlame(25);
 }
 
 /// <summary>
@@ -69,13 +70,15 @@ void Kuribo::Move()
 
 	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
-		Walk(m_MaxWalkSpeed);
+		m_NowWalkSpeed = m_MaxWalkSpeed;
 	}
 
 	if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
 	{
-		Walk(-m_MaxWalkSpeed);
+		m_NowWalkSpeed = -m_MaxWalkSpeed;
 	}
+
+	Walk(m_NowWalkSpeed);
 
 	if (m_MoveObjState == MoveObjState::ON_THE_GROUND)
 	{
@@ -86,6 +89,20 @@ void Kuribo::Move()
 void Kuribo::ThisObjRender()
 {
 	if (!m_LivingFlag) { return; }
+
+	m_pWalkAnimation->AnimPlay();
+	m_pMainTextureResource = m_pWalkAnimation->GetAnimTextureResource();
+	m_pMainTextureSRV = m_pWalkAnimation->GetAnimTextureSRV();
+
+	/* ‰E‚Æ¶‚Ç‚¿‚ç‚ÉŒü‚¢‚Ä‚¢‚é‚Ì‚©‚Ì”»’è */
+	if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
+	{
+		ParallelInverted();
+	}
+	else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
+	{
+		ParallelInverted();
+	}
 
 	Render(m_pVertexArray, m_IndexArraySize);
 }

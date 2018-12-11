@@ -66,10 +66,6 @@ void Enemy::CheckEnemy(Enemy* pEnemy)
 				/* もしそうなら左に進ませる */
 				enemyInput.ReSet(InputFlagCode::INPUT_RIGHT);
 				enemyInput.Set(InputFlagCode::INPUT_LEFT);
-
-				/* 自分は右に進む */
-				//m_InputFlag.ReSet(InputFlagCode::INPUT_LEFT);
-				//m_InputFlag.Set(InputFlagCode::INPUT_RIGHT);
 			}
 		}
 
@@ -82,10 +78,6 @@ void Enemy::CheckEnemy(Enemy* pEnemy)
 				/* もしそうなら右に進ませる */
 				enemyInput.ReSet(InputFlagCode::INPUT_LEFT);
 				enemyInput.Set(InputFlagCode::INPUT_RIGHT);
-
-				/* 自分は左に進む */
-				//m_InputFlag.ReSet(InputFlagCode::INPUT_RIGHT);
-				//m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
 			}
 		}
 
