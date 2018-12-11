@@ -9,10 +9,12 @@ public:
 	Image(Vector3 pos, Vector2 size, ID3D11Resource* pTR, ID3D11ShaderResourceView* pTSRV);
 	~Image() {};
 
-	/*---RenderObj---*/
-	void ThisObjRender();
-	void ThisObjCreateBuffer();
-
 protected:
 	virtual void Abstract() {};
+
+
+/*-------RenderObj------*/
+public:
+	void ThisObjRender();
+	void ThisObjCreateBuffer();
 };

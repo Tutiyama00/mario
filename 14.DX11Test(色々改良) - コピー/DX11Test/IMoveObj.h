@@ -34,20 +34,18 @@ protected:
 
 	MoveObjState m_MoveObjState;  //ステート
 
-	InputFlag m_InputFlag;
+	InputFlag    m_InputFlag;  //現在の入力状態
 
-	int m_MaxJumpLevel;           //ジャンプのレベルカウントの上限
-	int m_JumpLevelCount;         //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
-	int m_JumpAbjustPoint;        //ジャンプ力計算に使う調整値
-
+	int   m_MaxJumpLevel;     //ジャンプのレベルカウントの上限
+	int   m_JumpLevelCount;   //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
+	int   m_JumpAbjustPoint;  //ジャンプ力計算に使う調整値
+	bool  m_JumpFlag;             //ジャンプ可能かどうかのフラグ
+	float m_JumpPower;            //ジャンプ量
 
 	float m_MaxWalkSpeed;          //歩く最大スピード
 	float m_WalkFluctuationAmount; //歩くスピードを変える
+	float m_NowWalkSpeed;         //今の歩く速度
 
 	float m_SlipStopAmount;       //滑りを抑制する値
 	float m_SlipStopThreshold;    //滑りを０にするしきい値
-
-	bool  m_JumpFlag;             //ジャンプ可能かどうかのフラグ
-	float m_NowWalkSpeed;         //今の歩く速度
-	float m_JumpPower;            //ジャンプ量
 };

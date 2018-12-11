@@ -9,12 +9,11 @@ public:
 	Goal(Vector3 pos, Vector2 size);
 	~Goal();
 
-	/*---RenderObj---*/
+/*------RenderObj------*/
+public:
 	void ThisObjRender();
 	void ThisObjCreateBuffer();
 
 protected:
-
-	/*---RenderObj---*/
 	void Abstract() {};
 };

@@ -59,18 +59,6 @@ public:
 		}
 	}
 
-	//---RenderObj---
-	void ThisObjRender()
-	{
-		Render(m_pVertexArray, m_IndexArraySize);
-	}
-
-	void ThisObjCreateBuffer()
-	{
-		SetVertexIndex();
-		CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
-	}
-
 public:
 	std::vector<T*> m_ObjectVector;
 
@@ -108,12 +96,26 @@ private:
 		}
 	}
 
-	//---RenderObj---
-	void Abstract() {};
-
 private:
 	vertex*                   m_pVertexArray    = nullptr;
 	UINT                      m_VertexArraySize = 0;
 	WORD*                     m_pIndexArray     = nullptr;
 	UINT                      m_IndexArraySize  = 0;
+
+
+/*------RenderObj------*/
+public:
+	void ThisObjRender()
+	{
+		Render(m_pVertexArray, m_IndexArraySize);
+	}
+
+	void ThisObjCreateBuffer()
+	{
+		SetVertexIndex();
+		CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+	}
+
+private:
+	void Abstract() {};
 };

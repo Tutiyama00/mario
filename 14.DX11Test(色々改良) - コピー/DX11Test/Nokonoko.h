@@ -18,12 +18,6 @@ public:
 	Nokonoko(Vector3 pos, Vector2 size);
 	~Nokonoko();
 
-	/*---Enemy---*/
-	void Move();
-	virtual void CheckPlayer(Player* pPlayer);
-	virtual void CheckEnemy(Enemy* pEnemy);
-	void ThisObjRender();
-
 public:
 	/* getter */
 	NokonokoState GetNokonokoState()const { return m_NokonokoState; }
@@ -39,7 +33,14 @@ private:
 	bool                m_StateKeepFlag       = false;    //ステートの変わり目中かどうかのフラグ
 	Animation*          m_pWalkAnimation      = nullptr;  //歩くアニメーション
 
+
+/*------Enemy------*/
+public:
+	void Move();
+	virtual void CheckPlayer(Player* pPlayer);
+	virtual void CheckEnemy(Enemy* pEnemy);
+	void ThisObjRender();
+
 protected:
-	/*---Enemy---*/
 	void Abstract() {};
 };

@@ -15,10 +15,12 @@ public:
 	Block(Vector3 pos, Vector2 size);
 	~Block() {};
 
-	/*---NotPlayer---*/
-	void CheckPlayer(Player* pPlayer);
-	void CheckEnemy (Enemy*  pEnemy );
-
 protected:
 	void Abstract() {};
+
+
+/*------NotPlayer------*/
+public:
+	void CheckPlayer(Player* pPlayer);
+	void CheckEnemy(Enemy*  pEnemy);
 };
