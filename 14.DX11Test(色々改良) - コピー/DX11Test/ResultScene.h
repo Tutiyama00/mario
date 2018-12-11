@@ -15,9 +15,6 @@ public:
 	void ChangeWorldNamber(int worldNamber, int stageNamber);
 	void ChangeMarioLife(UINT playerLife);
 
-	//---IGameScene---
-	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
-
 private:
 	Image*          m_pImageOfMario      = nullptr;
 	TextCharacters* m_pTextOfWORLD       = nullptr;
@@ -27,12 +24,15 @@ private:
 	unsigned int m_FlameCount = 0;  //シーンを遷移させるまでのカウント
 	const unsigned int M_CHANGE_FLAME_COUNT = 180;
 
+
+/*------IGameScene------*/
+public:
+	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
+
 protected:
-	//---IGameScene---
 	void UpDateGame(InputFlag inputFlag);
 	void Draw();
 
 protected:
-	//---IGameScene---
 	GameState m_NextGameState;
 };

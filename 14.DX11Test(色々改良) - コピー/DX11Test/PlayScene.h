@@ -23,9 +23,6 @@ public:
 
 	void KillPlayer();
 
-	//---IGameScene---
-	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
-
 public:
 	/* getter */
 	const Player*  GetPlayer       ()const { return m_pPlayer; }
@@ -59,12 +56,15 @@ private:
 	int       m_NowStageLevel   = 0;       //現在のステージ
 	const int M_IN_STAGE_AMOUNT = 4;       //一つのワールドにある面の数
 
+
+/*------IGameScene------*/
+public:
+	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
+
 protected:
-	//---IGameScene---
 	void UpDateGame(InputFlag inputFlag);
 	void Draw();
 
 protected:
-	//---IGameScene---
 	GameState m_NextGameState;
 };

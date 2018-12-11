@@ -21,9 +21,6 @@ public:
 	void SetTimer(DWORD time);
 	DWORD GetNowTime() { return m_pTimer->GetCount(); }
 
-	//---IGameScene---
-	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
-
 private:
 	Timer*          m_pTimer             = nullptr;
 	TextCharacters* m_pTextOfMARIO       = nullptr;
@@ -35,12 +32,15 @@ private:
 	TextCharacters* m_pTextOfScoreNamber = nullptr;
 	Image*          m_pImageOfCoin       = nullptr;
 
+
+/*------IGameScene------*/
+public:
+	GameState UpDateScene(InputFlag inputFlag);  //このシーンを更新する。戻り値は、次に行くべきステート
+
 protected:
-	//---IGameScene---
 	void UpDateGame(InputFlag inputFlag);
 	void Draw();
 
 protected:
-	//---IGameScene---
 	GameState m_NextGameState;
 };
