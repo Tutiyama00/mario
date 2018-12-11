@@ -81,30 +81,11 @@ void Kuribo::Move()
 	{
 		m_MoveObjState = MoveObjState::CHECK_GROUND;
 	}
-
-   /* AnimResource pAnimResource;
-	pAnimResource = m_pWalkAnimation->AnimPlay();
-
-	m_pMainTextureResource = pAnimResource->m_pAnimTextureResource;
-	m_pMainTextureSRV = pAnimResource->m_pAnimTextureSRV;*/
 }
 
 void Kuribo::ThisObjRender()
 {
 	if (!m_LivingFlag) { return; }
 
-	const AnimResource* pAnimResource = nullptr;
-
-	/*pAnimResource          = m_pWalkAnimation->AnimPlay();
-
-	m_pMainTextureResource = pAnimResource->m_pAnimTextureResource;
-	m_pMainTextureSRV      = pAnimResource->m_pAnimTextureSRV;*/
-
 	Render(m_pVertexArray, m_IndexArraySize);
-
-	if (pAnimResource != nullptr)
-	{
-		delete pAnimResource;
-		pAnimResource = nullptr;
-	}
 }

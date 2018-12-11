@@ -3,10 +3,6 @@
 #include"Vertex.h"
 #include"Math.h"
 
-/*######################  Polygon  ###################################*/
-
-Polygon::~Polygon(){}
-
 /*######################  Square  ###################################*/
 
 /*----------------------  public   -----------------------------------*/
@@ -78,4 +74,43 @@ bool Square::CollisionCheck(Polygon* checkPolygon)
 	}
 
 	return false;
+}
+
+/// <summary>
+/// ïΩçsÇ…îΩì]Ç≥ÇπÇÈ
+/// </summary>
+void Square::ParallelInverted()
+{
+	if (m_ParallelInvertedFlag)
+	{
+		m_ParallelInvertedFlag = false;
+		/* å≥ÇÃèÛë‘Ç…ñﬂÇ∑ */
+		m_pVertexArray[0].tex[0] = 0;
+		m_pVertexArray[0].tex[1] = 0;
+
+		m_pVertexArray[1].tex[0] = 1;
+		m_pVertexArray[1].tex[1] = 1;
+
+		m_pVertexArray[2].tex[0] = 0;
+		m_pVertexArray[2].tex[1] = 1;
+
+		m_pVertexArray[3].tex[0] = 1;
+		m_pVertexArray[3].tex[1] = 0;
+	}
+	else
+	{
+		m_ParallelInvertedFlag = true;
+		/* îΩì]Ç≥ÇπÇÈ */
+		m_pVertexArray[0].tex[0] = 1;
+		m_pVertexArray[0].tex[1] = 0;
+
+		m_pVertexArray[1].tex[0] = 0;
+		m_pVertexArray[1].tex[1] = 1;
+
+		m_pVertexArray[2].tex[0] = 1;
+		m_pVertexArray[2].tex[1] = 1;
+
+		m_pVertexArray[3].tex[0] = 0;
+		m_pVertexArray[3].tex[1] = 0;
+	}
 }

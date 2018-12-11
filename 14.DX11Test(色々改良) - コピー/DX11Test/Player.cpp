@@ -23,16 +23,17 @@ Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 	m_pMainTextureResource = TextureData::Instance()->GetMARIO_STAND_TR();
 	m_pMainTextureSRV = TextureData::Instance()->GetMARIO_STAND_TSRV();
 
-	m_pAnimation = new Animation();
-	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_STAND_TR(), TextureData::Instance()->GetMARIO_STAND_TSRV());
-	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN1_TR(), TextureData::Instance()->GetMARIO_RUN1_TSRV());
-	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN2_TR(), TextureData::Instance()->GetMARIO_RUN2_TSRV());
-	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN3_TR(), TextureData::Instance()->GetMARIO_RUN3_TSRV());
+	/* 走るアニメーションの登録 */
+	m_pRunAnimation = new Animation();
+	m_pRunAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_STAND_TR(), TextureData::Instance()->GetMARIO_STAND_TSRV());
+	m_pRunAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN1_TR() , TextureData::Instance()->GetMARIO_RUN1_TSRV());
+	m_pRunAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN2_TR() , TextureData::Instance()->GetMARIO_RUN2_TSRV());
+	m_pRunAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN3_TR() , TextureData::Instance()->GetMARIO_RUN3_TSRV());
 }
 
 Player::~Player()
 {
-	if (m_pAnimation != nullptr) { delete m_pAnimation; m_pAnimation = nullptr; }
+	if (m_pRunAnimation != nullptr) { delete m_pRunAnimation; m_pRunAnimation = nullptr; }
 }
 
 /// <summary>
@@ -67,14 +68,12 @@ void Player::Die()
 void Player::Move()
 {
 	/*生きていない状態だったらリターンして動かさない*/
-	if (!m_LivingFlag)
-	{
-		return;
-	}
+	if (!m_LivingFlag) { return; }
 
 	switch (m_MoveObjState)
 	{
 	case MoveObjState::CHECK_GROUND:
+
 		m_MoveObjState = MoveObjState::FALL;
 
 	case MoveObjState::ON_THE_GROUND:
@@ -195,15 +194,40 @@ void Player::Move()
 /// </summary>
 void Player::ThisObjRender()
 {
-	if (m_NowWalkSpeed > 0)
+	/* 描画するテクスチャの設定 */
+	switch (m_MoveObjState)
 	{
-		m_pAnimation->AnimPlay();
-		m_pMainTextureResource = m_pAnimation->GetAnimTextureResource();
-		m_pMainTextureSRV      = m_pAnimation->GetAnimTextureSRV();
+	case MoveObjState::CHECK_GROUND:
+
+		/* 歩いているのかの判定 */
+		if (m_NowWalkSpeed != 0)
+		{
+			m_pRunAnimation->AnimPlay();
+			m_pMainTextureResource = m_pRunAnimation->GetAnimTextureResource();
+			m_pMainTextureSRV = m_pRunAnimation->GetAnimTextureSRV();
+		}
+		else
+		{
+			m_pRunAnimation->AnimReset();
+			m_pMainTextureResource = TextureData::Instance()->GetMARIO_STAND_TR();
+			m_pMainTextureSRV = TextureData::Instance()->GetMARIO_STAND_TSRV();
+		}
+
+		break;
+
+	default:
+		m_pMainTextureResource = TextureData::Instance()->GetMARIO_JUMP_TR();
+		m_pMainTextureSRV=TextureData::Instance()->GetMARIO_JUMP_TSRV();
 	}
-	else
+
+	/* 右と左どちらに向いているのかの判定 */
+	if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
 	{
-		m_pAnimation->AnimReset();
+		ParallelInverted();
+	}
+	else if(m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
+	{
+		ParallelInverted();
 	}
 
 	Render(m_pVertexArray, m_IndexArraySize);
@@ -318,6 +342,9 @@ void Player::Fall()
 	}
 }
 
+/// <summary>
+/// 小ジャンプの開始
+/// </summary>
 void Player::MiniJumpStart()
 {
 	m_MiniJumpFlag   = true;
@@ -327,6 +354,10 @@ void Player::MiniJumpStart()
 	m_JumpLevelCount = M_MINI_JUMP_COUNT_MAX;
 }
 
+/// <summary>
+/// 小ジャンプ
+/// </summary>
+/// <returns></returns>
 bool Player::MiniJump()
 {
 	if (m_MiniJumpCount <= M_MINI_JUMP_COUNT_MAX)

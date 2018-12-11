@@ -19,7 +19,7 @@ class Polygon
 {
 public:
 	virtual void Abstract() = 0;  //純粋仮想関数（これによってこのクラスはインスタンスできない)
-	virtual ~Polygon();           //デストラクタ←ここでカラ定義
+	virtual ~Polygon() {};           //デストラクタ←ここでカラ定義
 
 public:
 	float GetxPos() { return m_xPos; }
@@ -62,5 +62,9 @@ private:
 	float m_DiagonalLength = 0.0f; //この四角形の対角線の長さ
 
 protected:
+	void ParallelInverted();  //平行に反転させる
+
+protected:
 	float m_ColAdjustedValue = 0.0f;  //衝突の調整値
+	bool  m_ParallelInvertedFlag = false;  //平行反転させているのかのフラグ
 };
