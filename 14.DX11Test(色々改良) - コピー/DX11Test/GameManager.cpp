@@ -14,7 +14,7 @@
 #include"GameOverScene.h"
 #include"ParameterScene.h"
 #include"ResultScene.h"
-
+#include"TextureData.h"
 
 /*デストラクタ*/
 GameManager::~GameManager()
@@ -38,6 +38,8 @@ void GameManager::Initialize(HWND hwnd)
 	{
 		/* Dx11の初期化 */
 		Dx11::Instance()->Initialize(hwnd);
+
+		TextureData::Instance()->Initialize();
 
 		m_pFlag     = new InputFlag();
 		m_pDsound   = new Dsound(hwnd);

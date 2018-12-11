@@ -24,6 +24,12 @@ public:
 	ID3D11DeviceContext*     m_pDeviceContext = nullptr;        //描画処理を行うクラス。内部的には、レンダリングコマンドと呼ばれるバイナリデータを作成し、GPUに送る。
 	ID3D11Device*            m_pDevice        = nullptr;        //DirectX11の中心になるクラス。全体の管理とバッファ、シェーダ、テクスチャなどのリソース作成などを行う。
 
+	ID3D11Resource* Getaa()const { return aa; }
+	ID3D11ShaderResourceView* Getbb()const { return bb; }
+
+	ID3D11Resource* aa=nullptr;
+	ID3D11ShaderResourceView* bb = nullptr;
+
 private:
 	const UINT M_WINDOW_WIDTH  = 1000;
 	const UINT M_WINDOW_HEIGHT = 750;
@@ -46,7 +52,7 @@ private:
 	Dx11(const Dx11 &gameManager) {};
 	~Dx11();
 
-	HRESULT AllDelete();
+	void AllDelete();
 
 protected:
 	bool m_InitializedFlag = false;  //初期化しているかのフラグ（True＝初期化済み、False＝未初期化）

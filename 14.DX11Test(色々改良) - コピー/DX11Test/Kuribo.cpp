@@ -1,5 +1,6 @@
 #include"Kuribo.h"
 #include"Animation.h"
+#include"TextureData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -12,15 +13,17 @@
 /// <param name="size">ÉTÉCÉY</param>
 Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 {
-	LoadTexture(L"Texture/KURIBO1.png");
 	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+
+	m_pMainTextureResource = TextureData::Instance()->GetKURIBO1_TR();
+	m_pMainTextureSRV      = TextureData::Instance()->GetKURIBO1_TSRV();
 
 	m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
 
 	m_pWalkAnimation = new Animation();
-	m_pWalkAnimation->AddAnimResource(L"Texture/KURIBO1.png");
-	m_pWalkAnimation->AddAnimResource(L"Texture/KURIBO2.png");
+	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetKURIBO1_TR(), TextureData::Instance()->GetKURIBO1_TSRV());
+	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetKURIBO2_TR(), TextureData::Instance()->GetKURIBO2_TSRV());
 }
 
 /// <summary>

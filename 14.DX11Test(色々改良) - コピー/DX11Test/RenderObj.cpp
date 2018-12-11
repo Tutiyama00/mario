@@ -1,7 +1,7 @@
 #include"RenderObj.h"
 #include<d3dcompiler.h>
 #include"WICTextureLoader.h"
-#include "WICTextureLoader.cpp"
+//#include "WICTextureLoader.cpp"
 #include"Vertex.h"
 #include"Math.h"
 #include"Dx11.h"
@@ -29,31 +29,6 @@ RenderObj::~RenderObj()
 	if (m_pTextureVertexShader != nullptr) { m_pTextureVertexShader ->Release();  m_pTextureVertexShader = nullptr; }
 	if (m_pTexturePixelShader  != nullptr) { m_pTexturePixelShader  ->Release();  m_pTexturePixelShader  = nullptr; }
 	if (m_pTextureInputLayout  != nullptr) { m_pTextureInputLayout  ->Release();  m_pTextureInputLayout  = nullptr; }
-
-	if (m_pMainTextureResource != nullptr) { m_pMainTextureResource ->Release();  m_pMainTextureResource = nullptr; }
-	if (m_pMainTextureSRV      != nullptr) { m_pMainTextureSRV      ->Release();  m_pMainTextureSRV      = nullptr; }
-}
-
-/// <summary>
-/// テクスチャの読み込み
-/// </summary>
-/// <param name="pFileName">テクスチャファイルのパス</param>
-void RenderObj::LoadTexture(const wchar_t* pFileName)
-{
-	HRESULT hr = S_OK;
-
-	//テクスチャの読み込み
-	CoInitialize(NULL);   //COMライブラリの初期化が必要(絶対ここでしばらく詰んだ)
-
-	//テクスチャの読み込み
-	hr = DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, pFileName, &m_pMainTextureResource, &m_pMainTextureSRV);
-	if (FAILED(hr))
-	{
-		MessageBox(NULL, "Error : CreateWICTextureFromFile() Failed.", "ERRER", MB_OK);
-	}
-
-	//CoInitializeしたので呼ぶ
-	CoUninitialize();
 }
 
 /// <summary>

@@ -1,5 +1,5 @@
 #include"Goal.h"
-
+#include"TextureData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -13,9 +13,11 @@
 /// <param name="size">ÉTÉCÉY</param>
 Goal::Goal(Vector3 pos, Vector2 size) : Square(pos,size)
 {
-	LoadTexture(L"Texture/MARIO_GOAL.png");
 	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+
+	m_pMainTextureResource = TextureData::Instance()->GetGOAL_TR();
+	m_pMainTextureSRV      = TextureData::Instance()->GetGOAL_TSRV();
 }
 
 /// <summary>

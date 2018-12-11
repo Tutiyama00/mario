@@ -4,6 +4,7 @@
 #include"Flag.h"
 #include"Animation.h"
 #include<string>
+#include"TextureData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -16,15 +17,17 @@
 /// <param name="size">ÉTÉCÉY</param>
 Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 {
-	LoadTexture(L"Texture/MARIO_STAND.png");
 	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
+	m_pMainTextureResource = TextureData::Instance()->GetMARIO_STAND_TR();
+	m_pMainTextureSRV = TextureData::Instance()->GetMARIO_STAND_TSRV();
+
 	m_pAnimation = new Animation();
-	m_pAnimation->AddAnimResource(L"Texture/MARIO_STAND.png");
-	m_pAnimation->AddAnimResource(L"Texture/MARIO_RUN1.png");
-	m_pAnimation->AddAnimResource(L"Texture/MARIO_RUN2.png");
-	m_pAnimation->AddAnimResource(L"Texture/MARIO_RUN3.png");
+	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_STAND_TR(), TextureData::Instance()->GetMARIO_STAND_TSRV());
+	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN1_TR(), TextureData::Instance()->GetMARIO_RUN1_TSRV());
+	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN2_TR(), TextureData::Instance()->GetMARIO_RUN2_TSRV());
+	m_pAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN3_TR(), TextureData::Instance()->GetMARIO_RUN3_TSRV());
 }
 
 Player::~Player()

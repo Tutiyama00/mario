@@ -12,13 +12,6 @@ struct AnimResource
 public:
 	ID3D11Resource*           m_pAnimTextureResource = nullptr;
 	ID3D11ShaderResourceView* m_pAnimTextureSRV      = nullptr;
-
-public:
-	/*~AnimResource()
-	{
-		if (m_pAnimTextureResource != nullptr) { m_pAnimTextureResource->Release(); m_pAnimTextureResource = nullptr; }
-		if (m_pAnimTextureSRV      != nullptr) { m_pAnimTextureSRV     ->Release(); m_pAnimTextureSRV      = nullptr; }
-	}*/
 };
 
 class Animation
@@ -29,7 +22,7 @@ public:
 
 	void AnimPlay();
 	void AnimReset();
-	void AddAnimResource(const wchar_t* pFileNames);
+	void AddAnimResource(ID3D11Resource*  pTR, ID3D11ShaderResourceView* pTSVR);
 
 public:
 	/* getter */

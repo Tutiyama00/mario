@@ -11,6 +11,7 @@
 #include<string>
 #include"Kuribo.h"
 #include"Nokonoko.h"
+#include"TextureData.h"
 
 using namespace OriginalMath;
 
@@ -97,7 +98,7 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag)
 /// </summary>
 void PlayScene::MakeStageObj()
 {
-	m_pBlocks = new Characters<Block>(L"Texture/BLOCK.png", L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlocks = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),TextureData::Instance()->GetBLOCK_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
 	int halfHeight = m_pStage->GetStageHeight() / 2;

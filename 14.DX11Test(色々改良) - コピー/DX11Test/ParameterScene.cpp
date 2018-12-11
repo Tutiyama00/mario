@@ -7,6 +7,7 @@
 #include"Image.h"
 #include<string>
 #include"GameManager.h"
+#include"TextureData.h"
 
 /// <summary>
 /// コンストラクタ
@@ -40,7 +41,7 @@ ParameterScene::ParameterScene(GameState nowGameState)
 	m_pTextOfTimeNamber = new TextCharacters(pos, size, "   ", TPS_WHITE);
 
 	pos.x = -0.275f;
-	m_pImageOfCoin = new Image(pos, size, L"Texture/COIN1.png");
+	m_pImageOfCoin = new Image(pos, size, TextureData::Instance()->GetCOIN1_TR(), TextureData::Instance()->GetCOIN1_TSRV());
 
 	pos.x = -0.225f;
 	m_pTextOfCoinNamber = new TextCharacters(pos, size, "*00", TPS_WHITE);

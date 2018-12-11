@@ -146,6 +146,7 @@
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TextChar.cpp" />
     <ClCompile Include="TextCharacters.cpp" />
+    <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Vertex.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="TextChar.h" />
     <ClInclude Include="TextCharacters.h" />
+    <ClInclude Include="TextureData.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vertex.h" />

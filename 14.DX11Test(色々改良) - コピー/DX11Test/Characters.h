@@ -3,14 +3,17 @@
 #include"RenderObj.h"
 #include<vector>
 #include"Dx11.h"
+#include"TextureData.h"
 
 template<class T> class Characters : public RenderObj
 {
 public:
-	Characters(const wchar_t* pTextureFileName, LPCWSTR pVSFileName, LPCWSTR pPSFileName)
+	Characters(ID3D11Resource* pTR, ID3D11ShaderResourceView* pTSRV, LPCWSTR pVSFileName, LPCWSTR pPSFileName)
 	{
-		LoadTexture(pTextureFileName);
 		CreateShader(pVSFileName, pPSFileName);
+
+		m_pMainTextureResource = pTR;
+		m_pMainTextureSRV      = pTSRV;
 	}
 
 	~Characters()

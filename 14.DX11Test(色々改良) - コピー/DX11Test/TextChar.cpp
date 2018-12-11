@@ -1,5 +1,5 @@
 #include"TextChar.h"
-
+#include"TextureData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -15,12 +15,12 @@
 TextChar::TextChar(Vector3 pos, Vector2 size, LPCWSTR TPS_COLOR,char setChar)
 	     :Square(pos, size)
 {
-	LoadTexture(L"Texture/DOT_FONT.png");
 	CherTexSet(setChar);
 	CreateShader(L"Shader/TextVertexShader.vsh",TPS_COLOR);
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
-	HRESULT hr = S_OK;
+	m_pMainTextureResource = TextureData::Instance()->GetDOT_FONT_TR();
+	m_pMainTextureSRV      = TextureData::Instance()->GetDOT_FONT_TSRV();
 }
 
 /// <summary>

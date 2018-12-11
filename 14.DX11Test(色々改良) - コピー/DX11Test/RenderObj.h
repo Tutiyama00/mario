@@ -16,7 +16,6 @@ public:
 
 protected:
 	virtual void Abstract() = 0;  //純粋仮想関数（これによってこのクラスはインスタンスできない)
-	virtual void LoadTexture(const wchar_t* pFileName);
 	virtual void CreateShader(LPCWSTR pVSFileName, LPCWSTR pPSFileName);
 	virtual void Render(vertex* pVertexArray, UINT indexArraySize);
 	virtual void CreateBuffer(vertex* pVertexArray, UINT vertexArraySize, WORD* pIndexArray, UINT indexArraySize);

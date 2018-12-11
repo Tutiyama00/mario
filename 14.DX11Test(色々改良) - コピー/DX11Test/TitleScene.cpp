@@ -8,6 +8,7 @@
 #include"Characters.h"
 #include"Timer.h"
 #include"Image.h"
+#include"TextureData.h"
 
 /*コンストラクタ*/
 TitleScene::TitleScene()
@@ -18,7 +19,8 @@ TitleScene::TitleScene()
 	m_pCamera       = new Camera();
 
 	pos.z = 0.0f;
-	m_pImageOfTitle = new Image(pos, size, L"Texture/MARIO_TITLE_LOGO.png");
+	m_pImageOfTitle = new Image(pos, size, TextureData::Instance()->GetTITLE_LOGO_TR(), TextureData::Instance()->GetTITLE_LOGO_TSRV());
+
 	m_NextGameState = GameState::TITLE;
 
 	pos.x  = -0.45f;

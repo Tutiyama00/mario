@@ -37,25 +37,13 @@ void Animation::AnimReset()
 /// アニメーション１カットを追加する
 /// </summary>
 /// <param name="pFileNames">追加したいカットのテクスチャファイルのパス</param>
-void Animation::AddAnimResource(const wchar_t* pFileNames)
+void Animation::AddAnimResource(ID3D11Resource*  pTR, ID3D11ShaderResourceView* pTSVR)
 {
-	//テクスチャの読み込み
-	CoInitialize(NULL);   //COMライブラリの初期化が必要(絶対ここでしばらく詰んだ)
 	AnimResource animResource;
 
-	HRESULT hr = S_OK;
-
-	//テクスチャの読み込み
-	hr = DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, pFileNames, &animResource.m_pAnimTextureResource, &animResource.m_pAnimTextureSRV);
-	if (FAILED(hr))
-	{
-		MessageBox(NULL, "Error : CreateWICTextureFromFile() Anime Failed.", "ERRER", MB_OK);
-	}
+	animResource.m_pAnimTextureResource = pTR;
+	animResource.m_pAnimTextureSRV      = pTSVR;
 
 	/* 配列に追加 */
 	m_AnimRsrcVector.push_back(animResource);
-
-
-	//CoInitializeしたので呼ぶ
-	CoUninitialize();
 }

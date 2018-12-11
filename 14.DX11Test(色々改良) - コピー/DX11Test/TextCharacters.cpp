@@ -1,7 +1,7 @@
 #include"TextCharacters.h"
 #include"Characters.h"
 #include"TextChar.h"
-
+#include"TextureData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -16,7 +16,7 @@
 /// <param name="TPS_COLOR">文字の色（ピクセルシェーダのパス）</param>
 TextCharacters::TextCharacters(Vector3 pos, Vector2 size,std::string text,  LPCWSTR TPS_COLOR) : M_POS(pos), M_SIZE(size), M_TPS_COLOR(TPS_COLOR)
 {
-	m_pCharacters = new Characters<TextChar>(L"Texture/DOT_FONT.png", L"Shader/TextVertexShader.vsh", TPS_COLOR);
+	m_pCharacters = new Characters<TextChar>(TextureData::Instance()->GetDOT_FONT_TR(), TextureData::Instance()->GetDOT_FONT_TSRV(), L"Shader/TextVertexShader.vsh", TPS_COLOR);
 
 	int textSize = text.size();
 	for (int i = 0; i < textSize; i++)

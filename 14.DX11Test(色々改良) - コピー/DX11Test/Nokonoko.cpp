@@ -1,6 +1,8 @@
 #include"Nokonoko.h"
 #include"Player.h"
 #include"Animation.h"
+#include"TextureData.h"
+
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -13,15 +15,17 @@
 /// <param name="size">ÉTÉCÉY</param>
 Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 {
-	LoadTexture(L"Texture/NOKONOKO1.png");
 	CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+
+	m_pMainTextureResource = TextureData::Instance()->GetNOKONOKO1_TR();
+	m_pMainTextureSRV = TextureData::Instance()->GetNOKONOKO1_TSRV();
 
 	m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
 
 	m_pWalkAnimation = new Animation();
-	m_pWalkAnimation->AddAnimResource(L"Texture/NOKONOKO1.png");
-	m_pWalkAnimation->AddAnimResource(L"Texture/NOKONOKO2.png");
+	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetNOKONOKO1_TR(), TextureData::Instance()->GetNOKONOKO1_TSRV());
+	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetNOKONOKO2_TR(), TextureData::Instance()->GetNOKONOKO2_TSRV());
 }
 
 /// <summary>
@@ -128,7 +132,6 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 			if (UpCheck(pPlayer))
 			{
 				pPlayer->MiniJumpStart();
-				LoadTexture(L"Texture/KOURA1.png");
 				m_NokonokoState = NokonokoState::KOURA_STOP;
 				m_InputFlag.AllReSet();
 				StateKeepFlameStart();

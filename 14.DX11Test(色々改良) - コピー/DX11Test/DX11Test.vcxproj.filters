@@ -46,6 +46,12 @@
     <Filter Include="ヘッダー ファイル\Scene">
       <UniqueIdentifier>{6e62074e-92de-4a17-b964-9a7b465a4e9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Data">
+      <UniqueIdentifier>{596720c2-b1f6-45bf-a7d6-0f84b9c625bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Data">
+      <UniqueIdentifier>{86b50244-370a-4f4c-9e56-6a9c28c21b97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -128,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="RenderObj.cpp">
       <Filter>ソース ファイル\Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureData.cpp">
+      <Filter>ソース ファイル\Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureData.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

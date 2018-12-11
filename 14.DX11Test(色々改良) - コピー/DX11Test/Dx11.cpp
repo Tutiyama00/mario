@@ -5,7 +5,6 @@
 #include"Enum.h"
 #include"Camera.h"
 #include"Block.h"
-#include"WICTextureLoader.h"
 #include"Characters.h"
 
 using namespace DirectX;
@@ -119,6 +118,9 @@ void Dx11::Initialize(HWND hwnd)
 	}
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Dx11::~Dx11() 
 {
 	if (!m_InitializedFlag) { MessageBox(NULL, "NotInitialize Dx11", "ERROR", MB_OK); return; }
@@ -127,8 +129,11 @@ Dx11::~Dx11()
 	CoUninitialize();
 }
 
-//解放
-HRESULT Dx11::AllDelete()
+/// <summary>
+/// 解放
+/// </summary>
+/// <returns></returns>
+void Dx11::AllDelete()
 {
 	if (m_pSwapChain             != nullptr) { m_pSwapChain            -> Release();  m_pSwapChain             = nullptr; }
 	if (m_pDevice                != nullptr) { m_pDevice               -> Release();  m_pDevice                = nullptr; }
@@ -137,8 +142,6 @@ HRESULT Dx11::AllDelete()
 	if (m_pDepthStencilTexture2D != nullptr) { m_pDepthStencilTexture2D-> Release();  m_pDepthStencilTexture2D = nullptr; }
 	if (m_pDepthStencilView      != nullptr) { m_pDepthStencilView     -> Release();  m_pDepthStencilView      = nullptr; }
 	if (m_pSampler               != nullptr) { m_pSampler              -> Release();  m_pSampler               = nullptr; }
-
-	return TRUE;
 }
 
 //Render開始

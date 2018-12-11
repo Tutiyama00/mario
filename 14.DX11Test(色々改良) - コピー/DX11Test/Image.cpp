@@ -1,5 +1,5 @@
 #include"Image.h"
-
+#include<d3d11.h>
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -12,11 +12,13 @@
 /// <param name="size">サイズ</param>
 /// <param name="pDevice">使用するデバイス</param>
 /// <param name="pTextureFileName">テクスチャファイルのパス</param>
-Image::Image(Vector3 pos, Vector2 size, const wchar_t* pTextureFileName) : Square(pos,size)
+Image::Image(Vector3 pos, Vector2 size, ID3D11Resource* pTR, ID3D11ShaderResourceView* pTSRV) : Square(pos,size)
 {
-	LoadTexture(pTextureFileName);
 	CreateShader(L"Shader/TextVertexShader.vsh", L"Shader/PixelShader.psh");
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
+
+	m_pMainTextureResource = pTR;
+	m_pMainTextureSRV = pTSRV;
 }
 
 
