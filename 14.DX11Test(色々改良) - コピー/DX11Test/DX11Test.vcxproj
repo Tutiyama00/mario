@@ -142,7 +142,7 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RenderObj.cpp" />
     <ClCompile Include="ResultScene.cpp" />
-    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundData.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TextChar.cpp" />
     <ClCompile Include="TextCharacters.cpp" />
@@ -176,7 +176,7 @@
     <ClInclude Include="RenderObj.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundData.h" />
     <ClInclude Include="Dx11.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="TextChar.h" />

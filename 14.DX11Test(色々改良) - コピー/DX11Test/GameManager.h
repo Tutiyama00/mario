@@ -6,7 +6,7 @@ class InputFlag;
 enum class GameState : unsigned char;
 class Player;
 class Dx11;
-class Dsound;
+class SoundData;
 class Stage;
 class Camera;
 class CharacterManager;
@@ -15,7 +15,7 @@ class PlayScene;
 class GameOverScene;
 class ParameterScene;
 class ResultScene;
-class Dsound;
+class SoundData;
 
 class GameManager : public Singleton<GameManager>
 {
@@ -47,7 +47,6 @@ private:
 	GameOverScene*  m_pGameOverScene  = nullptr;
 	ParameterScene* m_pParameterScene = nullptr;
 	ResultScene*    m_pResultScene    = nullptr;
-	Dsound*         m_pDsound         = nullptr;
 
 protected:
 	/*---Singleton---*/

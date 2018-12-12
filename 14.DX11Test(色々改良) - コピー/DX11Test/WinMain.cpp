@@ -2,7 +2,6 @@
 
 #include <Windows.h>
 #include"Vertex.h"
-#include"Sound.h"
 #include"GameManager.h"
 #include<sstream>
 
@@ -10,7 +9,6 @@ HWND  g_hwnd               = nullptr;
 const UINT G_WINDOW_WIDTH  = 1000;
 const UINT G_WINDOW_HEIGHT = 750;
 MSG   g_msg = {0};
-LPDIRECTSOUNDBUFFER g_BGMdirectSoundBuffer = nullptr;
 char* g_baseClassName = (char*)"Base_Window";
 
 const float G_MIN_FREAM_TIME = 1.0f / 60;

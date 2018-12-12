@@ -3,7 +3,6 @@
 #include"Flag.h"
 #include"Enum.h"
 #include"Player.h"
-#include"Sound.h"
 #include"Dx11.h"
 #include"Stage.h"
 #include"Block.h"
@@ -15,13 +14,12 @@
 #include"ParameterScene.h"
 #include"ResultScene.h"
 #include"TextureData.h"
-#include"Sound.h"
+#include"SoundData.h"
 #include<dsound.h>
 
 /*デストラクタ*/
 GameManager::~GameManager()
 {
-	if (m_pDsound         != nullptr) { delete m_pDsound;          m_pDsound         = nullptr; }
 	if (m_pFlag           != nullptr) { delete m_pFlag;            m_pFlag           = nullptr; }
 	if (m_pTitleScene     != nullptr) { delete m_pTitleScene;      m_pTitleScene     = nullptr; }
 	if (m_pPlayScene      != nullptr) { delete m_pPlayScene;       m_pPlayScene      = nullptr; }
@@ -41,10 +39,13 @@ void GameManager::Initialize(HWND hwnd)
 		/* Dx11の初期化 */
 		Dx11::Instance()->Initialize(hwnd);
 
+		/* TextureDataの初期化 */
 		TextureData::Instance()->Initialize();
 
+		/* SoundDataの初期化 */
+		SoundData::Instance()->Initialize(hwnd);
+
 		m_pFlag     = new InputFlag();
-		m_pDsound   = new Dsound(hwnd);
 		m_GameState = GameState::TITLE;
 
 		m_pTitleScene     = new TitleScene();
@@ -54,15 +55,6 @@ void GameManager::Initialize(HWND hwnd)
 		m_pGameOverScene  = new GameOverScene();
 
 		m_InitializedFlag = true;
-
-
-		/*LPDIRECTSOUNDBUFFER sound = nullptr;
-		m_pDsound = new Dsound(hwnd);
-		m_pDsound->CreateSoundBuffer(&sound, "Sound/STANDARD_BGM.wav");
-		
-		sound->Play(0, 0, 0);*/
-
-
 	}
 }
 
@@ -128,6 +120,9 @@ void GameManager::UpDateGame()
 		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
+			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->Stop();  //再生を止める
+			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->SetCurrentPosition(0);  //再生位置を先頭に戻す
+
 			/*変化していた場合
 			 *変化先のシーンによってやることが変わる*/
 			switch (m_GameState)
@@ -167,6 +162,8 @@ void GameManager::UpDateGame()
 		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
+			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->Play(0,0, DSBPLAY_LOOPING);
+
 			m_pParameterScene->SetTimer(m_pPlayScene->GetStageTime());
 			m_pParameterScene->StartTimer();
 		}
