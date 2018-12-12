@@ -15,6 +15,7 @@ public:
 	void Initialize(HWND hwnd);
 
 public:
+	/* getter */
 	LPDIRECTSOUNDBUFFER GetKICKsoundBuffer            ()const { return m_KICKsoundBuffer;             }
 	LPDIRECTSOUNDBUFFER GetMARIO_JUMP_SMALLsoundBuffer()const { return m_MARIO_JUMP_SMALLsoundBuffer; }
 	LPDIRECTSOUNDBUFFER GetSTANDARD_BGMsoundBuffer    ()const { return m_STANDARD_BGMsoundBuffer;     }

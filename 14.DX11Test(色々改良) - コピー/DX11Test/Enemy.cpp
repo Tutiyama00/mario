@@ -1,5 +1,6 @@
 #include"Enemy.h"
 #include"Player.h"
+#include"SoundData.h"
 
 
 /*#####################################          #####################################*/
@@ -33,6 +34,8 @@ void Enemy::CheckPlayer(Player* pPlayer)
 	{
 		if (UpCheck(pPlayer))
 		{
+			SoundData::Instance()->GetSTOMPsoundBuffer()->SetCurrentPosition(0);
+			SoundData::Instance()->GetSTOMPsoundBuffer()->Play(0,0,0);
 			pPlayer->MiniJumpStart();
 			Die();
 		}

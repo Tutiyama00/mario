@@ -2,7 +2,7 @@
 #include"Player.h"
 #include"Animation.h"
 #include"TextureData.h"
-
+#include"SoundData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -137,6 +137,9 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 			/* ã‚©‚çÕ“Ë‚µ‚Ä‚¢‚é‚Ì‚©‚Ç‚¤‚© */
 			if (UpCheck(pPlayer))
 			{
+				SoundData::Instance()->GetSTOMPsoundBuffer()->SetCurrentPosition(0);
+				SoundData::Instance()->GetSTOMPsoundBuffer()->Play(0, 0, 0);
+
 				pPlayer->MiniJumpStart();
 				m_NokonokoState = NokonokoState::KOURA_STOP;
 				m_InputFlag.AllReSet();
@@ -161,6 +164,9 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 			StateKeepFlameStart();
 			m_NokonokoState = NokonokoState::KOURA_RUN;
 
+			SoundData::Instance()->GetKICKsoundBuffer()->SetCurrentPosition(0);
+			SoundData::Instance()->GetKICKsoundBuffer()->Play(0, 0, 0);
+
 			/* ¶‰E‚Ç‚¿‚ç‘¤‚ÉÕ“Ë‚µ‚Ä‚¢‚é‚© */
 			if (pPlayer->GetxPos() <= GetxPos())
 			{
@@ -184,6 +190,9 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 
 			if (UpCheck(pPlayer))
 			{
+				SoundData::Instance()->GetSTOMPsoundBuffer()->SetCurrentPosition(0);
+				SoundData::Instance()->GetSTOMPsoundBuffer()->Play(0, 0, 0);
+
 				pPlayer->MiniJumpStart();
 				m_NokonokoState = NokonokoState::KOURA_STOP;
 				m_InputFlag.AllReSet();

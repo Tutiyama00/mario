@@ -48,11 +48,11 @@ private:
 	ParameterScene* m_pParameterScene = nullptr;
 	ResultScene*    m_pResultScene    = nullptr;
 
+
+/*------Singleton------*/
 protected:
-	/*---Singleton---*/
 	bool m_InitializedFlag = false;  //初期化しているかのフラグ（True＝初期化済み、False＝未初期化）
 
 protected:
-	/*---Singleton---*/
 	void Abstract() {};
 };

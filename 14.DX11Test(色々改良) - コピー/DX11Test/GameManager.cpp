@@ -121,7 +121,6 @@ void GameManager::UpDateGame()
 		if (m_GameState != oldGameState)
 		{
 			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->Stop();  //再生を止める
-			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->SetCurrentPosition(0);  //再生位置を先頭に戻す
 
 			/*変化していた場合
 			 *変化先のシーンによってやることが変わる*/
@@ -162,7 +161,8 @@ void GameManager::UpDateGame()
 		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
-			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->Play(0,0, DSBPLAY_LOOPING);
+			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->SetCurrentPosition(0);  //再生位置を先頭に戻す
+			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->Play(0,0, DSBPLAY_LOOPING);  //再生する
 
 			m_pParameterScene->SetTimer(m_pPlayScene->GetStageTime());
 			m_pParameterScene->StartTimer();

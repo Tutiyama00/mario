@@ -14,7 +14,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Camera" Collapsed="true">
-    <Position X="14.75" Y="3.5" Width="1.5" />
+    <Position X="16.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAABAAAQAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Camera.h</FileName>
@@ -58,11 +58,10 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>ACiJAAABEBgAAQAAAAAAAAIAAAgAAAEAAAAAAABQAAI=</HashCode>
+      <HashCode>ACiJAAABEAgAAQAAAAAAAAIAAAgAAAEAAAAAAABQAAI=</HashCode>
       <FileName>GameManager.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="m_pDsound" />
       <Field Name="m_pFlag" />
       <Field Name="m_GameState" />
     </ShowAsAssociation>
@@ -94,22 +93,15 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>CCEAAAENCqGAAQC4QAQABAgCgADAICAAAAJDAwAgEBA=</HashCode>
+      <HashCode>CCUAAAENCqGAAQC4QAQABAgCgADAICAAAAJDAwAgEBA=</HashCode>
       <FileName>Player.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RenderObj" Collapsed="true">
     <Position X="6" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABBEAAABAAEAgEACAAABABAAAAABAQBAIJADAABAAAA=</HashCode>
+      <HashCode>ABBAAAABAAEAgEACAAABABAAAAABAQBAIJADAABAAAA=</HashCode>
       <FileName>RenderObj.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dsound" Collapsed="true">
-    <Position X="11.5" Y="9.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAQAAAAAAAAABAAAABAAIAAAAA=</HashCode>
-      <FileName>Sound.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dx11" Collapsed="true">
@@ -121,12 +113,12 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAIBAAABAAACISACChAgEQhBAAAAEAICAAgAACAAAAQ=</HashCode>
+      <HashCode>AAIBAQAFAAECJSACChAgEQhBAAAAEAICAAgAACAAAAQ=</HashCode>
       <FileName>Dx11.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Stage" Collapsed="true">
-    <Position X="20.25" Y="3.5" Width="1.5" />
+    <Position X="22" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgIAAEEAAiAAAAAAAAgAAAAAAAEQAABAAAgAAACIAAA=</HashCode>
       <FileName>Stage.h</FileName>
@@ -148,12 +140,12 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAABAEAAAAAAAAAAAAAAAAAAAAAAQAAgAABAAAA=</HashCode>
+      <HashCode>AAAAAAABAEAAAAAAgAAAAAAAAgAAAAAAQAAgAADAAAA=</HashCode>
       <FileName>Vertex.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OriginalMath::Math" Collapsed="true">
-    <Position X="14.75" Y="4.5" Width="1.5" />
+    <Position X="16.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Math.h</FileName>
@@ -188,7 +180,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Timer" Collapsed="true">
-    <Position X="18.25" Y="3.5" Width="1.5" />
+    <Position X="20" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAACAAAACQAAAAACAgAAAEAAIAAAAAAEAFAAA=</HashCode>
       <FileName>Timer.h</FileName>
@@ -264,7 +256,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TextCharacters" Collapsed="true">
-    <Position X="16.5" Y="3.5" Width="1.5" />
+    <Position X="18.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAACEAAAAAABAAgAAAAAAAAAABABAAAAAACAA=</HashCode>
       <FileName>TextCharacters.h</FileName>
@@ -339,7 +331,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAABAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAABAIEAAAAAAACAAAgAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Kuribo.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -368,15 +360,37 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAhAABADAIAAABAAAgAAAAAAABBQACAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAhAABADAIEAABAAAgAAAAgAABBQACAQAAAAAAAAAAA=</HashCode>
       <FileName>Nokonoko.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Animation" Collapsed="true">
     <Position X="3.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAgAABAAAAAAAAAAAAAACAAAAAAAE=</HashCode>
+      <HashCode>AAAAIIAABAAEAAAAgAABSAAQAAAAAAAAUAAACAAAAAE=</HashCode>
       <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundData" Collapsed="true">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAABgYABIAAAEUAAABACAAAAAEAAAAAAIABAAIAAIAA=</HashCode>
+      <FileName>SoundData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextureData" Collapsed="true">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <InheritanceLine Type="Singleton&lt;T&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="14.062" Y="4.75" />
+        <Point X="14.062" Y="4.316" />
+        <Point X="15.5" Y="4.316" />
+        <Point X="15.5" Y="3.941" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>GWGJoJgJCBQAAQABGshRCAIBBAQ4AAABRAglRXoSgCk=</HashCode>
+      <FileName>TextureData.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="CameraConstantBuffer">
@@ -394,14 +408,14 @@
     </TypeIdentifier>
   </Struct>
   <Struct Name="OriginalMath::Vector3" Collapsed="true">
-    <Position X="18.25" Y="4.5" Width="1.5" />
+    <Position X="20" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
       <FileName>Math.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="OriginalMath::Vector2" Collapsed="true">
-    <Position X="16.5" Y="4.5" Width="1.5" />
+    <Position X="18.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>Math.h</FileName>
