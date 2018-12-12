@@ -15,6 +15,8 @@
 #include"ParameterScene.h"
 #include"ResultScene.h"
 #include"TextureData.h"
+#include"Sound.h"
+#include<dsound.h>
 
 /*デストラクタ*/
 GameManager::~GameManager()
@@ -52,6 +54,15 @@ void GameManager::Initialize(HWND hwnd)
 		m_pGameOverScene  = new GameOverScene();
 
 		m_InitializedFlag = true;
+
+
+		LPDIRECTSOUNDBUFFER sound = nullptr;
+		m_pDsound = new Dsound(hwnd);
+		m_pDsound->CreateSoundBuffer(&sound, "Sound/STANDARD_BGM.wav");
+		
+		sound->Play(0, 0, 0);
+
+
 	}
 }
 

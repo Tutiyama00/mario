@@ -15,6 +15,7 @@ class PlayScene;
 class GameOverScene;
 class ParameterScene;
 class ResultScene;
+class Dsound;
 
 class GameManager : public Singleton<GameManager>
 {
@@ -26,9 +27,6 @@ public:
 	void UpDateGame(); //ƒQ[ƒ€‚ÌXV
 
 	void Initialize(HWND hwnd); //‰Šú‰»ŠÖ”
-
-public:
-	Dsound*   m_pDsound   = nullptr;
 
 public:
 	/* getter */
@@ -49,6 +47,7 @@ private:
 	GameOverScene*  m_pGameOverScene  = nullptr;
 	ParameterScene* m_pParameterScene = nullptr;
 	ResultScene*    m_pResultScene    = nullptr;
+	Dsound*         m_pDsound         = nullptr;
 
 protected:
 	/*---Singleton---*/
