@@ -60,7 +60,13 @@ Dsound::Dsound(HWND hwnd)
 Dsound::~Dsound()
 {
 	if (m_LpDirectSound != nullptr) { m_LpDirectSound->Release(); m_LpDirectSound = nullptr; }
-	if (m_LpPrimarySoundBuffer != nullptr) { m_LpPrimarySoundBuffer->Release(); m_LpPrimarySoundBuffer = nullptr; }
+	if (m_LpPrimarySoundBuffer != nullptr) 
+	{
+		m_LpPrimarySoundBuffer->Release(); 
+		m_LpPrimarySoundBuffer = nullptr; 
+	}
+
+	CoUninitialize();
 }
 
 

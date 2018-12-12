@@ -56,11 +56,11 @@ void GameManager::Initialize(HWND hwnd)
 		m_InitializedFlag = true;
 
 
-		LPDIRECTSOUNDBUFFER sound = nullptr;
+		/*LPDIRECTSOUNDBUFFER sound = nullptr;
 		m_pDsound = new Dsound(hwnd);
 		m_pDsound->CreateSoundBuffer(&sound, "Sound/STANDARD_BGM.wav");
 		
-		sound->Play(0, 0, 0);
+		sound->Play(0, 0, 0);*/
 
 
 	}
