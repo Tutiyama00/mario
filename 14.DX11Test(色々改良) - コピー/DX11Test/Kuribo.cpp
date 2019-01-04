@@ -1,6 +1,7 @@
 #include"Kuribo.h"
 #include"Animation.h"
 #include"TextureData.h"
+#include"ScoreManager.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -25,6 +26,8 @@ Kuribo::Kuribo(Vector3 pos, Vector2 size) : Enemy(pos,size)
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetKURIBO1_TR(), TextureData::Instance()->GetKURIBO1_TSRV());
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetKURIBO2_TR(), TextureData::Instance()->GetKURIBO2_TSRV());
 	m_pWalkAnimation->SetAnimIntervalFlame(25);
+
+	m_DieScorePoint = KURIBO_SCORE;
 }
 
 /// <summary>

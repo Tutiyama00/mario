@@ -8,6 +8,7 @@
 #include<string>
 #include"GameManager.h"
 #include"TextureData.h"
+#include"ScoreManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -106,6 +107,48 @@ void ParameterScene::UpDateGame(InputFlag inputFlag)
 		/* プレイ状態ではなかったら、タイムを表示しない*/
 		m_pTextOfTimeNamber->ChangeText("   ");
 	}
+
+	/* スコアの取得 */
+	DWORD score = ScoreManager::Instance()->GetNowScoreAmount();
+	if (m_ViewScoreAmount != score)
+	{
+		/* 表示するスコアを更新 */
+		m_ViewScoreAmount = score;
+
+		if (m_ViewScoreAmount == 0)
+		{
+			m_pTextOfScoreNamber->ChangeText("000000");
+		}
+		else if (m_ViewScoreAmount <= 9)
+		{
+			m_pTextOfScoreNamber->ChangeText("00000" + std::to_string(m_ViewScoreAmount));
+		}
+		else if (m_ViewScoreAmount <= 99)
+		{
+			m_pTextOfScoreNamber->ChangeText("0000" + std::to_string(m_ViewScoreAmount));
+		}
+		else if (m_ViewScoreAmount <= 999)
+		{
+			m_pTextOfScoreNamber->ChangeText("000" + std::to_string(m_ViewScoreAmount));
+		}
+		else if (m_ViewScoreAmount <= 9999)
+		{
+			m_pTextOfScoreNamber->ChangeText("00" + std::to_string(m_ViewScoreAmount));
+		}
+		else if (m_ViewScoreAmount <= 99999)
+		{
+			m_pTextOfScoreNamber->ChangeText("0" + std::to_string(m_ViewScoreAmount));
+		}
+		else if (m_ViewScoreAmount <= 999999)
+		{
+			m_pTextOfScoreNamber->ChangeText(std::to_string(m_ViewScoreAmount));
+		}
+		else
+		{
+			m_ViewScoreAmount = 999999;
+		}
+	}
+
 }
 
 /// <summary>

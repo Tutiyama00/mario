@@ -32,6 +32,7 @@ private:
 	TextCharacters* m_pTextOfScoreNamber = nullptr;
 	Image*          m_pImageOfCoin       = nullptr;
 
+	DWORD           m_ViewScoreAmount = 0;  //今表示しているスコア
 
 /*------IGameScene------*/
 public:

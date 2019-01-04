@@ -1,7 +1,7 @@
 #include"Enemy.h"
 #include"Player.h"
 #include"SoundData.h"
-
+#include"ScoreManager.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -12,6 +12,9 @@
 /// </summary>
 void Enemy::Die()
 {
+	if (!m_LivingFlag) { return; }
+
+	ScoreManager::Instance()->AddScore(m_DieScorePoint);
 	m_LivingFlag = false;
 }
 
@@ -54,6 +57,7 @@ void Enemy::CheckPlayer(Player* pPlayer)
 void Enemy::CheckEnemy(Enemy* pEnemy)
 {
 	if (!m_LivingFlag) { return; }
+	if (!pEnemy->GetLivingFlag()) { return; }
 
 	if (CollisionCheck(pEnemy))
 	{

@@ -78,7 +78,6 @@ private:
 	ID3D11ShaderResourceView* m_pMARIO_RUN3_TSRV  = nullptr;
 	ID3D11Resource*           m_pMARIO_STAND_TR   = nullptr;
 	ID3D11ShaderResourceView* m_pMARIO_STAND_TSRV = nullptr;
-
 	ID3D11Resource*           m_pNOKONOKO1_TR     = nullptr;
 	ID3D11ShaderResourceView* m_pNOKONOKO1_TSRV   = nullptr;
 	ID3D11Resource*           m_pNOKONOKO2_TR     = nullptr;

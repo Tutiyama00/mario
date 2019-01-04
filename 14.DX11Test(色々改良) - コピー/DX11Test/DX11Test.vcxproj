@@ -142,6 +142,7 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RenderObj.cpp" />
     <ClCompile Include="ResultScene.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="SoundData.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TextChar.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RenderObj.h" />
     <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundData.h" />
     <ClInclude Include="Dx11.h" />

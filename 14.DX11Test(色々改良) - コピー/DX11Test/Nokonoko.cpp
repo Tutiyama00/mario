@@ -3,6 +3,7 @@
 #include"Animation.h"
 #include"TextureData.h"
 #include"SoundData.h"
+#include"ScoreManager.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -27,6 +28,8 @@ Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetNOKONOKO1_TR(), TextureData::Instance()->GetNOKONOKO1_TSRV());
 	m_pWalkAnimation->AddAnimResource(TextureData::Instance()->GetNOKONOKO2_TR(), TextureData::Instance()->GetNOKONOKO2_TSRV());
 	m_pWalkAnimation->SetAnimIntervalFlame(25);
+
+	m_DieScorePoint = NOKONOKO_SCORE;
 }
 
 /// <summary>
@@ -215,6 +218,7 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 void Nokonoko::CheckEnemy(Enemy* pEnemy)
 {
 	if (!m_LivingFlag) { return; }
+	if (!pEnemy->GetLivingFlag()) { return; }
 
 	if (CollisionCheck(pEnemy))
 	{

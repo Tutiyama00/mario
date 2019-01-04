@@ -20,6 +20,9 @@ public:
 protected:
 	virtual void Abstract() = 0;
 
+protected:
+	int m_DieScorePoint = 0;  //Ž€‚ñ‚¾‚Æ‚«‚É‰ÁŽZ‚³‚ê‚éƒXƒRƒA
+
 
 /*------NotPlayer------*/
 public:
