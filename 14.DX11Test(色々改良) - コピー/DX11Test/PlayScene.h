@@ -56,6 +56,8 @@ private:
 	int       m_NowStageLevel   = 0;       //現在のステージ
 	const int M_IN_STAGE_AMOUNT = 4;       //一つのワールドにある面の数
 	float     m_CameraShootXPos = 0;       //カメラを映すX座標
+	float     m_PlayerMoveEndXPos = 0;     //プレイヤーの動ける左限界値
+	float     m_EndToShootXPosAmount = 0.75f;  //カメラから左限界値までの距離
 
 /*------IGameScene------*/
 public:

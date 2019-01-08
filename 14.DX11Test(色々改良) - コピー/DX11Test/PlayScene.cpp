@@ -140,7 +140,7 @@ void PlayScene::MakeStageObj()
 	Vector3 pos  = { 1.75f,-0.115f,m_StandardZpos };
 	Vector2 size = { 0.75f,0.75f };
 
-	//m_pGoal = new Goal(pos, size);
+	//m_pGoal = new Goal(pos, size); 
 
 	m_pBlocks->ThisObjCreateBuffer();
 
@@ -149,6 +149,9 @@ void PlayScene::MakeStageObj()
 
 	/* カメラのX座標初期化 */
 	m_CameraShootXPos = 0.8f;
+
+	/* 左限界値の初期化 */
+	m_PlayerMoveEndXPos = m_CameraShootXPos - m_EndToShootXPosAmount;
 }
 
 
@@ -344,7 +347,6 @@ void PlayScene::ObjCheckOrder()
 			/* どのパターンにも当てはまらなかった場合 */
 			m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
 			m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-			
 		}
 	}
 }
@@ -364,6 +366,12 @@ void PlayScene::ObjCheckOrder()
 void PlayScene::UpDateGame(InputFlag inputFlag)
 {
 	m_NextGameState = GameState::PLAY;
+
+	/* プレイヤーが左限界値を超えないようにする */
+	if (m_pPlayer->GetxPos() <= m_PlayerMoveEndXPos)
+	{
+		inputFlag.ReSet(InputFlagCode::INPUT_LEFT);
+	}
 
 	m_pPlayer->SetInputFlag(inputFlag);
 
@@ -392,6 +400,7 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	if (m_pPlayer->GetxPos() >= m_CameraShootXPos)
 	{
 		m_CameraShootXPos = m_pPlayer->GetxPos();
+		m_PlayerMoveEndXPos = m_CameraShootXPos - m_EndToShootXPosAmount;
 	}
 
 	//落下チェック
