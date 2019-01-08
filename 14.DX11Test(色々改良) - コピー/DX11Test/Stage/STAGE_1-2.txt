@@ -11,9 +11,9 @@ B
 B             B               
 B           B                 
 B         B                   
-B       B                     
-B     B                       
-B   BB                        
-  M                           
-  BBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  BBBBBBBBBBBBBBBBBBBBBBBBBBBB
+B                             
+B                             
+B                             
+B M B  K  N  N    K    B      
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB

@@ -140,7 +140,7 @@ void PlayScene::MakeStageObj()
 	Vector3 pos  = { 1.75f,-0.115f,m_StandardZpos };
 	Vector2 size = { 0.75f,0.75f };
 
-	m_pGoal = new Goal(pos, size);
+	//m_pGoal = new Goal(pos, size);
 
 	m_pBlocks->ThisObjCreateBuffer();
 
@@ -369,21 +369,21 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	MoveOrder();
 
 	/*ゴールチェック*/
-	if (m_pGoal->CollisionCheck(m_pPlayer))
-	{
-		m_NowStageLevel++;
-		if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
-		{
-			m_NowWorldLevel++;
-			m_NowStageLevel = 1;
-		}
+	//if (m_pGoal->CollisionCheck(m_pPlayer))
+	//{
+	//	m_NowStageLevel++;
+	//	if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
+	//	{
+	//		m_NowWorldLevel++;
+	//		m_NowStageLevel = 1;
+	//	}
 
-		std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+	//	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
-		m_pStage->ChangeStage(filePas.data());
-		ReStart();
-		m_NextGameState = GameState::RESULT;
-	}
+	//	m_pStage->ChangeStage(filePas.data());
+	//	ReStart();
+	//	m_NextGameState = GameState::RESULT;
+	//}
 
 	//落下チェック
 	if (m_UnderDeathLine > m_pPlayer->GetyPos())
@@ -406,7 +406,7 @@ void PlayScene::Draw()
 {
 	m_pCamera->Shoot(m_pPlayer->GetxPos());
 	m_pPlayer->ThisObjRender();
-	m_pGoal->ThisObjRender();
+	//m_pGoal->ThisObjRender();
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{

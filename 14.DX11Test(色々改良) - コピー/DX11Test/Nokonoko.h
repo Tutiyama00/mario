@@ -36,11 +36,11 @@ private:
 
 /*------Enemy------*/
 public:
-	void Move();
-	virtual void CheckPlayer(Player* pPlayer);
-	virtual void CheckEnemy(Enemy* pEnemy);
-	void ThisObjRender();
+	void Move()override;
+	void CheckPlayer(Player* pPlayer)override;
+	void CheckEnemy(Enemy* pEnemy)override;
+	void ThisObjRender()override;
 
 protected:
-	void Abstract() {};
+	void Abstract()override {};
 };

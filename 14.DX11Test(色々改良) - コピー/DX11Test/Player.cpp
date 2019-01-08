@@ -5,6 +5,7 @@
 #include"Animation.h"
 #include<string>
 #include"TextureData.h"
+#include"SoundData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -87,6 +88,8 @@ void Player::Move()
 		{
 			if (m_JumpFlag)
 			{
+				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->SetCurrentPosition(0);
+				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->Play(0,0,0);
 				Jump();
 				m_MoveObjState = MoveObjState::JUMP;
 				break;

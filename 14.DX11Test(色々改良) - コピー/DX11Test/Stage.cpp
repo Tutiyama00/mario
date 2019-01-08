@@ -94,15 +94,37 @@ void Stage::LoadStage(const char* stageName)
 	time = nullptr;
 
 	//ステージの幅の取得
-	char* width = new char;
+	char* width = new char;  //ステージの幅
+	char* digit = new char;  //ステージの幅の桁数
 	ifs.seekg(ifs.beg + 5);
-	ifs.read(width, 1);
-	m_StageWidth += atoi(width) * 10;
-	ifs.seekg(ifs.beg + 6);
-	ifs.read(width, 1);
-	m_StageWidth += atoi(width);
+	ifs.read(digit, 1);
+	switch (atoi(digit))
+	{
+	case 2:
+		ifs.seekg(ifs.beg + 8);
+		ifs.read(width, 1);
+		m_StageWidth += atoi(width) * 10;
+		ifs.seekg(ifs.beg + 9);
+		ifs.read(width, 1);
+		m_StageWidth += atoi(width);
+		break;
+
+	case 3:
+		ifs.seekg(ifs.beg + 8);
+		ifs.read(width, 1);
+		m_StageWidth += atoi(width) * 100;
+		ifs.seekg(ifs.beg + 9);
+		ifs.read(width, 1);
+		m_StageWidth += atoi(width) * 10;
+		ifs.seekg(ifs.beg + 10);
+		ifs.read(width, 1);
+		m_StageWidth += atoi(width);
+		break;
+	}
 	delete width;
 	width = nullptr;
+	delete digit;
+	digit = nullptr;
 
 	//ステージデータをObject型に変換
 	int pt = 0;
