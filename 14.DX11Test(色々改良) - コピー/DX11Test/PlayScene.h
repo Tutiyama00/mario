@@ -55,7 +55,7 @@ private:
 	int       m_NowWorldLevel   = 0;       //現在のワールド
 	int       m_NowStageLevel   = 0;       //現在のステージ
 	const int M_IN_STAGE_AMOUNT = 4;       //一つのワールドにある面の数
-
+	float     m_CameraShootXPos = 0;       //カメラを映すX座標
 
 /*------IGameScene------*/
 public:

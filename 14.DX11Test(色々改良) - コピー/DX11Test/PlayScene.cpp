@@ -146,6 +146,9 @@ void PlayScene::MakeStageObj()
 
 	/*下の死亡判定ラインの計算*/
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
+
+	/* カメラのX座標初期化 */
+	m_CameraShootXPos = 0.8f;
 }
 
 
@@ -385,6 +388,12 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	//	m_NextGameState = GameState::RESULT;
 	//}
 
+	/* カメラの映すX座標を変えていいか */
+	if (m_pPlayer->GetxPos() >= m_CameraShootXPos)
+	{
+		m_CameraShootXPos = m_pPlayer->GetxPos();
+	}
+
 	//落下チェック
 	if (m_UnderDeathLine > m_pPlayer->GetyPos())
 	{
@@ -404,7 +413,7 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 /// </summary>
 void PlayScene::Draw()
 {
-	m_pCamera->Shoot(m_pPlayer->GetxPos());
+	m_pCamera->Shoot(m_CameraShootXPos);
 	m_pPlayer->ThisObjRender();
 	//m_pGoal->ThisObjRender();
 
