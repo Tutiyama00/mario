@@ -138,6 +138,7 @@ void Stage::LoadStage(const char* stageName)
 		case 'K':m_pStageDataArray[pt] = Object::KURIBOU;         pt++; break;
 		case 'N':m_pStageDataArray[pt] = Object::NOKONOKO;        pt++; break;
 		case 'G':m_pStageDataArray[pt] = Object::GROUND_BLOCK;    pt++; break;
+		case 'g':m_pStageDataArray[pt] = Object::GOAL;            pt++; break;
 		}
 	}
 

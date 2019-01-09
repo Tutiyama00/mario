@@ -9,6 +9,8 @@ public:
 	Image(Vector3 pos, Vector2 size, ID3D11Resource* pTR, ID3D11ShaderResourceView* pTSRV);
 	~Image() {};
 
+	void Move(Vector3 amount);
+
 protected:
 	virtual void Abstract() {};
 

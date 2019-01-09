@@ -139,6 +139,9 @@ void PlayScene::MakeStageObj()
 			case Object::NOKONOKO:
 				m_pNokonokoVector.push_back( new Nokonoko(pos, size));
 				break;
+			case Object::GOAL:
+				m_pGoal = new Goal(pos);
+				break;
 			}
 		}
 	}

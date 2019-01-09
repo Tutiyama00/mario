@@ -23,5 +23,6 @@ enum class Object : unsigned char
 	GROUND_BLOCK,
 	KURIBOU,
 	NOKONOKO,
-	SPACE
+	SPACE,
+	GOAL
 };
