@@ -42,7 +42,7 @@ ParameterScene::ParameterScene(GameState nowGameState)
 	m_pTextOfTimeNamber = new TextCharacters(pos, size, "   ", TPS_WHITE);
 
 	pos.x = -0.275f;
-	m_pImageOfCoin = new Image(pos, size, TextureData::Instance()->GetCOIN1_TR(), TextureData::Instance()->GetCOIN1_TSRV());
+	m_pImageOfCoin = new Image(pos, size, TextureData::Instance()->GetCOIN1_TR(), TextureData::Instance()->GetCOIN1_TSRV(), true);
 
 	pos.x = -0.225f;
 	m_pTextOfCoinNamber = new TextCharacters(pos, size, "*00", TPS_WHITE);

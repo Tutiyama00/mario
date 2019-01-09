@@ -21,6 +21,7 @@ public:
 
 	void Die(); //死亡処理
 	void MiniJumpStart();
+	void GoalPlay(float downAmount, float downEndYPos, bool down);
 
 public:
 	/* getter */
@@ -34,6 +35,7 @@ public:
 	
 private:
 	bool MiniJump();
+	void PlayerMove();
 
 private:
 	const UINT          M_START_LIFE          = 3;      //ゲームスタート時のプレイヤーの残機
@@ -45,11 +47,22 @@ private:
 	unsigned char m_Life = 0;     //残り残機
 	Animation* m_pRunAnimation = nullptr;
 
+	bool m_GoalPlayFlag = false;  //ゴール中かどうかのフラグ
+	enum GoalPlayState
+	{
+		POLE_DOWN,
+		POLE_STOP,
+		POLE_PARALLEL_WAIT,
+		WALK_TO_CASTLE
+	};
+	GoalPlayState m_GoalPlayState = GoalPlayState::POLE_DOWN;
+	const unsigned int M_POLE_STOP_WAIT_FRAME = 20;
+	unsigned int m_PoleStopWaitCounter = 0;
 
 
 /*------IMoveObj------*/
 public:
-	void Move();  //プレイヤーの動き（入力情報)
+	void Move();  //プレイヤーの動き
 
 public:
 	/* getter */
@@ -57,7 +70,7 @@ public:
 	InputFlag    GetInputFlag()const { return m_InputFlag; }
 	/* setter */
 	void         SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
-	void         SetInputFlag(InputFlag value) { m_InputFlag = value; }
+	void         SetInputFlag(InputFlag value) { if (!m_GoalPlayFlag) { m_InputFlag = value; } }
 
 private:
 	void Walk(float xAmount);  //歩く

@@ -17,7 +17,7 @@ ResultScene::ResultScene(UINT playerLife)
 	Vector3 pos  = { -0.14f,0.0f,0.0f };
 	Vector2 size = { 0.1f,0.1f };
 
-	m_pImageOfMario = new Image(pos, size, TextureData::Instance()->GetMARIO_STAND_TR(), TextureData::Instance()->GetMARIO_STAND_TSRV());
+	m_pImageOfMario = new Image(pos, size, TextureData::Instance()->GetMARIO_STAND_TR(), TextureData::Instance()->GetMARIO_STAND_TSRV(), true);
 
 	pos.x  = 0.0f;
 	size.x = size.y = 0.07f;

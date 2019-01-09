@@ -20,6 +20,7 @@ public:
 	LPDIRECTSOUNDBUFFER GetMARIO_JUMP_SMALLsoundBuffer()const { return m_MARIO_JUMP_SMALLsoundBuffer; }
 	LPDIRECTSOUNDBUFFER GetSTANDARD_BGMsoundBuffer    ()const { return m_STANDARD_BGMsoundBuffer;     }
 	LPDIRECTSOUNDBUFFER GetSTOMPsoundBuffer           ()const { return m_STOMPsoundBuffer;            }
+	LPDIRECTSOUNDBUFFER GetSTAGE_CLEARPsoundBuffer()const { return m_STAGE_CLEARsoundBuffer; }
 	
 private:
 	SoundData() {};  //コンストラクタ
@@ -37,6 +38,7 @@ private:
 	LPDIRECTSOUNDBUFFER m_MARIO_JUMP_SMALLsoundBuffer = nullptr;
 	LPDIRECTSOUNDBUFFER m_STANDARD_BGMsoundBuffer     = nullptr;
 	LPDIRECTSOUNDBUFFER m_STOMPsoundBuffer            = nullptr;
+	LPDIRECTSOUNDBUFFER m_STAGE_CLEARsoundBuffer      = nullptr;
 
 /*------Singleton------*/
 protected:	

@@ -140,6 +140,8 @@ void RenderObj::CreateBuffer(vertex* pVertexArray,UINT vertexArraySize,WORD* pIn
 /// <param name="indexArraySize">頂点インデックス情報配列の要素数</param>
 void RenderObj::Render(vertex* pVertexArray, UINT indexArraySize)
 {
+	if (!m_RenderFlag) { return; }
+
 	UINT strides = Dx11::Instance()->GetStrides();
 	UINT offsets = Dx11::Instance()->GetOffsets();
 

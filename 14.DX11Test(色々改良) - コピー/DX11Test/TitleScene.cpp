@@ -19,7 +19,7 @@ TitleScene::TitleScene()
 	m_pCamera       = new Camera();
 
 	pos.z = 0.0f;
-	m_pImageOfTitle = new Image(pos, size, TextureData::Instance()->GetTITLE_LOGO_TR(), TextureData::Instance()->GetTITLE_LOGO_TSRV());
+	m_pImageOfTitle = new Image(pos, size, TextureData::Instance()->GetTITLE_LOGO_TR(), TextureData::Instance()->GetTITLE_LOGO_TSRV(), true);
 
 	m_NextGameState = GameState::TITLE;
 

@@ -422,6 +422,26 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	//	m_NextGameState = GameState::RESULT;
 	//}
 
+	if (m_pGoal->GoalCheck(m_pPlayer))
+	{
+		if (!m_pGoal->Play(m_pPlayer))
+		{
+			m_NowStageLevel++;
+			if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
+			{
+				m_NowWorldLevel++;
+				m_NowStageLevel = 1;
+			}
+
+			std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+
+			m_pStage->ChangeStage(filePas.data());
+			ReStart();
+			m_NextGameState = GameState::RESULT;
+		}
+	}
+	
+
 	/* カメラの映すX座標を変えていいか */
 	if (m_pPlayer->GetxPos() >= m_CameraShootXPos)
 	{
@@ -450,7 +470,7 @@ void PlayScene::Draw()
 {
 	m_pCamera->Shoot(m_CameraShootXPos);
 	m_pPlayer->ThisObjRender();
-	//m_pGoal->ThisObjRender();
+	m_pGoal->ThisObjRender();
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{

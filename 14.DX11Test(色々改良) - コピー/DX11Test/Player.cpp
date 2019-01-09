@@ -59,18 +59,86 @@ void Player::Die()
 	}
 }
 
-/*-------------------------------------            ----------------------------------*/
-/*-------------------------------------  IMoveObj  ----------------------------------*/
-/*-------------------------------------            ----------------------------------*/
+/// <summary>
+/// ゴール時のプレイヤーの挙動
+/// </summary>
+/// <param name="downAmount"></param>
+/// <param name="downEndYPos"></param>
+/// <param name="down"></param>
+void Player::GoalPlay(float downAmount, float downEndYPos, bool down)
+{
+	if (!m_GoalPlayFlag) { m_GoalPlayFlag = true; }
+
+	switch (m_GoalPlayState)
+	{
+	case GoalPlayState::POLE_DOWN:
+		if (down)
+		{
+			if (m_yPos > downEndYPos)
+			{
+				m_yPos -= downAmount;
+				for (int i = 0; i < m_VertexArraySize; i++)
+				{
+					m_pVertexArray[i].pos[1] -= downAmount;
+				}
+			}
+			else
+			{
+				m_GoalPlayState = GoalPlayState::POLE_STOP;
+			}
+		}
+		else
+		{
+			m_GoalPlayState = GoalPlayState::POLE_PARALLEL_WAIT;
+			ParallelInverted();
+			m_xPos += m_xSize;
+			for (int i = 0; i < m_VertexArraySize; i++)
+			{
+				m_pVertexArray[i].pos[0] += m_xSize;
+			}
+		} 
+		break;
+
+	case GoalPlayState::POLE_STOP:
+		if (!down)
+		{
+			m_GoalPlayState = GoalPlayState::POLE_PARALLEL_WAIT;
+			ParallelInverted();
+			m_xPos += m_xSize;
+			for (int i = 0; i < m_VertexArraySize; i++)
+			{
+				m_pVertexArray[i].pos[0] += m_xSize;
+			}
+		}
+		break;
+
+	case GoalPlayState::POLE_PARALLEL_WAIT:
+		if (m_PoleStopWaitCounter < M_POLE_STOP_WAIT_FRAME)
+		{
+			m_PoleStopWaitCounter++;
+		}
+		else
+		{
+			m_GoalPlayState = GoalPlayState::WALK_TO_CASTLE;
+			MiniJumpStart();
+			m_InputFlag.AllReSet();
+			m_InputFlag.Set(InputFlagCode::INPUT_RIGHT);
+		}
+		break;
+
+	case GoalPlayState::WALK_TO_CASTLE:
+		m_InputFlag.AllReSet();
+		m_InputFlag.Set(InputFlagCode::INPUT_RIGHT);
+		PlayerMove();
+		break;
+	}
+}
 
 /// <summary>
-/// 動作
+/// プレイヤーの移動
 /// </summary>
-void Player::Move()
+void Player::PlayerMove()
 {
-	/*生きていない状態だったらリターンして動かさない*/
-	if (!m_LivingFlag) { return; }
-
 	switch (m_MoveObjState)
 	{
 	case MoveObjState::CHECK_GROUND:
@@ -89,7 +157,7 @@ void Player::Move()
 			if (m_JumpFlag)
 			{
 				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->SetCurrentPosition(0);
-				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->Play(0,0,0);
+				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->Play(0, 0, 0);
 				Jump();
 				m_MoveObjState = MoveObjState::JUMP;
 				break;
@@ -185,6 +253,33 @@ void Player::Move()
 	{
 		m_MoveObjState = MoveObjState::CHECK_GROUND;
 	}
+
+	/* 右と左どちらに向いているのかの判定 */
+	if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
+	{
+		ParallelInverted();
+	}
+	else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
+	{
+		ParallelInverted();
+	}
+}
+
+/*-------------------------------------            ----------------------------------*/
+/*-------------------------------------  IMoveObj  ----------------------------------*/
+/*-------------------------------------            ----------------------------------*/
+
+/// <summary>
+/// 動作
+/// </summary>
+void Player::Move()
+{
+	/*生きていない状態だったらリターンして動かさない*/
+	if (!m_LivingFlag) { return; }
+	/*ゴール中だったらリターン*/
+	if (m_GoalPlayFlag) { return; }
+
+	PlayerMove();
 }
 
 
@@ -223,15 +318,7 @@ void Player::ThisObjRender()
 		m_pMainTextureSRV=TextureData::Instance()->GetMARIO_JUMP_TSRV();
 	}
 
-	/* 右と左どちらに向いているのかの判定 */
-	if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
-	{
-		ParallelInverted();
-	}
-	else if(m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
-	{
-		ParallelInverted();
-	}
+	
 
 	Render(m_pVertexArray, m_IndexArraySize);
 }

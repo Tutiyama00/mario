@@ -14,6 +14,10 @@ public:
 	virtual void ThisObjRender() = 0;
 	virtual void ThisObjCreateBuffer() = 0;
 
+public:
+	bool GetRenderFlag()const { return m_RenderFlag; }
+	void SetRenderFlag(bool value) { m_RenderFlag = value; }
+
 protected:
 	virtual void Abstract() = 0;  //純粋仮想関数（これによってこのクラスはインスタンスできない)
 	virtual void CreateShader(LPCWSTR pVSFileName, LPCWSTR pPSFileName);
@@ -32,4 +36,6 @@ protected:
 	ID3D11InputLayout*        m_pTextureInputLayout  = nullptr;
 	ID3D11Resource*           m_pMainTextureResource = nullptr;
 	ID3D11ShaderResourceView* m_pMainTextureSRV      = nullptr;
+
+	bool m_RenderFlag = true;
 };

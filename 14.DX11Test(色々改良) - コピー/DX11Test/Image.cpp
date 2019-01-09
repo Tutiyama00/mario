@@ -12,9 +12,17 @@
 /// <param name="size">サイズ</param>
 /// <param name="pDevice">使用するデバイス</param>
 /// <param name="pTextureFileName">テクスチャファイルのパス</param>
-Image::Image(Vector3 pos, Vector2 size, ID3D11Resource* pTR, ID3D11ShaderResourceView* pTSRV) : Square(pos,size)
+Image::Image(Vector3 pos, Vector2 size, ID3D11Resource* pTR, ID3D11ShaderResourceView* pTSRV, bool canvasMode) : Square(pos,size)
 {
-	CreateShader(L"Shader/TextVertexShader.vsh", L"Shader/PixelShader.psh");
+	if (canvasMode)
+	{
+		CreateShader(L"Shader/TextVertexShader.vsh", L"Shader/PixelShader.psh");
+	}
+	else
+	{
+		CreateShader(L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	}
+	
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	m_pMainTextureResource = pTR;
