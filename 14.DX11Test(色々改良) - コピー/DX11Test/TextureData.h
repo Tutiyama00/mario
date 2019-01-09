@@ -48,6 +48,8 @@ public:
 	ID3D11ShaderResourceView* GetTITLE_LOGO_TSRV ()const { return m_pTITLE_LOGO_TSRV;  }
 	ID3D11Resource*           GetGOAL_TR         ()const { return m_pGOAL_TR;          }
 	ID3D11ShaderResourceView* GetGOAL_TSRV       ()const { return m_pGOAL_TSRV;        }
+	ID3D11Resource*           GetBLOCK_GROUND_TR  ()const { return m_pBLOCK_GROUND_TR; }
+	ID3D11ShaderResourceView* GetBLOCK_GROUND_TSRV()const { return m_pBLOCK_GROUND_TSRV; }
 
 private:
 	ID3D11Resource*           m_pBLOCK_TR         = nullptr;
@@ -86,6 +88,8 @@ private:
 	ID3D11ShaderResourceView* m_pTITLE_LOGO_TSRV  = nullptr;
 	ID3D11Resource*           m_pGOAL_TR          = nullptr;
 	ID3D11ShaderResourceView* m_pGOAL_TSRV        = nullptr;
+	ID3D11Resource*           m_pBLOCK_GROUND_TR   = nullptr;
+	ID3D11ShaderResourceView* m_pBLOCK_GROUND_TSRV = nullptr;
 
 private:
 	TextureData() {};

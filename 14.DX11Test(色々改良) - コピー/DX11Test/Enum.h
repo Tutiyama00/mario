@@ -20,6 +20,7 @@ enum class Object : unsigned char
 {
 	MARIO,
 	NORMAL_BLOCK,
+	GROUND_BLOCK,
 	KURIBOU,
 	NOKONOKO,
 	SPACE

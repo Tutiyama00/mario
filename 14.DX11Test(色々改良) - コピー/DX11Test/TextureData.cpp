@@ -30,6 +30,7 @@ void TextureData::Initialize()
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/NOKONOKO2.png"   , &m_pNOKONOKO2_TR   , &m_pNOKONOKO2_TSRV  );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/TITLE_LOGO.png"  , &m_pTITLE_LOGO_TR  , &m_pTITLE_LOGO_TSRV );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/GOAL.png"        , &m_pGOAL_TR        , &m_pGOAL_TSRV       );
+	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/BLOCK_GROUND.png", &m_pBLOCK_GROUND_TR, &m_pBLOCK_GROUND_TSRV);
 
 	//CoInitialize‚µ‚½‚Ì‚ÅŒÄ‚Ô
 	CoUninitialize();
@@ -76,4 +77,6 @@ TextureData::~TextureData()
 	if (m_pTITLE_LOGO_TSRV  != nullptr) { m_pTITLE_LOGO_TSRV  -> Release(); m_pTITLE_LOGO_TSRV  = nullptr; }
 	if (m_pGOAL_TR          != nullptr) { m_pGOAL_TR          -> Release(); m_pGOAL_TR          = nullptr; }
 	if (m_pGOAL_TSRV        != nullptr) { m_pGOAL_TSRV        -> Release(); m_pGOAL_TSRV        = nullptr; }
+	if (m_pBLOCK_GROUND_TR   != nullptr) { m_pBLOCK_GROUND_TR   -> Release(); m_pBLOCK_GROUND_TR   = nullptr; }
+	if (m_pBLOCK_GROUND_TSRV != nullptr) { m_pBLOCK_GROUND_TSRV -> Release(); m_pBLOCK_GROUND_TSRV = nullptr; }
 }

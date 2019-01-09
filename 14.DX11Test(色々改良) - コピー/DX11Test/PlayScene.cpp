@@ -47,6 +47,7 @@ PlayScene::~PlayScene()
 	if (m_pCamera       != nullptr) { delete m_pCamera;       m_pCamera       = nullptr; }
 	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
+	if (m_pBlockGrounds != nullptr) { delete m_pBlockGrounds; m_pBlockGrounds = nullptr; }
 	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
@@ -99,6 +100,7 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag)
 void PlayScene::MakeStageObj()
 {
 	m_pBlocks = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),TextureData::Instance()->GetBLOCK_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlockGrounds = new Characters<Block>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
 	int halfHeight = m_pStage->GetStageHeight() / 2;
@@ -126,6 +128,10 @@ void PlayScene::MakeStageObj()
 				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
 
+			case Object::GROUND_BLOCK:
+				m_pBlockGrounds->m_ObjectVector.push_back(new Block(pos, size));
+				break;
+
 			case Object::KURIBOU:
 				m_pKuriboVector.push_back( new Kuribo(pos, size));
 				break;
@@ -143,6 +149,7 @@ void PlayScene::MakeStageObj()
 	//m_pGoal = new Goal(pos, size); 
 
 	m_pBlocks->ThisObjCreateBuffer();
+	m_pBlockGrounds->ThisObjCreateBuffer();
 
 	/*下の死亡判定ラインの計算*/
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
@@ -217,6 +224,7 @@ void PlayScene::StageObjDelete()
 {
 	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
 	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
+	if (m_pBlockGrounds != nullptr) { delete m_pBlockGrounds; m_pBlockGrounds = nullptr; }
 	if (m_pGoal   != nullptr) { delete m_pGoal;         m_pGoal   = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
@@ -257,7 +265,7 @@ void PlayScene::MoveOrder()
 /// </summary>
 void PlayScene::ObjCheckOrder()
 {
-	//ブロック群のプレイヤーに対して衝突判定
+	//ブロック群の対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
 		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
@@ -270,6 +278,21 @@ void PlayScene::ObjCheckOrder()
 		for (int j = 0; j < m_pNokonokoVector.size(); j++)
 		{
 			m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+		}
+	}
+	//ブロック群の対して衝突判定
+	for (int i = 0; i < m_pBlockGrounds->m_ObjectVector.size(); i++)
+	{
+		m_pBlockGrounds->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
+
+		for (int j = 0; j < m_pKuriboVector.size(); j++)
+		{
+			m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
+		}
+
+		for (int j = 0; j < m_pNokonokoVector.size(); j++)
+		{
+			m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 		}
 	}
 
@@ -436,4 +459,5 @@ void PlayScene::Draw()
 		m_pNokonokoVector[i]->ThisObjRender();
 	}
 	m_pBlocks->ThisObjRender();
+	m_pBlockGrounds->ThisObjRender();
 }
