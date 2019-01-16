@@ -20,6 +20,7 @@ public:
 	~Player(); //デストラクタ
 
 	void Die(); //死亡処理
+	bool DieMove();  //死亡演出
 	void MiniJumpStart();
 	void GoalPlay(float downAmount, float downEndYPos, bool down);
 
@@ -36,6 +37,7 @@ public:
 private:
 	bool MiniJump();
 	void PlayerMove();
+	
 
 private:
 	const UINT          M_START_LIFE          = 3;      //ゲームスタート時のプレイヤーの残機
@@ -58,6 +60,14 @@ private:
 	GoalPlayState m_GoalPlayState = GoalPlayState::POLE_DOWN;
 	const unsigned int M_POLE_STOP_WAIT_FRAME = 20;
 	unsigned int m_PoleStopWaitCounter = 0;
+
+	const unsigned int M_DIE_MOVE_FRAME           = 360;  //死亡処理にかかるフレーム数
+	const unsigned int M_DIE_MOVE_STOP_FRAME        = 60;   //死亡処理で最初止まっているフレーム数
+	unsigned int       m_DieMoveFrameCounter      = 0;    //死亡処理で使用するフレームカウンター
+	const float        M_DIE_MOVE_SPEED_MAX = 0.02f;
+	float              m_DieMoveNowSpeed = M_DIE_MOVE_SPEED_MAX;
+	float              m_DieMoveChangeAmount            = 0.0005f;  //死亡処理の移動量の変動値
+
 
 
 /*------IMoveObj------*/

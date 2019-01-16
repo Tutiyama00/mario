@@ -70,6 +70,8 @@ SoundData::~SoundData()
 	if (m_STANDARD_BGMsoundBuffer     != nullptr) { m_STANDARD_BGMsoundBuffer    ->Release(); m_STANDARD_BGMsoundBuffer     = nullptr; }
 	if (m_STOMPsoundBuffer            != nullptr) { m_STOMPsoundBuffer           ->Release(); m_STOMPsoundBuffer            = nullptr; }
 	if (m_STAGE_CLEARsoundBuffer != nullptr) { m_STAGE_CLEARsoundBuffer->Release(); m_STAGE_CLEARsoundBuffer = nullptr; }
+	if (m_MARIO_DIEsoundBuffer != nullptr) { m_MARIO_DIEsoundBuffer->Release(); m_MARIO_DIEsoundBuffer = nullptr; }
+	if (m_GAME_OVERsoundBuffer != nullptr) { m_GAME_OVERsoundBuffer->Release(); m_GAME_OVERsoundBuffer = nullptr; }
 
 	if (m_LpPrimarySoundBuffer != nullptr) { m_LpPrimarySoundBuffer->Release(); m_LpPrimarySoundBuffer = nullptr; }
 
@@ -216,5 +218,7 @@ void SoundData::CreateGameSound()
 	CreateSoundBuffer(&m_MARIO_JUMP_SMALLsoundBuffer, "Sound/MARIO_JUMP_SMALL.wav");
 	CreateSoundBuffer(&m_STANDARD_BGMsoundBuffer    , "Sound/STANDARD_BGM.wav"    );
 	CreateSoundBuffer(&m_STOMPsoundBuffer           , "Sound/STOMP.wav"           );
-	CreateSoundBuffer(&m_STAGE_CLEARsoundBuffer, "Sound/STAGE_CLEAR.wav");
+	CreateSoundBuffer(&m_STAGE_CLEARsoundBuffer,      "Sound/STAGE_CLEAR.wav"     );
+	CreateSoundBuffer(&m_MARIO_DIEsoundBuffer, "Sound/MARIO_DIE.wav");
+	CreateSoundBuffer(&m_GAME_OVERsoundBuffer, "Sound/GAME_OVER.wav");
 }

@@ -22,7 +22,7 @@ Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	m_pMainTextureResource = TextureData::Instance()->GetMARIO_STAND_TR();
-	m_pMainTextureSRV = TextureData::Instance()->GetMARIO_STAND_TSRV();
+	m_pMainTextureSRV      = TextureData::Instance()->GetMARIO_STAND_TSRV();
 
 	/* 走るアニメーションの登録 */
 	m_pRunAnimation = new Animation();
@@ -32,6 +32,9 @@ Player::Player(Vector3 pos, Vector2 size) : Square::Square(pos, size)
 	m_pRunAnimation->AddAnimResource(TextureData::Instance()->GetMARIO_RUN3_TR() , TextureData::Instance()->GetMARIO_RUN3_TSRV());
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Player::~Player()
 {
 	if (m_pRunAnimation != nullptr) { delete m_pRunAnimation; m_pRunAnimation = nullptr; }
@@ -56,6 +59,11 @@ void Player::Die()
 		{
 			m_Life--;
 		}
+
+		/* 死亡音流す */
+		SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->Stop();
+		SoundData::Instance()->GetMARIO_DIEsoundBuffer()->SetCurrentPosition(0);
+		SoundData::Instance()->GetMARIO_DIEsoundBuffer()->Play(0, 0, 0);
 	}
 }
 
@@ -292,33 +300,41 @@ void Player::Move()
 /// </summary>
 void Player::ThisObjRender()
 {
-	/* 描画するテクスチャの設定 */
-	switch (m_MoveObjState)
+	if (m_LivingFlag)
 	{
-	case MoveObjState::CHECK_GROUND:
 
-		/* 歩いているのかの判定 */
-		if (m_NowWalkSpeed != 0)
+
+		/* 描画するテクスチャの設定 */
+		switch (m_MoveObjState)
 		{
-			m_pRunAnimation->AnimPlay();
-			m_pMainTextureResource = m_pRunAnimation->GetAnimTextureResource();
-			m_pMainTextureSRV = m_pRunAnimation->GetAnimTextureSRV();
-		}
-		else
-		{
-			m_pRunAnimation->AnimReset();
-			m_pMainTextureResource = TextureData::Instance()->GetMARIO_STAND_TR();
-			m_pMainTextureSRV = TextureData::Instance()->GetMARIO_STAND_TSRV();
-		}
+		case MoveObjState::CHECK_GROUND:
 
-		break;
+			/* 歩いているのかの判定 */
+			if (m_NowWalkSpeed != 0)
+			{
+				m_pRunAnimation->AnimPlay();
+				m_pMainTextureResource = m_pRunAnimation->GetAnimTextureResource();
+				m_pMainTextureSRV = m_pRunAnimation->GetAnimTextureSRV();
+			}
+			else
+			{
+				m_pRunAnimation->AnimReset();
+				m_pMainTextureResource = TextureData::Instance()->GetMARIO_STAND_TR();
+				m_pMainTextureSRV = TextureData::Instance()->GetMARIO_STAND_TSRV();
+			}
 
-	default:
-		m_pMainTextureResource = TextureData::Instance()->GetMARIO_JUMP_TR();
-		m_pMainTextureSRV=TextureData::Instance()->GetMARIO_JUMP_TSRV();
+			break;
+
+		default:
+			m_pMainTextureResource = TextureData::Instance()->GetMARIO_JUMP_TR();
+			m_pMainTextureSRV = TextureData::Instance()->GetMARIO_JUMP_TSRV();
+		}
 	}
-
-	
+	else
+	{
+		m_pMainTextureResource = TextureData::Instance()->GetMARIO_DEAD_TR();
+		m_pMainTextureSRV = TextureData::Instance()->GetMARIO_DEAD_TSRV();
+	}
 
 	Render(m_pVertexArray, m_IndexArraySize);
 }
@@ -465,4 +481,46 @@ bool Player::MiniJump()
 	}
 
 	return false;
+}
+
+bool Player::DieMove()
+{
+	if (m_LivingFlag) { return false; }
+
+	if (m_DieMoveFrameCounter < M_DIE_MOVE_FRAME)
+	{
+		if (m_DieMoveFrameCounter >= M_DIE_MOVE_STOP_FRAME)
+		{
+			if (std::abs(m_DieMoveNowSpeed) <= M_DIE_MOVE_SPEED_MAX)
+			{
+				m_DieMoveNowSpeed -= m_DieMoveChangeAmount;
+			}
+			else
+			{
+				if (m_DieMoveNowSpeed < 0)
+				{
+					m_DieMoveNowSpeed = -M_DIE_MOVE_SPEED_MAX;
+				}
+				else
+				{
+					m_DieMoveNowSpeed = M_DIE_MOVE_SPEED_MAX;
+				}
+			}
+
+			/* 移動 */
+			m_yPos += m_DieMoveNowSpeed;
+			for (int i = 0; i < m_VertexArraySize; i++)
+			{
+				m_pVertexArray[i].pos[1] += m_DieMoveNowSpeed;
+			}
+		}
+
+		m_DieMoveFrameCounter++;
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

@@ -133,6 +133,10 @@ void GameManager::UpDateGame()
 				m_pParameterScene ->ChangeWorldNamber(m_pPlayScene->GetNowWorldLevel(), m_pPlayScene->GetNowStageLevel());	
 				m_pResultScene    ->ChangeMarioLife(m_pPlayScene->GetPlayer()->GetLife());
 				break;
+
+			case GameState::GAMEOVER:
+				SoundData::Instance()->GetGAME_OVERsoundBuffer()->SetCurrentPosition(0);
+				SoundData::Instance()->GetGAME_OVERsoundBuffer()->Play(0,0,0);
 			}
 		}
 

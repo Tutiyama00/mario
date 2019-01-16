@@ -19,7 +19,7 @@ private:
 	TextCharacters* m_pTextCharacters = nullptr;
 
 	unsigned int m_FlameCount = 0;  //シーンを遷移させるまでのカウント
-	const unsigned int M_CHANGE_FLAME_COUNT = 180;
+	const unsigned int M_CHANGE_FLAME_COUNT = 480;
 
 
 /*------IGameScene------*/

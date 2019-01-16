@@ -99,7 +99,7 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag)
 /// </summary>
 void PlayScene::MakeStageObj()
 {
-	m_pBlocks = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),TextureData::Instance()->GetBLOCK_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlocks       = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),        TextureData::Instance()->GetBLOCK_TSRV(),        L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	m_pBlockGrounds = new Characters<Block>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
@@ -225,10 +225,10 @@ void PlayScene::MoveScene()
 /// </summary>
 void PlayScene::StageObjDelete()
 {
-	if (m_pPlayer != nullptr) { delete m_pPlayer;       m_pPlayer = nullptr; }
-	if (m_pBlocks != nullptr) { delete m_pBlocks;       m_pBlocks = nullptr; }
+	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
+	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
 	if (m_pBlockGrounds != nullptr) { delete m_pBlockGrounds; m_pBlockGrounds = nullptr; }
-	if (m_pGoal   != nullptr) { delete m_pGoal;         m_pGoal   = nullptr; }
+	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -260,7 +260,6 @@ void PlayScene::MoveOrder()
 	{
 		m_pNokonokoVector[i]->Move();
 	}
-
 }
 
 /// <summary>
@@ -405,23 +404,6 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 
 	MoveOrder();
 
-	/*ゴールチェック*/
-	//if (m_pGoal->CollisionCheck(m_pPlayer))
-	//{
-	//	m_NowStageLevel++;
-	//	if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
-	//	{
-	//		m_NowWorldLevel++;
-	//		m_NowStageLevel = 1;
-	//	}
-
-	//	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
-
-	//	m_pStage->ChangeStage(filePas.data());
-	//	ReStart();
-	//	m_NextGameState = GameState::RESULT;
-	//}
-
 	if (m_pGoal->GoalCheck(m_pPlayer))
 	{
 		if (!m_pGoal->Play(m_pPlayer))
@@ -458,8 +440,11 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	/* プレイヤーが死んでいるかどうか */
 	if (m_pPlayer->GetLivibgFlag() == false)
 	{
-		/* 死んでいたらシーン遷移 */
-		MoveScene();
+		if (!m_pPlayer->DieMove())
+		{
+			/* 死亡演出が終わったらシーン遷移 */
+			MoveScene();
+		}
 	}
 }
 
@@ -470,7 +455,7 @@ void PlayScene::Draw()
 {
 	m_pCamera->Shoot(m_CameraShootXPos);
 	m_pPlayer->ThisObjRender();
-	m_pGoal->ThisObjRender();
+	m_pGoal  ->ThisObjRender();
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -481,6 +466,6 @@ void PlayScene::Draw()
 	{
 		m_pNokonokoVector[i]->ThisObjRender();
 	}
-	m_pBlocks->ThisObjRender();
+	m_pBlocks      ->ThisObjRender();
 	m_pBlockGrounds->ThisObjRender();
 }

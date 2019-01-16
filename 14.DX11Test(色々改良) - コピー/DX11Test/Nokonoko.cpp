@@ -123,6 +123,7 @@ void Nokonoko::Move()
 void Nokonoko::CheckPlayer(Player* pPlayer)
 {
 	if (!m_LivingFlag) { return; }
+	if (!pPlayer->GetLivibgFlag()) { return; }
 
 	/* ƒvƒŒƒCƒ„[‚ÆÕ“Ë‚µ‚Ä‚¢‚½‚ç */
 	if (CollisionCheck(pPlayer))
