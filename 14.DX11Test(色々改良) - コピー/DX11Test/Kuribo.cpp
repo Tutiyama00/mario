@@ -2,6 +2,8 @@
 #include"Animation.h"
 #include"TextureData.h"
 #include"ScoreManager.h"
+#include"Player.h"
+#include"SoundData.h"
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -48,7 +50,26 @@ Kuribo::~Kuribo()
 void Kuribo::Move()
 {
 	/*生きていない状態だったらリターンして動かさない*/
-	if (!m_LivingFlag){ return; }
+	if (!m_LivingFlag)
+	{
+		if (m_RenderFlag)
+		{
+			if (m_StompDieFlag)
+			{
+				if (m_StompRenderFrameCounter < M_STOMP_RENDER_FRAME)
+				{
+					OutputDebugString("AAAAAAAAAAA");
+					m_StompRenderFrameCounter++;
+				}
+				else
+				{
+					m_RenderFlag = false;
+				}
+			}
+		}
+
+		return;
+	}
 
 	switch (m_MoveObjState)
 	{
@@ -91,21 +112,64 @@ void Kuribo::Move()
 
 void Kuribo::ThisObjRender()
 {
-	if (!m_LivingFlag) { return; }
-
-	m_pWalkAnimation->AnimPlay();
-	m_pMainTextureResource = m_pWalkAnimation->GetAnimTextureResource();
-	m_pMainTextureSRV = m_pWalkAnimation->GetAnimTextureSRV();
-
-	/* 右と左どちらに向いているのかの判定 */
-	if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
+	if (m_LivingFlag)
 	{
-		ParallelInverted();
-	}
-	else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
-	{
-		ParallelInverted();
+		m_pWalkAnimation->AnimPlay();
+		m_pMainTextureResource = m_pWalkAnimation->GetAnimTextureResource();
+		m_pMainTextureSRV = m_pWalkAnimation->GetAnimTextureSRV();
+
+		/* 右と左どちらに向いているのかの判定 */
+		if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
+		{
+			ParallelInverted();
+		}
+		else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
+		{
+			ParallelInverted();
+		}
 	}
 
 	Render(m_pVertexArray, m_IndexArraySize);
+}
+
+/// <summary>
+/// 死亡処理
+/// </summary>
+void Kuribo::Die()
+{
+	if (!m_LivingFlag) { return; }
+
+	ScoreManager::Instance()->AddScore(m_DieScorePoint);
+	m_LivingFlag = false;
+}
+
+/// <summary>
+/// プレイヤーのチェック
+/// </summary>
+/// <param name="pPlayer">チェックするプレイヤーのポインター</param>
+/// <param name="pInputFlag">入力情報</param>
+void Kuribo::CheckPlayer(Player* pPlayer)
+{
+	if (!m_LivingFlag) { return; }
+	if (!pPlayer->GetLivibgFlag()) { return; }
+
+	/* プレイヤーと衝突していたら */
+	if (CollisionCheck(pPlayer))
+	{
+		if (UpCheck(pPlayer))
+		{
+			SoundData::Instance()->GetSTOMPsoundBuffer()->SetCurrentPosition(0);
+			SoundData::Instance()->GetSTOMPsoundBuffer()->Play(0, 0, 0);
+			m_pMainTextureResource = TextureData::Instance()->GetKURIBO_DEAD_TR();
+			m_pMainTextureSRV = TextureData::Instance()->GetKURIBO_DEAD_TSRV();
+			m_StompDieFlag = true;
+			pPlayer->MiniJumpStart();
+			Die();
+		}
+		else
+		{
+			/* プレイヤーを殺す */
+			pPlayer->Die();
+		}
+	}
 }

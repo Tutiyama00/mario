@@ -20,6 +20,7 @@ void TextureData::Initialize()
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/KOURA2.png"      , &m_pKOURA2_TR      , &m_pKOURA2_TSRV     );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/KURIBO1.png"     , &m_pKURIBO1_TR     , &m_pKURIBO1_TSRV    );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/KURIBO2.png"     , &m_pKURIBO2_TR     , &m_pKURIBO2_TSRV    );
+	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/KURIBO_DEAD.png" , &m_pKURIBO_DEAD_TR , &m_pKURIBO_DEAD_TSRV);
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/MARIO_DEAD.png"  , &m_pMARIO_DEAD_TR  , &m_pMARIO_DEAD_TSRV );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/MARIO_JUMP.png"  , &m_pMARIO_JUMP_TR  , &m_pMARIO_JUMP_TSRV );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/MARIO_RUN1.png"  , &m_pMARIO_RUN1_TR  , &m_pMARIO_RUN1_TSRV );

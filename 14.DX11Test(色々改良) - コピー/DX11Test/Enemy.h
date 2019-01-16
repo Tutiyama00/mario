@@ -12,7 +12,7 @@ public:
 	Enemy(Vector3 pos, Vector2 size) : NotPlayer(pos, size) {};
 	~Enemy() {};
 
-	void Die();
+	virtual void Die();
 
 public:
 	bool GetLivingFlag() { return m_LivingFlag; }
@@ -22,7 +22,6 @@ protected:
 
 protected:
 	int m_DieScorePoint = 0;  //Ž€‚ñ‚¾‚Æ‚«‚É‰ÁŽZ‚³‚ê‚éƒXƒRƒA
-
 
 /*------NotPlayer------*/
 public:

@@ -125,7 +125,7 @@ void Enemy::ThisObjCreateBuffer()
 /// </summary>
 void Enemy::ThisObjRender()
 {
-	if (!m_LivingFlag) { return; }
+	if (!m_RenderFlag) { return; }
 
 	Render(m_pVertexArray, m_IndexArraySize);
 }

@@ -302,8 +302,6 @@ void Player::ThisObjRender()
 {
 	if (m_LivingFlag)
 	{
-
-
 		/* 描画するテクスチャの設定 */
 		switch (m_MoveObjState)
 		{
