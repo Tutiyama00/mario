@@ -58,7 +58,6 @@ void Kuribo::Move()
 			{
 				if (m_StompRenderFrameCounter < M_STOMP_RENDER_FRAME)
 				{
-					OutputDebugString("AAAAAAAAAAA");
 					m_StompRenderFrameCounter++;
 				}
 				else

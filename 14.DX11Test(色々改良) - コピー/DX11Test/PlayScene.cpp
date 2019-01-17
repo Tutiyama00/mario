@@ -12,6 +12,7 @@
 #include"Kuribo.h"
 #include"Nokonoko.h"
 #include"TextureData.h"
+#include"Image.h"
 
 using namespace OriginalMath;
 
@@ -48,6 +49,7 @@ PlayScene::~PlayScene()
 	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
 	if (m_pBlockGrounds != nullptr) { delete m_pBlockGrounds; m_pBlockGrounds = nullptr; }
+	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
 	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
@@ -101,6 +103,7 @@ void PlayScene::MakeStageObj()
 {
 	m_pBlocks       = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),        TextureData::Instance()->GetBLOCK_TSRV(),        L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	m_pBlockGrounds = new Characters<Block>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlockGroundDummys = new Characters<Image>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	//.5が切り上げになるので縦幅（奇数前提）の中間値が取得できる
 	int halfHeight = m_pStage->GetStageHeight() / 2;
@@ -132,6 +135,10 @@ void PlayScene::MakeStageObj()
 				m_pBlockGrounds->m_ObjectVector.push_back(new Block(pos, size));
 				break;
 
+			case Object::GROUND_BLOCK_DUMMY:
+				m_pBlockGroundDummys->m_ObjectVector.push_back(new Image(pos, size, TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), false));
+				break;
+
 			case Object::KURIBOU:
 				m_pKuriboVector.push_back( new Kuribo(pos, size));
 				break;
@@ -153,6 +160,7 @@ void PlayScene::MakeStageObj()
 
 	m_pBlocks->ThisObjCreateBuffer();
 	m_pBlockGrounds->ThisObjCreateBuffer();
+	m_pBlockGroundDummys->ThisObjCreateBuffer();
 
 	/*下の死亡判定ラインの計算*/
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
@@ -160,8 +168,13 @@ void PlayScene::MakeStageObj()
 	/* カメラのX座標初期化 */
 	m_CameraShootXPos = 0.8f;
 
-	/* 左限界値の初期化 */
+	/* プレイヤー左限界値の初期化 */
 	m_PlayerMoveEndXPos = m_CameraShootXPos - m_EndToShootXPosAmount;
+
+	/* オブジェクト右限界値の初期化 */
+	m_ObjMoveRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
+	/* オブジェクト左限界値の初期化 */
+	m_ObjMoveLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
 }
 
 
@@ -228,6 +241,7 @@ void PlayScene::StageObjDelete()
 	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
 	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
 	if (m_pBlockGrounds != nullptr) { delete m_pBlockGrounds; m_pBlockGrounds = nullptr; }
+	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
 	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
@@ -253,12 +267,18 @@ void PlayScene::MoveOrder()
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
-		m_pKuriboVector[i]->Move();
+		if (m_pKuriboVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pKuriboVector[i]->GetxPos() <= m_ObjMoveRightXPos)
+		{
+			m_pKuriboVector[i]->Move();
+		}
 	}
 
 	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
-		m_pNokonokoVector[i]->Move();
+		if (m_pNokonokoVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pNokonokoVector[i]->GetxPos() <= m_ObjMoveRightXPos)
+		{
+			m_pNokonokoVector[i]->Move();
+		}
 	}
 }
 
@@ -270,108 +290,120 @@ void PlayScene::ObjCheckOrder()
 	//ブロック群の対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
-		m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
-
-		for (int j = 0; j < m_pKuriboVector.size(); j++)
+		if (m_pBlocks->m_ObjectVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pBlocks->m_ObjectVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
-			m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
-		}
+			m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
-		for (int j = 0; j < m_pNokonokoVector.size(); j++)
-		{
-			m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			for (int j = 0; j < m_pKuriboVector.size(); j++)
+			{
+				m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
+			}
+
+			for (int j = 0; j < m_pNokonokoVector.size(); j++)
+			{
+				m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			}
 		}
 	}
 	//ブロック群の対して衝突判定
 	for (int i = 0; i < m_pBlockGrounds->m_ObjectVector.size(); i++)
 	{
-		m_pBlockGrounds->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
-
-		for (int j = 0; j < m_pKuriboVector.size(); j++)
+		if (m_pBlockGrounds->m_ObjectVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pBlockGrounds->m_ObjectVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
-			m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
-		}
+			m_pBlockGrounds->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
-		for (int j = 0; j < m_pNokonokoVector.size(); j++)
-		{
-			m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			for (int j = 0; j < m_pKuriboVector.size(); j++)
+			{
+				m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
+			}
+
+			for (int j = 0; j < m_pNokonokoVector.size(); j++)
+			{
+				m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			}
 		}
 	}
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
-	    /* クリボーとプレイヤーの比較 */
-		m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
-
-		for (int j = 0; j < m_pNokonokoVector.size(); j++)
+		if (m_pKuriboVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pKuriboVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
-			if (m_pNokonokoVector[j]->GetLivingFlag())
+			/* クリボーとプレイヤーの比較 */
+			m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
+
+			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
-				/* クリボーとノコノコの比較 */
-				m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
-				m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+				if (m_pNokonokoVector[j]->GetLivingFlag())
+				{
+					/* クリボーとノコノコの比較 */
+					m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
+					m_pKuriboVector  [i]->CheckEnemy(m_pNokonokoVector[j]);
+				}
 			}
-		}
 
-		if (i + 1 < m_pKuriboVector.size())
-		{
-			/* クリボーとクリボーの比較 */
-			for (int c = i + 1; c < m_pKuriboVector.size(); c++)
+			if (i + 1 < m_pKuriboVector.size())
 			{
-				m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
-				m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
+				/* クリボーとクリボーの比較 */
+				for (int c = i + 1; c < m_pKuriboVector.size(); c++)
+				{
+					m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
+					m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
+				}
 			}
 		}
 	}
 
 	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
-		/* ノコノコとプレイヤーの比較 */
-		m_pNokonokoVector[i]->CheckPlayer(m_pPlayer);
-
-		/* チェックしているのが配列の最後のノコノコだった場合ノコノコ同士の処理しない */
-		if (i + 1 >= m_pNokonokoVector.size()) { continue; }
-
-		/*　ノコノコとノコノコの比較 */
-		for (int j = i + 1; j < m_pNokonokoVector.size(); j++)
+		if (m_pNokonokoVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pNokonokoVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
-			/* ノコノコが甲羅走りしているのかチェック */
-			bool NokonokoRunStateFlagI = m_pNokonokoVector[i]->GetNokonokoState() == NokonokoState::KOURA_RUN;
-			bool NokonokoRunStateFlagJ = m_pNokonokoVector[j]->GetNokonokoState() == NokonokoState::KOURA_RUN;
+			/* ノコノコとプレイヤーの比較 */
+			m_pNokonokoVector[i]->CheckPlayer(m_pPlayer);
 
-			/* 両方のノコノコが甲羅走り */
-			if (NokonokoRunStateFlagI && NokonokoRunStateFlagJ)
+			/* チェックしているのが配列の最後のノコノコだった場合ノコノコ同士の処理しない */
+			if (i + 1 >= m_pNokonokoVector.size()) { continue; }
+
+			/*　ノコノコとノコノコの比較 */
+			for (int j = i + 1; j < m_pNokonokoVector.size(); j++)
 			{
-				if (m_pNokonokoVector[j]->CollisionCheck(m_pNokonokoVector[i]) && m_pNokonokoVector[i]->CollisionCheck(m_pNokonokoVector[j]))
+				/* ノコノコが甲羅走りしているのかチェック */
+				bool NokonokoRunStateFlagI = m_pNokonokoVector[i]->GetNokonokoState() == NokonokoState::KOURA_RUN;
+				bool NokonokoRunStateFlagJ = m_pNokonokoVector[j]->GetNokonokoState() == NokonokoState::KOURA_RUN;
+
+				/* 両方のノコノコが甲羅走り */
+				if (NokonokoRunStateFlagI && NokonokoRunStateFlagJ)
 				{
-					m_pNokonokoVector[i]->Die();
-					m_pNokonokoVector[j]->Die();
+					if (m_pNokonokoVector[j]->CollisionCheck(m_pNokonokoVector[i]) && m_pNokonokoVector[i]->CollisionCheck(m_pNokonokoVector[j]))
+					{
+						m_pNokonokoVector[i]->Die();
+						m_pNokonokoVector[j]->Die();
+
+						continue;
+					}
+				}
+
+				/* Iの方のノコノコだけが甲羅走り */
+				if (NokonokoRunStateFlagI && !NokonokoRunStateFlagJ)
+				{
+					m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+					m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
 
 					continue;
 				}
-			}
 
-			/* Iの方のノコノコだけが甲羅走り */
-			if(NokonokoRunStateFlagI && !NokonokoRunStateFlagJ)
-			{
-				m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-				m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
+				/* Jの方のノコノコだけが甲羅走り */
+				if (!NokonokoRunStateFlagI && NokonokoRunStateFlagJ)
+				{
+					m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
+					m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 
-				continue;
-			}
+					continue;
+				}
 
-			/* Jの方のノコノコだけが甲羅走り */
-			if (!NokonokoRunStateFlagI && NokonokoRunStateFlagJ)
-			{
+				/* どのパターンにも当てはまらなかった場合 */
 				m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
 				m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-
-				continue;
 			}
-
-			/* どのパターンにも当てはまらなかった場合 */
-			m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
-			m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 		}
 	}
 }
@@ -423,12 +455,18 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 		}
 	}
 	
-
 	/* カメラの映すX座標を変えていいか */
 	if (m_pPlayer->GetxPos() >= m_CameraShootXPos)
 	{
 		m_CameraShootXPos = m_pPlayer->GetxPos();
+
+		/* プレイヤー左限界値の初期化 */
 		m_PlayerMoveEndXPos = m_CameraShootXPos - m_EndToShootXPosAmount;
+
+		/* オブジェクト右限界値の初期化 */
+		m_ObjMoveRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
+		/* オブジェクト左限界値の初期化 */
+		m_ObjMoveLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
 	}
 
 	//落下チェック
@@ -468,4 +506,5 @@ void PlayScene::Draw()
 	}
 	m_pBlocks      ->ThisObjRender();
 	m_pBlockGrounds->ThisObjRender();
+	m_pBlockGroundDummys->ThisObjRender();
 }
