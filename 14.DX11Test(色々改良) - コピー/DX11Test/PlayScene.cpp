@@ -146,6 +146,7 @@ void PlayScene::MakeStageObj()
 			case Object::NOKONOKO:
 				m_pNokonokoVector.push_back( new Nokonoko(pos, size));
 				break;
+
 			case Object::GOAL:
 				m_pGoal = new Goal(pos);
 				break;
@@ -236,11 +237,11 @@ void PlayScene::MoveScene()
 /// </summary>
 void PlayScene::StageObjDelete()
 {
-	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
-	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
-	if (m_pBlockGrounds != nullptr) { delete m_pBlockGrounds; m_pBlockGrounds = nullptr; }
+	if (m_pPlayer            != nullptr) { delete m_pPlayer;            m_pPlayer            = nullptr; }
+	if (m_pBlocks            != nullptr) { delete m_pBlocks;            m_pBlocks            = nullptr; }
+	if (m_pBlockGrounds      != nullptr) { delete m_pBlockGrounds;      m_pBlockGrounds      = nullptr; }
 	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
-	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
+	if (m_pGoal              != nullptr) { delete m_pGoal;              m_pGoal              = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
