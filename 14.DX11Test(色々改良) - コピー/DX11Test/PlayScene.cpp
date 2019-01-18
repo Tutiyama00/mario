@@ -156,8 +156,6 @@ void PlayScene::MakeStageObj()
 	Vector3 pos  = { 1.75f,-0.115f,m_StandardZpos };
 	Vector2 size = { 0.75f,0.75f };
 
-	//m_pGoal = new Goal(pos, size); 
-
 	m_pBlocks->ThisObjCreateBuffer();
 	m_pBlockGrounds->ThisObjCreateBuffer();
 	m_pBlockGroundDummys->ThisObjCreateBuffer();
@@ -494,7 +492,7 @@ void PlayScene::Draw()
 	m_pCamera->Shoot(m_CameraShootXPos);
 	m_pPlayer->ThisObjRender();
 	m_pGoal  ->ThisObjRender();
-
+	 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
 		m_pKuriboVector[i]->ThisObjRender();
