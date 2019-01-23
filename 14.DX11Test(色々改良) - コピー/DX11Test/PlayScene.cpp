@@ -293,18 +293,24 @@ void PlayScene::MoveOrder()
 	//プレイヤー移動
 	m_pPlayer->Move();
 
+	/*クリボーの移動*/
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
+		/*行動範囲内にいるのかどうか*/
 		if (m_pKuriboVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pKuriboVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
+			/*移動*/
 			m_pKuriboVector[i]->Move();
 		}
 	}
 
+	/*ノコノコの移動*/
 	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
+		/*行動範囲内にいるのかどうか*/
 		if (m_pNokonokoVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pNokonokoVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
+			/*移動*/
 			m_pNokonokoVector[i]->Move();
 		}
 	}
@@ -315,36 +321,45 @@ void PlayScene::MoveOrder()
 /// </summary>
 void PlayScene::ObjCheckOrder()
 {
-	//ブロック群の対して衝突判定
+	//ブロック群の衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
+		/*判定可能範囲内にいるのかどうか*/
 		if (m_pBlocks->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pBlocks->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
 		{
+			/*プレイヤーに対してのチェック*/
 			m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
+			/*クリボーに対してのチェック*/
 			for (int j = 0; j < m_pKuriboVector.size(); j++)
 			{
 				m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
 			}
 
+			/*ノコノコに対してのチェック*/
 			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
 				m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 			}
 		}
 	}
-	//ブロック群の対して衝突判定
+
+	//ブロック群の衝突判定
 	for (int i = 0; i < m_pBlockGrounds->m_ObjectVector.size(); i++)
 	{
+		/*判定可能範囲内にいるのかどうか*/
 		if (m_pBlockGrounds->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pBlockGrounds->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
 		{
+			/*プレイヤーに対してのチェック*/
 			m_pBlockGrounds->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
+			/*クリボーに対してのチェック*/
 			for (int j = 0; j < m_pKuriboVector.size(); j++)
 			{
 				m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
 			}
 
+			/*ノコノコに対してのチェック*/
 			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
 				m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
@@ -355,15 +370,19 @@ void PlayScene::ObjCheckOrder()
 	//土管群の対して衝突判定
 	for (int i = 0; i < m_pClayPipes->m_ObjectVector.size(); i++)
 	{
+		/*判定可能範囲内にいるのかどうか*/
 		if (m_pClayPipes->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pClayPipes->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
 		{
+			/*プレイヤーに対してのチェック*/
 			m_pClayPipes->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
+			/*クリボーに対してのチェック*/
 			for (int j = 0; j < m_pKuriboVector.size(); j++)
 			{
 				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
 			}
 
+			/*ノコノコに対してのチェック*/
 			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
 				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
@@ -371,15 +390,19 @@ void PlayScene::ObjCheckOrder()
 		}
 	}
 
+	/*クリボーの衝突判定*/
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
+		/*判定可能範囲にいるのかどうか*/
 		if (m_pKuriboVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pKuriboVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
-			/* クリボーとプレイヤーの比較 */
+			/*プレイヤーに対してのチェック*/
 			m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
 
+			/*ノコノコに対してのチェック*/
 			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
+				/*ノコノコが生きているかどうか*/
 				if (m_pNokonokoVector[j]->GetLivingFlag())
 				{
 					/* クリボーとノコノコの比較 */
@@ -388,20 +411,28 @@ void PlayScene::ObjCheckOrder()
 				}
 			}
 
+			/*クリボーに対してのチェック*/
+			/*配列の最後尾かどうか*/
 			if (i + 1 < m_pKuriboVector.size())
 			{
-				/* クリボーとクリボーの比較 */
+				/*クリボーとクリボーの比較*/
 				for (int c = i + 1; c < m_pKuriboVector.size(); c++)
 				{
-					m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
-					m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
+					/*対象のクリボーが生きているかどうか*/
+					if (m_pKuriboVector[c]->GetLivingFlag())
+					{
+						m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
+						m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
+					}
 				}
 			}
 		}
 	}
 
+	/*ノコノコの衝突判定*/
 	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
+		/*判定可能範囲内にいるのかどうか*/
 		if (m_pNokonokoVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pNokonokoVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
 			/* ノコノコとプレイヤーの比較 */
@@ -551,9 +582,10 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	/* プレイヤーが死んでいるかどうか */
 	if (m_pPlayer->GetLivibgFlag() == false)
 	{
+		/*死亡演出が終わったかどうか*/
 		if (!m_pPlayer->DieMove())
 		{
-			/* 死亡演出が終わったらシーン遷移 */
+			/*死亡演出が終わったらシーン遷移*/
 			MoveScene();
 		}
 	}
@@ -564,9 +596,9 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 /// </summary>
 void PlayScene::Draw()
 {
-	m_pCamera->Shoot(m_CameraShootXPos);
-	m_pPlayer->ThisObjRender();
-	m_pGoal  ->ThisObjRender();
+	m_pCamera -> Shoot(m_CameraShootXPos);
+	m_pPlayer -> ThisObjRender();
+	m_pGoal   -> ThisObjRender();
 	 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -577,9 +609,10 @@ void PlayScene::Draw()
 	{
 		m_pNokonokoVector[i]->ThisObjRender();
 	}
-	m_pBlocks      ->ThisObjRender();
-	m_pBlockDummys ->ThisObjRender();
-	m_pBlockGrounds->ThisObjRender();
-	m_pBlockGroundDummys->ThisObjRender();
-	m_pClayPipes->ThisObjRender();
+
+	m_pBlocks            -> ThisObjRender();
+	m_pBlockDummys       -> ThisObjRender();
+	m_pBlockGrounds      -> ThisObjRender();
+	m_pBlockGroundDummys -> ThisObjRender();
+	m_pClayPipes         -> ThisObjRender();
 }

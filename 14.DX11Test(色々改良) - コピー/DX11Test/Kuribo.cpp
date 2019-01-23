@@ -52,8 +52,10 @@ void Kuribo::Move()
 	/*¶‚«‚Ä‚¢‚È‚¢ó‘Ô‚¾‚Á‚½‚çƒŠƒ^[ƒ“‚µ‚Ä“®‚©‚³‚È‚¢*/
 	if (!m_LivingFlag)
 	{
+		/*•`‰æ‚³‚¹‚Ä‚¢‚é‚©‚Ç‚¤‚©*/
 		if (m_RenderFlag)
 		{
+			/*“¥‚Ü‚ê‚Ä€‚ñ‚Å‚¢‚é‚©*/
 			if (m_StompDieFlag)
 			{
 				if (m_StompRenderFrameCounter < M_STOMP_RENDER_FRAME)
@@ -64,6 +66,13 @@ void Kuribo::Move()
 				{
 					m_RenderFlag = false;
 				}
+
+				return;
+			}
+			else
+			{
+				m_RenderFlag = false;
+				return;
 			}
 		}
 
