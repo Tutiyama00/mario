@@ -56,6 +56,8 @@ public:
 	ID3D11ShaderResourceView* GetGOAL_FLAG_TSRV   ()const { return m_pGOAL_FLAG_TSRV;    }
 	ID3D11Resource*           GetGOAL_CASTLE_TR   ()const { return m_pGOAL_CASTLE_TR;    }
 	ID3D11ShaderResourceView* GetGOAL_CASTLE_TSRV ()const { return m_pGOAL_CASTLE_TSRV;  }
+	ID3D11Resource*           GetCLAY_PIPE_TR     ()const { return m_pCLAY_PIPE_TR;      }
+	ID3D11ShaderResourceView* GetCLAY_PIPE_TSRV   ()const { return m_pCLAY_PIPE_TSRV;    }
 
 private:
 	ID3D11Resource*           m_pBLOCK_TR          = nullptr;
@@ -102,6 +104,8 @@ private:
 	ID3D11ShaderResourceView* m_pGOAL_FLAG_TSRV    = nullptr;
 	ID3D11Resource*           m_pGOAL_CASTLE_TR    = nullptr;
 	ID3D11ShaderResourceView* m_pGOAL_CASTLE_TSRV  = nullptr;
+	ID3D11Resource*           m_pCLAY_PIPE_TR = nullptr;
+	ID3D11ShaderResourceView* m_pCLAY_PIPE_TSRV = nullptr;
 
 private:
 	TextureData() {};

@@ -25,5 +25,8 @@ enum class Object : unsigned char
 	KURIBOU,
 	NOKONOKO,
 	SPACE,
-	GOAL
+	GOAL,
+	CLAY_PIPE_2,
+	CLAY_PIPE_3,
+	CLAY_PIPE_4
 };

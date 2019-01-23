@@ -114,11 +114,6 @@ void GameManager::UpDateGame()
 		/*シーンの更新*/
 		m_GameState = m_pPlayScene->UpDateScene(*m_pFlag);
 
-		if (m_pParameterScene->GetNowTime() <= 0)
-		{
-			m_pPlayScene->KillPlayer();
-		}
-
 		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
@@ -137,6 +132,14 @@ void GameManager::UpDateGame()
 			case GameState::GAMEOVER:
 				SoundData::Instance()->GetGAME_OVERsoundBuffer()->SetCurrentPosition(0);
 				SoundData::Instance()->GetGAME_OVERsoundBuffer()->Play(0,0,0);
+				break;
+			}
+		}
+		else
+		{
+			if (m_pParameterScene->GetNowTime() <= 95)
+			{
+				m_pPlayScene->KillPlayer();
 			}
 		}
 
@@ -167,7 +170,7 @@ void GameManager::UpDateGame()
 		/*更新の結果ゲームステートが変化しているか*/
 		if (m_GameState != oldGameState)
 		{
-			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->SetCurrentPosition(0);  //再生位置を先頭に戻す
+			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->SetCurrentPosition(0);       //再生位置を先頭に戻す
 			SoundData::Instance()->GetSTANDARD_BGMsoundBuffer()->Play(0,0, DSBPLAY_LOOPING);  //再生する
 
 			m_pParameterScene->SetTimer(m_pPlayScene->GetStageTime());

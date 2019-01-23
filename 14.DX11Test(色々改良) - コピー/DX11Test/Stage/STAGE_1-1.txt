@@ -1,4 +1,4 @@
-300
+100
 3
 213
                                                                                                                                                                                                                      
@@ -12,9 +12,9 @@
                                                                                                                                                                                             BBB                      
                                                                                                                                                                                            BBBB                      
                                                                                                                                                                                           BBBBB                      
-                B   BBBBB                     BB         BB                  BBB              B     BB    B  B  B     B          BB      B  B           BB  B            BBBB            BBBBBB                      
-                                      BB      BB         BB                                                                             BB  BB         BBB  BB                          BBBBBBB                      
-                            BB        BB      BB         BB                                                                            BBB  BBB       BBBB  BBB     BB              BB BBBBBBBB        C             
-  M                  K      BB        BB      BB    KK   BB                                     KK         N       KK     KK     KK   BBBB  BBBB     BBBBB  BBBB    BB         KK   BBBBBBBBBBB        B             
+                B   BBBBB                                                    BBB              B     BB    B  B  B     B          BB      B  B           BB  B            BBBB            BBBBBB                      
+                                                                                                                                        BB  BB         BBB  BB                          BBBBBBB                      
+                                                                                                                                       BBB  BBB       BBBB  BBB                        BBBBBBBB        C             
+  M                  K      p         P       P     KK   P                                      KK         N       KK     KK     KK   BBBB  BBBB     BBBBB  BBBB    p          KK   p BBBBBBBBB        B             
 GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggG  GgggggggggggggG   GgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggG  GgggggggggggggggggggggggggggggggggggggggggggggggggggggggG

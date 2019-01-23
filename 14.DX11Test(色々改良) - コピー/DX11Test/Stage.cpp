@@ -132,14 +132,17 @@ void Stage::LoadStage(const char* stageName)
 	{
 		switch (loadStageData[i])
 		{
-		case 'M':m_pStageDataArray[pt] = Object::MARIO;           pt++; break;
-		case ' ':m_pStageDataArray[pt] = Object::SPACE;           pt++; break;
-		case 'B':m_pStageDataArray[pt] = Object::NORMAL_BLOCK;    pt++; break;
-		case 'K':m_pStageDataArray[pt] = Object::KURIBOU;         pt++; break;
-		case 'N':m_pStageDataArray[pt] = Object::NOKONOKO;        pt++; break;
-		case 'G':m_pStageDataArray[pt] = Object::GROUND_BLOCK;    pt++; break;
-		case 'g':m_pStageDataArray[pt] = Object::GROUND_BLOCK_DUMMY;    pt++; break;
-		case 'C':m_pStageDataArray[pt] = Object::GOAL;            pt++; break;
+		case 'M':m_pStageDataArray[pt] = Object::MARIO;               pt++; break;
+		case ' ':m_pStageDataArray[pt] = Object::SPACE;               pt++; break;
+		case 'B':m_pStageDataArray[pt] = Object::NORMAL_BLOCK;        pt++; break;
+		case 'K':m_pStageDataArray[pt] = Object::KURIBOU;             pt++; break;
+		case 'N':m_pStageDataArray[pt] = Object::NOKONOKO;            pt++; break;
+		case 'G':m_pStageDataArray[pt] = Object::GROUND_BLOCK;        pt++; break;
+		case 'g':m_pStageDataArray[pt] = Object::GROUND_BLOCK_DUMMY;  pt++; break;
+		case 'C':m_pStageDataArray[pt] = Object::GOAL;                pt++; break;
+		case 'p':m_pStageDataArray[pt] = Object::CLAY_PIPE_2;         pt++; break;
+		case 'P':m_pStageDataArray[pt] = Object::CLAY_PIPE_3;         pt++; break;
+		case 'i':m_pStageDataArray[pt] = Object::CLAY_PIPE_4;         pt++; break;
 		}
 	}
 

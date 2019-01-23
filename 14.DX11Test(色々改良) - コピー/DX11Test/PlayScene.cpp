@@ -13,6 +13,7 @@
 #include"Nokonoko.h"
 #include"TextureData.h"
 #include"Image.h"
+#include"ClayPipe.h"
 
 using namespace OriginalMath;
 
@@ -44,13 +45,14 @@ PlayScene::PlayScene()
 /// </summary>
 PlayScene::~PlayScene()
 {
-	if (m_pStage        != nullptr) { delete m_pStage;        m_pStage        = nullptr; }
-	if (m_pCamera       != nullptr) { delete m_pCamera;       m_pCamera       = nullptr; }
-	if (m_pPlayer       != nullptr) { delete m_pPlayer;       m_pPlayer       = nullptr; }
-	if (m_pBlocks       != nullptr) { delete m_pBlocks;       m_pBlocks       = nullptr; }
-	if (m_pBlockGrounds != nullptr) { delete m_pBlockGrounds; m_pBlockGrounds = nullptr; }
+	if (m_pStage             != nullptr) { delete m_pStage;             m_pStage             = nullptr; }
+	if (m_pCamera            != nullptr) { delete m_pCamera;            m_pCamera            = nullptr; }
+	if (m_pPlayer            != nullptr) { delete m_pPlayer;            m_pPlayer            = nullptr; }
+	if (m_pBlocks            != nullptr) { delete m_pBlocks;            m_pBlocks            = nullptr; }
+	if (m_pBlockGrounds      != nullptr) { delete m_pBlockGrounds;      m_pBlockGrounds      = nullptr; }
 	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
-	if (m_pGoal         != nullptr) { delete m_pGoal;         m_pGoal         = nullptr; }
+	if (m_pClayPipes         != nullptr) { delete m_pClayPipes;         m_pClayPipes         = nullptr; }
+	if (m_pGoal              != nullptr) { delete m_pGoal;              m_pGoal              = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -101,9 +103,10 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag)
 /// </summary>
 void PlayScene::MakeStageObj()
 {
-	m_pBlocks       = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),        TextureData::Instance()->GetBLOCK_TSRV(),        L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
-	m_pBlockGrounds = new Characters<Block>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlocks            = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),        TextureData::Instance()->GetBLOCK_TSRV(),        L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pBlockGrounds      = new Characters<Block>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	m_pBlockGroundDummys = new Characters<Image>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pClayPipes        = new Characters<ClayPipe>(TextureData::Instance()->GetCLAY_PIPE_TR(), TextureData::Instance()->GetCLAY_PIPE_TSRV(),    L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 
 	//.5Ç™êÿÇËè„Ç∞Ç…Ç»ÇÈÇÃÇ≈ècïùÅiäÔêîëOíÒÅjÇÃíÜä‘ílÇ™éÊìæÇ≈Ç´ÇÈ
 	int halfHeight = m_pStage->GetStageHeight() / 2;
@@ -139,6 +142,18 @@ void PlayScene::MakeStageObj()
 				m_pBlockGroundDummys->m_ObjectVector.push_back(new Image(pos, size, TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), false));
 				break;
 
+			case Object::CLAY_PIPE_2:
+				m_pClayPipes->m_ObjectVector.push_back(new ClayPipe(pos,size,2));
+				break;
+
+			case Object::CLAY_PIPE_3:
+				m_pClayPipes->m_ObjectVector.push_back(new ClayPipe(pos, size, 3));
+				break;
+
+			case Object::CLAY_PIPE_4:
+				m_pClayPipes->m_ObjectVector.push_back(new ClayPipe(pos, size, 4));
+				break;
+
 			case Object::KURIBOU:
 				m_pKuriboVector.push_back( new Kuribo(pos, size));
 				break;
@@ -160,6 +175,7 @@ void PlayScene::MakeStageObj()
 	m_pBlocks->ThisObjCreateBuffer();
 	m_pBlockGrounds->ThisObjCreateBuffer();
 	m_pBlockGroundDummys->ThisObjCreateBuffer();
+	m_pClayPipes->ThisObjCreateBuffer();
 
 	/*â∫ÇÃéÄñSîªíËÉâÉCÉìÇÃåvéZ*/
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
@@ -241,6 +257,7 @@ void PlayScene::StageObjDelete()
 	if (m_pBlocks            != nullptr) { delete m_pBlocks;            m_pBlocks            = nullptr; }
 	if (m_pBlockGrounds      != nullptr) { delete m_pBlockGrounds;      m_pBlockGrounds      = nullptr; }
 	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
+	if (m_pClayPipes        != nullptr) { delete m_pClayPipes;        m_pClayPipes        = nullptr; }
 	if (m_pGoal              != nullptr) { delete m_pGoal;              m_pGoal              = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
@@ -319,6 +336,25 @@ void PlayScene::ObjCheckOrder()
 			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
 				m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			}
+		}
+	}
+
+	//ìyä«åQÇÃëŒÇµÇƒè’ìÀîªíË
+	for (int i = 0; i < m_pClayPipes->m_ObjectVector.size(); i++)
+	{
+		if (m_pClayPipes->m_ObjectVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pClayPipes->m_ObjectVector[i]->GetxPos() <= m_ObjMoveRightXPos)
+		{
+			m_pClayPipes->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
+
+			for (int j = 0; j < m_pKuriboVector.size(); j++)
+			{
+				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
+			}
+
+			for (int j = 0; j < m_pNokonokoVector.size(); j++)
+			{
+				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 			}
 		}
 	}
@@ -506,4 +542,5 @@ void PlayScene::Draw()
 	m_pBlocks      ->ThisObjRender();
 	m_pBlockGrounds->ThisObjRender();
 	m_pBlockGroundDummys->ThisObjRender();
+	m_pClayPipes->ThisObjRender();
 }
