@@ -1,5 +1,4 @@
 #include<crtdbg.h>
-
 #include <Windows.h>
 #include"Vertex.h"
 #include"GameManager.h"

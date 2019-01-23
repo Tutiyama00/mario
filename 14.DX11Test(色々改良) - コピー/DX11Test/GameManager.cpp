@@ -137,7 +137,8 @@ void GameManager::UpDateGame()
 		}
 		else
 		{
-			if (m_pParameterScene->GetNowTime() <= 95)
+			/*秒数が０になったらタイムアップでプレイヤーを殺す*/
+			if (m_pParameterScene->GetNowTime() <= 0)
 			{
 				m_pPlayScene->KillPlayer();
 			}

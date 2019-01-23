@@ -135,6 +135,7 @@ void Stage::LoadStage(const char* stageName)
 		case 'M':m_pStageDataArray[pt] = Object::MARIO;               pt++; break;
 		case ' ':m_pStageDataArray[pt] = Object::SPACE;               pt++; break;
 		case 'B':m_pStageDataArray[pt] = Object::NORMAL_BLOCK;        pt++; break;
+		case 'b':m_pStageDataArray[pt] = Object::NORMAL_BLOCK_DUMMY;  pt++; break;
 		case 'K':m_pStageDataArray[pt] = Object::KURIBOU;             pt++; break;
 		case 'N':m_pStageDataArray[pt] = Object::NOKONOKO;            pt++; break;
 		case 'G':m_pStageDataArray[pt] = Object::GROUND_BLOCK;        pt++; break;

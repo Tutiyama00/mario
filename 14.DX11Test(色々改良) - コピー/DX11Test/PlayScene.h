@@ -46,9 +46,10 @@ private:
 	Camera*               m_pCamera            = nullptr;
 	Player*               m_pPlayer            = nullptr;
 	Characters<Block>*    m_pBlocks            = nullptr;
+	Characters<Image>*    m_pBlockDummys       = nullptr;
 	Characters<Block>*    m_pBlockGrounds      = nullptr;
 	Characters<Image>*    m_pBlockGroundDummys = nullptr;
-	Characters<ClayPipe>* m_pClayPipes        = nullptr;
+	Characters<ClayPipe>* m_pClayPipes         = nullptr;
 	Characters<ClayPipe>* m_pClayPipe3s        = nullptr;
 	Goal*                 m_pGoal              = nullptr;
 	vector<Kuribo*>       m_pKuriboVector;
