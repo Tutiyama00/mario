@@ -197,6 +197,10 @@ void PlayScene::MakeStageObj()
 	m_ObjMoveRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
 	/* オブジェクト左限界値の初期化 */
 	m_ObjMoveLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
+	/* ブロック右限界値の初期化 */
+	m_BlockCheckRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust + m_BlockCheckXPosDiff;
+	/* ブロック左限界値の初期化 */
+	m_BlockCheckLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust - m_BlockCheckXPosDiff;
 }
 
 
@@ -314,7 +318,7 @@ void PlayScene::ObjCheckOrder()
 	//ブロック群の対して衝突判定
 	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
 	{
-		if (m_pBlocks->m_ObjectVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pBlocks->m_ObjectVector[i]->GetxPos() <= m_ObjMoveRightXPos)
+		if (m_pBlocks->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pBlocks->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
 		{
 			m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
@@ -332,7 +336,7 @@ void PlayScene::ObjCheckOrder()
 	//ブロック群の対して衝突判定
 	for (int i = 0; i < m_pBlockGrounds->m_ObjectVector.size(); i++)
 	{
-		if (m_pBlockGrounds->m_ObjectVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pBlockGrounds->m_ObjectVector[i]->GetxPos() <= m_ObjMoveRightXPos)
+		if (m_pBlockGrounds->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pBlockGrounds->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
 		{
 			m_pBlockGrounds->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
@@ -351,7 +355,7 @@ void PlayScene::ObjCheckOrder()
 	//土管群の対して衝突判定
 	for (int i = 0; i < m_pClayPipes->m_ObjectVector.size(); i++)
 	{
-		if (m_pClayPipes->m_ObjectVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pClayPipes->m_ObjectVector[i]->GetxPos() <= m_ObjMoveRightXPos)
+		if (m_pClayPipes->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pClayPipes->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
 		{
 			m_pClayPipes->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
@@ -451,6 +455,41 @@ void PlayScene::ObjCheckOrder()
 	}
 }
 
+/// <summary>
+/// //ゴールしたかのチェック
+/// </summary>
+void PlayScene::GoalCheckOrder()
+{
+	/*プレイヤーがゴールしているか*/
+	if (m_pGoal->GoalCheck(m_pPlayer))
+	{
+		/*ゴール演出が終わっているか*/
+		if (!m_pGoal->Play(m_pPlayer))
+		{
+			/*ステージのレベルを１上げる*/
+			m_NowStageLevel++;
+			/*ステージのレベルが１ワールド内にあるステージ数を上回っているかどうか*/
+			if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
+			{
+				/*ワールドのレベルを1上げる*/
+				m_NowWorldLevel++;
+				/*ステージのレベルを１に戻す*/
+				m_NowStageLevel = 1;
+			}
+
+			/*次に読み込むファイルパスを設定*/
+			std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+
+			/*ステージを変える*/
+			m_pStage->ChangeStage(filePas.data());
+			/*シーンをリスタート*/
+			ReStart();
+			/*次にリザルトシーンに飛ぶ*/
+			m_NextGameState = GameState::RESULT;
+		}
+	}
+}
+
 /*#####################################             #####################################*/
 /*#####################################  PROTECTED  #####################################*/
 /*#####################################             #####################################*/
@@ -473,48 +512,39 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 		inputFlag.ReSet(InputFlagCode::INPUT_LEFT);
 	}
 
+	/*入力情報をプレイヤーにセットする*/
 	m_pPlayer->SetInputFlag(inputFlag);
 
+	/*キャラクター達のコリジョンチェック*/
 	ObjCheckOrder();
 
+	/*移動命令*/
 	MoveOrder();
 
-	if (m_pGoal->GoalCheck(m_pPlayer))
-	{
-		if (!m_pGoal->Play(m_pPlayer))
-		{
-			m_NowStageLevel++;
-			if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
-			{
-				m_NowWorldLevel++;
-				m_NowStageLevel = 1;
-			}
-
-			std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
-
-			m_pStage->ChangeStage(filePas.data());
-			ReStart();
-			m_NextGameState = GameState::RESULT;
-		}
-	}
+	/*ゴールチェック*/
+	GoalCheckOrder();
 	
 	/* カメラの映すX座標を変えていいか */
 	if (m_pPlayer->GetxPos() >= m_CameraShootXPos)
 	{
+		/*カメラのX座標をプレイヤーに合わせる*/
 		m_CameraShootXPos = m_pPlayer->GetxPos();
-
 		/* プレイヤー左限界値の初期化 */
 		m_PlayerMoveEndXPos = m_CameraShootXPos - m_EndToShootXPosAmount;
-
 		/* オブジェクト右限界値の初期化 */
 		m_ObjMoveRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
 		/* オブジェクト左限界値の初期化 */
 		m_ObjMoveLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
+		/* ブロック右限界値の初期化 */
+		m_BlockCheckRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust + m_BlockCheckXPosDiff;
+		/* ブロック左限界値の初期化 */
+		m_BlockCheckLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust - m_BlockCheckXPosDiff;
 	}
 
-	//落下チェック
+	/*プレイヤーが落下死しているかどうか*/
 	if (m_UnderDeathLine > m_pPlayer->GetyPos())
 	{
+		/*プレイヤーを殺す*/
 		KillPlayer();
 	}
 

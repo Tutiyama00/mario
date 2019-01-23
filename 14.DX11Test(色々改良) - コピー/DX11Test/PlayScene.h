@@ -40,6 +40,7 @@ private:
 	void StageObjDelete();  //ステージ上のオブジェクトのデリート
 	void MoveOrder     ();  //キャラ達の移動命令
 	void ObjCheckOrder ();  //キャラ達のチェック命令
+	void GoalCheckOrder();  //ゴールしたかのチェック
 
 private:
 	Stage*                m_pStage             = nullptr;
@@ -67,6 +68,9 @@ private:
 	float     m_EndToShootXPosAmount  = 0.75f;  //カメラから左限界値までの距離
 	float     m_ObjMoveRightXPos      = 0.0f;   //オブジェクトが動ける範囲の右端のX座標
 	float     m_ObjMoveLeftXPos       = 0.0f;   //オブジェクトが動ける範囲の左端のX座標
+	float     m_BlockCheckRightXPos   = 0.0f;   //ブロックがコリジョンチェックする範囲の右端のX座標
+	float     m_BlockCheckLeftXPos    = 0.0f;   //ブロックがコリジョンチェックする範囲の左端のX座標
+	float     m_BlockCheckXPosDiff    = 0.3f;   //オブジェクトのMove範囲とブロックのコリジョン範囲の差（コリジョン範囲の方が広くなる）
 	float     m_ObjMoveXPosAdjust     = 0.2f;   //カメラで映っている範囲のしきい値
 
 /*------IGameScene------*/
