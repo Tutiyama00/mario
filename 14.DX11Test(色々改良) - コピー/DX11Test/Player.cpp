@@ -84,11 +84,7 @@ void Player::GoalPlay(float downAmount, float downEndYPos, bool down)
 		{
 			if (m_yPos > downEndYPos)
 			{
-				m_yPos -= downAmount;
-				for (int i = 0; i < m_VertexArraySize; i++)
-				{
-					m_pVertexArray[i].pos[1] -= downAmount;
-				}
+				VertexMove(0, -downAmount);
 			}
 			else
 			{
@@ -99,11 +95,7 @@ void Player::GoalPlay(float downAmount, float downEndYPos, bool down)
 		{
 			m_GoalPlayState = GoalPlayState::POLE_PARALLEL_WAIT;
 			ParallelInverted();
-			m_xPos += m_xSize;
-			for (int i = 0; i < m_VertexArraySize; i++)
-			{
-				m_pVertexArray[i].pos[0] += m_xSize;
-			}
+			VertexMove(m_xSize, 0);
 		} 
 		break;
 
@@ -112,11 +104,7 @@ void Player::GoalPlay(float downAmount, float downEndYPos, bool down)
 		{
 			m_GoalPlayState = GoalPlayState::POLE_PARALLEL_WAIT;
 			ParallelInverted();
-			m_xPos += m_xSize;
-			for (int i = 0; i < m_VertexArraySize; i++)
-			{
-				m_pVertexArray[i].pos[0] += m_xSize;
-			}
+			VertexMove(m_xSize, 0);
 		}
 		break;
 
@@ -362,23 +350,7 @@ void Player::ThisObjCreateBuffer()
 /// <param name="xAmount">移動量（X軸）</param>
 void Player::Walk(float xAmount)
 {
-	m_xPos += xAmount;
-
-	m_pVertexArray[0] = {
-	{ m_pVertexArray[0].pos[0] + xAmount, m_pVertexArray[0].pos[1] , m_pVertexArray[0].pos[2] } ,
-	{ m_pVertexArray[0].tex[0],m_pVertexArray[0].tex[1]} };
-
-	m_pVertexArray[1] = {
-	{ m_pVertexArray[1].pos[0] + xAmount, m_pVertexArray[1].pos[1] , m_pVertexArray[1].pos[2] } ,
-	{ m_pVertexArray[1].tex[0],m_pVertexArray[1].tex[1]} };
-
-	m_pVertexArray[2] = {
-	{ m_pVertexArray[2].pos[0] + xAmount, m_pVertexArray[2].pos[1] , m_pVertexArray[2].pos[2] } ,
-	{ m_pVertexArray[2].tex[0],m_pVertexArray[2].tex[1]} };
-
-	m_pVertexArray[3] = {
-	{ m_pVertexArray[3].pos[0] + xAmount, m_pVertexArray[3].pos[1] , m_pVertexArray[3].pos[2] } ,
-	{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
+	VertexMove(xAmount, 0);
 }
 
 /// <summary>
@@ -390,23 +362,8 @@ bool Player::Jump()
 	if (m_JumpLevelCount > 0)
 	{
 		float jumpAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
-		m_yPos += jumpAmount;
 
-		m_pVertexArray[0] = {
-		{ m_pVertexArray[0].pos[0], m_pVertexArray[0].pos[1] + jumpAmount , m_pVertexArray[0].pos[2] } ,
-		{ m_pVertexArray[0].tex[0],m_pVertexArray[0].tex[1]} };
-
-		m_pVertexArray[1] = {
-		{ m_pVertexArray[1].pos[0], m_pVertexArray[1].pos[1] + jumpAmount , m_pVertexArray[1].pos[2] } ,
-		{ m_pVertexArray[1].tex[0],m_pVertexArray[1].tex[1]} };
-
-		m_pVertexArray[2] = {
-		{ m_pVertexArray[2].pos[0], m_pVertexArray[2].pos[1] + jumpAmount , m_pVertexArray[2].pos[2] } ,
-		{ m_pVertexArray[2].tex[0],m_pVertexArray[2].tex[1]} };
-
-		m_pVertexArray[3] = {
-		{ m_pVertexArray[3].pos[0], m_pVertexArray[3].pos[1] + jumpAmount , m_pVertexArray[3].pos[2] } ,
-		{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
+		VertexMove(0, jumpAmount);
 
 		m_JumpLevelCount--;
 
@@ -422,23 +379,8 @@ bool Player::Jump()
 void Player::Fall()
 {
 	float fallAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
-	m_yPos -= fallAmount;
 
-	m_pVertexArray[0] = {
-	{ m_pVertexArray[0].pos[0], m_pVertexArray[0].pos[1] - fallAmount , m_pVertexArray[0].pos[2] } ,
-	{ m_pVertexArray[0].tex[0],m_pVertexArray[0].tex[1]} };
-
-	m_pVertexArray[1] = {
-	{ m_pVertexArray[1].pos[0], m_pVertexArray[1].pos[1] - fallAmount , m_pVertexArray[1].pos[2] } ,
-	{ m_pVertexArray[1].tex[0],m_pVertexArray[1].tex[1]} };
-
-	m_pVertexArray[2] = {
-	{ m_pVertexArray[2].pos[0], m_pVertexArray[2].pos[1] - fallAmount , m_pVertexArray[2].pos[2] } ,
-	{ m_pVertexArray[2].tex[0],m_pVertexArray[2].tex[1]} };
-
-	m_pVertexArray[3] = {
-	{ m_pVertexArray[3].pos[0], m_pVertexArray[3].pos[1] - fallAmount , m_pVertexArray[3].pos[2] } ,
-	{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
+	VertexMove(0, -fallAmount);
 
 	if (m_JumpLevelCount < m_MaxJumpLevel)
 	{
@@ -481,12 +423,19 @@ bool Player::MiniJump()
 	return false;
 }
 
+/// <summary>
+/// 死亡演出
+/// </summary>
+/// <returns></returns>
 bool Player::DieMove()
 {
+	/*生きていたら処理を中断*/
 	if (m_LivingFlag) { return false; }
 
+	/*死亡演出が終わっているかどうか（フレーム数で判断）*/
 	if (m_DieMoveFrameCounter < M_DIE_MOVE_FRAME)
 	{
+		/*停止時間以上のフレームが経過しているか*/
 		if (m_DieMoveFrameCounter >= M_DIE_MOVE_STOP_FRAME)
 		{
 			if (std::abs(m_DieMoveNowSpeed) <= M_DIE_MOVE_SPEED_MAX)
@@ -506,11 +455,7 @@ bool Player::DieMove()
 			}
 
 			/* 移動 */
-			m_yPos += m_DieMoveNowSpeed;
-			for (int i = 0; i < m_VertexArraySize; i++)
-			{
-				m_pVertexArray[i].pos[1] += m_DieMoveNowSpeed;
-			}
+			VertexMove(0, m_DieMoveNowSpeed);
 		}
 
 		m_DieMoveFrameCounter++;

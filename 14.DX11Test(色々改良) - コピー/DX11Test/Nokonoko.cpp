@@ -291,13 +291,10 @@ void Nokonoko::ThisObjRender()
 		/* ‰E‚Æ¶‚Ç‚¿‚ç‚ÉŒü‚¢‚Ä‚¢‚é‚Ì‚©‚Ì”»’è */
 		if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
 		{
-			OutputDebugString("NOKONOKO RIGHT");
-
 			ParallelInverted();
 		}
 		else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
 		{
-			OutputDebugString("NOKONOKO LEFT");
 			ParallelInverted();
 		}
 	}

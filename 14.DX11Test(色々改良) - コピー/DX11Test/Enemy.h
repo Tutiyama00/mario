@@ -13,6 +13,7 @@ public:
 	~Enemy() {};
 
 	virtual void Die();
+	virtual void StartStandardDie(bool direction);  //通常の死亡演出スタート
 
 public:
 	bool GetLivingFlag() { return m_LivingFlag; }
@@ -20,8 +21,18 @@ public:
 protected:
 	virtual void Abstract() = 0;
 
+	virtual void StandardDie();  //通常の死亡処理演出
+
 protected:
-	int m_DieScorePoint = 0;  //死んだときに加算されるスコア
+	int m_DieScorePoint                        = 0;                       //死んだときに加算されるスコア
+	bool m_StanderdDieFlag                     = false;                   //通常の死に方をしたのか
+	const unsigned int M_S_DIE_MOVE_FRAME      = 360;                     //死亡処理にかかるフレーム数
+	const unsigned int M_S_DIE_MOVE_STOP_FRAME = 60;                      //死亡処理で最初止まっているフレーム数
+	unsigned int       m_S_DieMoveFrameCounter = 0;                       //死亡処理で使用するフレームカウンター
+	const float        M_S_DIE_MOVE_SPEED_MAX  = 0.02f;                   //死亡処理で移動するときの移動量の限界
+	float              m_S_DieMoveNowSpeed     = M_S_DIE_MOVE_SPEED_MAX;  //死亡処理の今の移動量
+	float              m_S_DieMoveChangeAmount = 0.0005f;                 //死亡処理の移動量の変動値
+	float              m_S_DieMoveXMoveAmount  = 0.0003f;                 //死亡処理のX軸の移動量
 
 /*------NotPlayer------*/
 public:

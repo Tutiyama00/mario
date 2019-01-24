@@ -25,11 +25,14 @@ public:
 	float GetxPos() { return m_xPos; }
 	float GetyPos() { return m_yPos; }
 	UINT GetVertexArraySize() { return m_VertexArraySize; }
-	UINT GetIndexArraySize() { return m_IndexArraySize; }
+	UINT GetIndexArraySize () { return m_IndexArraySize;  }
 
 public:
 	vertex* m_pVertexArray = nullptr;  //頂点配列
 	WORD*   m_pIndexArray  = nullptr;  //インデックス配列
+
+protected:
+	void VertexMove(float xAmount, float yAmount);
 
 protected:
 	UINT    m_VertexArraySize;         //頂点配列の要素数

@@ -2,6 +2,7 @@
 #include"Player.h"
 #include"SoundData.h"
 #include"ScoreManager.h"
+#include<string>
 
 /*#####################################          #####################################*/
 /*#####################################  PUBLIC  #####################################*/
@@ -18,6 +19,57 @@ void Enemy::Die()
 	m_LivingFlag = false;
 }
 
+/// <summary>
+/// 通常の死亡処理演出
+/// </summary>
+/// <param name="direction">飛ぶ方向（true=右、false=左）</param>
+void Enemy::StartStandardDie(bool direction)
+{
+	/*死亡処理*/
+	Die();
+	/*通常の死亡処理が始まるのでフラグを立てる*/
+	m_StanderdDieFlag = true;
+
+	/*方向が左かどうか*/
+	if (!direction)
+	{
+		/*X軸の移動量の符号を負にする*/
+		m_S_DieMoveXMoveAmount *= -1;
+	}
+}
+
+/*#####################################             #####################################*/
+/*#####################################  protected  #####################################*/
+/*#####################################             #####################################*/
+
+/// <summary>
+/// 通常の死亡処理演出
+/// </summary>
+void Enemy::StandardDie()
+{
+	/*まだ死亡処理にかかるフレーム数内かどうか*/
+	if (m_S_DieMoveFrameCounter < M_S_DIE_MOVE_FRAME)
+	{
+		if (std::abs(m_S_DieMoveNowSpeed) <= M_S_DIE_MOVE_SPEED_MAX)
+		{
+			m_S_DieMoveNowSpeed -= m_S_DieMoveChangeAmount;
+		}
+		else
+		{
+			if (m_S_DieMoveNowSpeed < 0)
+			{
+				m_S_DieMoveNowSpeed = -M_S_DIE_MOVE_SPEED_MAX;
+			}
+			else
+			{
+				m_S_DieMoveNowSpeed = M_S_DIE_MOVE_SPEED_MAX;
+			}
+		}
+
+		/* 移動 */
+		VertexMove(m_S_DieMoveXMoveAmount, m_S_DieMoveNowSpeed);
+	}
+}
 
 /*-------------------------------------             ----------------------------------*/
 /*-------------------------------------  NotPlayer  ----------------------------------*/
@@ -147,23 +199,7 @@ void Enemy::Walk(float xAmount)
 {
 	if (!m_LivingFlag) { return; }
 
-	m_xPos += xAmount;
-
-	m_pVertexArray[0] = {
-	{ m_pVertexArray[0].pos[0] + xAmount, m_pVertexArray[0].pos[1] , m_pVertexArray[0].pos[2] } ,
-	{ m_pVertexArray[0].tex[0],m_pVertexArray[0].tex[1]} };
-
-	m_pVertexArray[1] = {
-	{ m_pVertexArray[1].pos[0] + xAmount, m_pVertexArray[1].pos[1] , m_pVertexArray[1].pos[2] } ,
-	{ m_pVertexArray[1].tex[0],m_pVertexArray[1].tex[1]} };
-
-	m_pVertexArray[2] = {
-	{ m_pVertexArray[2].pos[0] + xAmount, m_pVertexArray[2].pos[1] , m_pVertexArray[2].pos[2] } ,
-	{ m_pVertexArray[2].tex[0],m_pVertexArray[2].tex[1]} };
-
-	m_pVertexArray[3] = {
-	{ m_pVertexArray[3].pos[0] + xAmount, m_pVertexArray[3].pos[1] , m_pVertexArray[3].pos[2] } ,
-	{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
+	VertexMove(xAmount, 0);
 }
 
 /// <summary>
@@ -177,23 +213,8 @@ bool Enemy::Jump()
 	if (m_JumpLevelCount > 0)
 	{
 		float jumpAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
-		m_yPos += jumpAmount;
 
-		m_pVertexArray[0] = {
-		{ m_pVertexArray[0].pos[0], m_pVertexArray[0].pos[1] + jumpAmount , m_pVertexArray[0].pos[2] } ,
-		{ m_pVertexArray[0].tex[0],m_pVertexArray[0].tex[1]} };
-
-		m_pVertexArray[1] = {
-		{ m_pVertexArray[1].pos[0], m_pVertexArray[1].pos[1] + jumpAmount , m_pVertexArray[1].pos[2] } ,
-		{ m_pVertexArray[1].tex[0],m_pVertexArray[1].tex[1]} };
-
-		m_pVertexArray[2] = {
-		{ m_pVertexArray[2].pos[0], m_pVertexArray[2].pos[1] + jumpAmount , m_pVertexArray[2].pos[2] } ,
-		{ m_pVertexArray[2].tex[0],m_pVertexArray[2].tex[1]} };
-
-		m_pVertexArray[3] = {
-		{ m_pVertexArray[3].pos[0], m_pVertexArray[3].pos[1] + jumpAmount , m_pVertexArray[3].pos[2] } ,
-		{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
+		VertexMove(0, jumpAmount);
 
 		m_JumpLevelCount--;
 
@@ -211,23 +232,8 @@ void Enemy::Fall()
 	if (!m_LivingFlag) { return; }
 
 	float fallAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
-	m_yPos -= fallAmount;
 
-	m_pVertexArray[0] = {
-	{ m_pVertexArray[0].pos[0], m_pVertexArray[0].pos[1] - fallAmount , m_pVertexArray[0].pos[2] } ,
-	{ m_pVertexArray[0].tex[0],m_pVertexArray[0].tex[1]} };
-
-	m_pVertexArray[1] = {
-	{ m_pVertexArray[1].pos[0], m_pVertexArray[1].pos[1] - fallAmount , m_pVertexArray[1].pos[2] } ,
-	{ m_pVertexArray[1].tex[0],m_pVertexArray[1].tex[1]} };
-
-	m_pVertexArray[2] = {
-	{ m_pVertexArray[2].pos[0], m_pVertexArray[2].pos[1] - fallAmount , m_pVertexArray[2].pos[2] } ,
-	{ m_pVertexArray[2].tex[0],m_pVertexArray[2].tex[1]} };
-
-	m_pVertexArray[3] = {
-	{ m_pVertexArray[3].pos[0], m_pVertexArray[3].pos[1] - fallAmount , m_pVertexArray[3].pos[2] } ,
-	{ m_pVertexArray[3].tex[0],m_pVertexArray[3].tex[1]} };
+	VertexMove(0, -fallAmount);
 
 	if (m_JumpLevelCount < m_MaxJumpLevel)
 	{

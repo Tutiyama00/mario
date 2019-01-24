@@ -3,6 +3,28 @@
 #include"Vertex.h"
 #include"Math.h"
 
+/*######################  Polygon  ###################################*/
+
+/*----------------------  protected   -----------------------------------*/
+
+/// <summary>
+/// ’¸“_‚ðˆÚ“®‚³‚¹‚é
+/// </summary>
+/// <param name="xAmount">XˆÚ“®—Ê</param>
+/// <param name="yAmount">YˆÚ“®—Ê</param>
+void Polygon::VertexMove(float xAmount, float yAmount)
+{
+	m_xPos += xAmount;
+	m_yPos += yAmount;
+
+	for (int i = 0; i < m_VertexArraySize; i++)
+	{
+		m_pVertexArray[i].pos[0] += xAmount;
+		m_pVertexArray[i].pos[1] += yAmount;
+	}
+}
+
+
 /*######################  Square  ###################################*/
 
 /*----------------------  public   -----------------------------------*/
