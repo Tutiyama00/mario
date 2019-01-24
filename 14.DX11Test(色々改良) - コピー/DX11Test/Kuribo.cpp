@@ -69,9 +69,13 @@ void Kuribo::Move()
 
 				return;
 			}
-			else
+			
+			/*’Êí‚Ì€‚É•û‚ğ‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©*/
+			if (m_StanderdDieFlag)
 			{
-				m_RenderFlag = false;
+				/*’Êí€–S‰‰o*/
+				StandardDie();
+
 				return;
 			}
 		}

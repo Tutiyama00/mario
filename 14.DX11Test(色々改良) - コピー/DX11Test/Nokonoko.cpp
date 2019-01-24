@@ -229,7 +229,18 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 		switch (m_NokonokoState)
 		{
 		case NokonokoState::KOURA_RUN:
-			pEnemy->Die();
+
+			/*ƒmƒRƒmƒR‚ª‚Ç‚¿‚ç‘¤‚Å“G‚É‚Ô‚Â‚©‚Á‚½‚©*/
+			if (m_xPos < pEnemy->GetxPos())
+			{
+				/*‰E‚É”ò‚Î‚·*/
+				pEnemy->StartStandardDie(true);
+			}
+			else
+			{
+				/*¶‚É”ò‚Î‚·*/
+				pEnemy->StartStandardDie(false);
+			}
 			break;
 
 		default:

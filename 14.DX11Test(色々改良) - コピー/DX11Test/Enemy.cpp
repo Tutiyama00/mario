@@ -36,6 +36,11 @@ void Enemy::StartStandardDie(bool direction)
 		/*X²‚ÌˆÚ“®—Ê‚Ì•„†‚ğ•‰‚É‚·‚é*/
 		m_S_DieMoveXMoveAmount *= -1;
 	}
+
+	m_pVertexArray[0].tex[0] = 0;  m_pVertexArray[0].tex[1] = 1;
+	m_pVertexArray[1].tex[0] = 1;  m_pVertexArray[1].tex[1] = 0;
+	m_pVertexArray[2].tex[0] = 0;  m_pVertexArray[2].tex[1] = 0;
+	m_pVertexArray[3].tex[0] = 1;  m_pVertexArray[3].tex[1] = 1;
 }
 
 /*#####################################             #####################################*/
@@ -68,6 +73,10 @@ void Enemy::StandardDie()
 
 		/* ˆÚ“® */
 		VertexMove(m_S_DieMoveXMoveAmount, m_S_DieMoveNowSpeed);
+	}
+	else
+	{
+		m_RenderFlag = false;
 	}
 }
 
