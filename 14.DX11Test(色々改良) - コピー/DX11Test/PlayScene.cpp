@@ -453,9 +453,18 @@ void PlayScene::ObjCheckOrder()
 				{
 					if (m_pNokonokoVector[j]->CollisionCheck(m_pNokonokoVector[i]) && m_pNokonokoVector[i]->CollisionCheck(m_pNokonokoVector[j]))
 					{
-						m_pNokonokoVector[i]->Die();
-						m_pNokonokoVector[j]->Die();
-
+						/*‚»‚ê‚¼‚ê‚Ç‚¿‚ç‘¤‚É‚¢‚é‚Ì‚©*/
+						if (m_pNokonokoVector[i]->GetxPos() <= m_pNokonokoVector[j]->GetxPos())
+						{
+							m_pNokonokoVector[i]->StartStandardDie(false);
+							m_pNokonokoVector[j]->StartStandardDie(true);
+						}
+						else
+						{
+							m_pNokonokoVector[i]->StartStandardDie(true);
+							m_pNokonokoVector[j]->StartStandardDie(false);
+						}
+						
 						continue;
 					}
 				}
@@ -464,7 +473,7 @@ void PlayScene::ObjCheckOrder()
 				if (NokonokoRunStateFlagI && !NokonokoRunStateFlagJ)
 				{
 					m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-					m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
+				    m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
 
 					continue;
 				}

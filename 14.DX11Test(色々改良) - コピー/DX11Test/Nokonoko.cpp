@@ -50,7 +50,21 @@ Nokonoko::~Nokonoko()
 void Nokonoko::Move()
 {
 	/*生きていない状態だったらリターンして動かさない*/
-	if (!m_LivingFlag) { return; }
+	if (!m_LivingFlag)
+	{
+		if (m_RenderFlag)
+		{
+			/*通常の死に方をしているかどうか*/
+			if (m_StanderdDieFlag)
+			{
+				OutputDebugString("AAAAAAAAAAAAAA");
+				/*通常死亡演出*/
+				StandardDie();
+
+				return;
+			}
+		}
+	}
 
 	switch (m_MoveObjState)
 	{
@@ -291,31 +305,59 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 /// </summary>
 void Nokonoko::ThisObjRender()
 {
-	if (!m_LivingFlag) { return; }
+	if (!m_RenderFlag) { return; }
 
-	if (m_NokonokoState == NokonokoState::NORMAL)
+	if (m_LivingFlag)
 	{
-		m_pWalkAnimation->AnimPlay();
-		m_pMainTextureResource = m_pWalkAnimation->GetAnimTextureResource();
-		m_pMainTextureSRV = m_pWalkAnimation->GetAnimTextureSRV();
+		if (m_NokonokoState == NokonokoState::NORMAL)
+		{
+			m_pWalkAnimation->AnimPlay();
+			m_pMainTextureResource = m_pWalkAnimation->GetAnimTextureResource();
+			m_pMainTextureSRV = m_pWalkAnimation->GetAnimTextureSRV();
 
-		/* 右と左どちらに向いているのかの判定 */
-		if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
-		{
-			ParallelInverted();
+			/* 右と左どちらに向いているのかの判定 */
+			if (m_NowWalkSpeed > 0 && m_ParallelInvertedFlag)
+			{
+				ParallelInverted();
+			}
+			else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
+			{
+				ParallelInverted();
+			}
 		}
-		else if (m_NowWalkSpeed < 0 && !m_ParallelInvertedFlag)
+		else
 		{
-			ParallelInverted();
+			m_pMainTextureResource = TextureData::Instance()->GetKOURA1_TR();
+			m_pMainTextureSRV = TextureData::Instance()->GetKOURA1_TSRV();
 		}
-	}
-	else
-	{
-		m_pMainTextureResource = TextureData::Instance()->GetKOURA1_TR();
-		m_pMainTextureSRV = TextureData::Instance()->GetKOURA1_TSRV();
 	}
 
 	Render(m_pVertexArray, m_IndexArraySize);
+}
+
+void Nokonoko::StartStandardDie(bool direction)
+{
+	/*死亡処理*/
+	Die();
+	/*通常の死亡処理が始まるのでフラグを立てる*/
+	m_StanderdDieFlag = true;
+
+	/*方向が左かどうか*/
+	if (!direction)
+	{
+		/*X軸の移動量の符号を負にする*/
+		m_S_DieMoveXMoveAmount *= -1;
+	}
+
+	/*甲羅状態にする*/
+	m_pMainTextureResource = TextureData::Instance()->GetKOURA1_TR();
+	m_pMainTextureSRV = TextureData::Instance()->GetKOURA1_TSRV();
+
+	/*テクスチャをさかさまにする*/
+	m_pVertexArray[0].tex[0] = 0;  m_pVertexArray[0].tex[1] = 1;
+	m_pVertexArray[1].tex[0] = 1;  m_pVertexArray[1].tex[1] = 0;
+	m_pVertexArray[2].tex[0] = 0;  m_pVertexArray[2].tex[1] = 0;
+	m_pVertexArray[3].tex[0] = 1;  m_pVertexArray[3].tex[1] = 1;
 }
 
 /*#####################################           #####################################*/

@@ -12,7 +12,6 @@ public:
 	Enemy(Vector3 pos, Vector2 size) : NotPlayer(pos, size) {};
 	~Enemy() {};
 
-	virtual void Die();
 	virtual void StartStandardDie(bool direction);  //通常の死亡演出スタート
 
 public:
@@ -22,6 +21,7 @@ protected:
 	virtual void Abstract() = 0;
 
 	virtual void StandardDie();  //通常の死亡処理演出
+	virtual void Die();
 
 protected:
 	int m_DieScorePoint                        = 0;                       //死んだときに加算されるスコア
@@ -32,7 +32,7 @@ protected:
 	const float        M_S_DIE_MOVE_SPEED_MAX  = 0.01f;                   //死亡処理で移動するときの移動量の限界
 	float              m_S_DieMoveNowSpeed     = M_S_DIE_MOVE_SPEED_MAX;  //死亡処理の今の移動量
 	float              m_S_DieMoveChangeAmount = 0.0005f;                 //死亡処理の移動量の変動値
-	float              m_S_DieMoveXMoveAmount  = 0.003f;                 //死亡処理のX軸の移動量
+	float              m_S_DieMoveXMoveAmount  = 0.003f;                  //死亡処理のX軸の移動量
 
 /*------NotPlayer------*/
 public:

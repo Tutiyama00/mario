@@ -40,6 +40,7 @@ public:
 	void CheckPlayer(Player* pPlayer)override;
 	void CheckEnemy(Enemy* pEnemy)override;
 	void ThisObjRender()override;
+	void StartStandardDie(bool direction)override;
 
 protected:
 	void Abstract()override {};
