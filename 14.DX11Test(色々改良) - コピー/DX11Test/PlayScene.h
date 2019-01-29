@@ -16,6 +16,7 @@ class Kuribo;
 class Nokonoko;
 class Image;
 class ClayPipe;
+class Enemy;
 
 class PlayScene : public IGameScene
 {
@@ -39,8 +40,13 @@ private:
 	void MoveScene     ();  //シーンの遷移
 	void StageObjDelete();  //ステージ上のオブジェクトのデリート
 	void MoveOrder     ();  //キャラ達の移動命令
+	void EnemyMoveOrder(Enemy* pEnemy);  //敵の移動命令
 	void ObjCheckOrder ();  //キャラ達のチェック命令
 	void GoalCheckOrder();  //ゴールしたかのチェック
+	void CollisionCheckNokonoko();  //ノコノコの衝突判定
+	void CollisionCheckKuribo();  //クリボーの衝突判定
+	void CollisionCheckBlock(Characters<Block>* pBlocks);  //ブロックの衝突判定
+	void CollisionCheckClayPipe();  //土管の衝突判定
 
 private:
 	Stage*                m_pStage             = nullptr;
@@ -51,7 +57,6 @@ private:
 	Characters<Block>*    m_pBlockGrounds      = nullptr;
 	Characters<Image>*    m_pBlockGroundDummys = nullptr;
 	Characters<ClayPipe>* m_pClayPipes         = nullptr;
-	Characters<ClayPipe>* m_pClayPipe3s        = nullptr;
 	Goal*                 m_pGoal              = nullptr;
 	vector<Kuribo*>       m_pKuriboVector;
 	vector<Nokonoko*>     m_pNokonokoVector;

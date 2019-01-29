@@ -135,6 +135,8 @@ void Player::GoalPlay(float downAmount, float downEndYPos, bool down)
 /// </summary>
 void Player::PlayerMove()
 {
+	if (!m_LivingFlag) { return; }
+
 	switch (m_MoveObjState)
 	{
 	case MoveObjState::CHECK_GROUND:

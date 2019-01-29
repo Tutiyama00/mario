@@ -14,6 +14,7 @@
 #include"TextureData.h"
 #include"Image.h"
 #include"ClayPipe.h"
+#include"Enemy.h"
 
 using namespace OriginalMath;
 
@@ -47,25 +48,7 @@ PlayScene::~PlayScene()
 {
 	if (m_pStage             != nullptr) { delete m_pStage;             m_pStage             = nullptr; }
 	if (m_pCamera            != nullptr) { delete m_pCamera;            m_pCamera            = nullptr; }
-	if (m_pPlayer            != nullptr) { delete m_pPlayer;            m_pPlayer            = nullptr; }
-	if (m_pBlocks            != nullptr) { delete m_pBlocks;            m_pBlocks            = nullptr; }
-	if (m_pBlockDummys       != nullptr) { delete m_pBlockDummys;       m_pBlockDummys       = nullptr; }
-	if (m_pBlockGrounds      != nullptr) { delete m_pBlockGrounds;      m_pBlockGrounds      = nullptr; }
-	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
-	if (m_pClayPipes         != nullptr) { delete m_pClayPipes;         m_pClayPipes         = nullptr; }
-	if (m_pGoal              != nullptr) { delete m_pGoal;              m_pGoal              = nullptr; }
-
-	for (int i = 0; i < m_pKuriboVector.size(); i++)
-	{
-		if (m_pKuriboVector[i] != nullptr) { delete m_pKuriboVector[i]; m_pKuriboVector[i] = nullptr; }
-	}
-	m_pKuriboVector.clear();
-
-	for (int i = 0; i < m_pNokonokoVector.size(); i++)
-	{
-		if (m_pNokonokoVector[i] != nullptr) { delete m_pNokonokoVector[i]; m_pNokonokoVector[i] = nullptr; }
-	}
-	m_pNokonokoVector.clear();
+	StageObjDelete();
 }
 
 /// <summary>
@@ -296,23 +279,27 @@ void PlayScene::MoveOrder()
 	/*クリボーの移動*/
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
-		/*行動範囲内にいるのかどうか*/
-		if (m_pKuriboVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pKuriboVector[i]->GetxPos() <= m_ObjMoveRightXPos)
-		{
-			/*移動*/
-			m_pKuriboVector[i]->Move();
-		}
+		EnemyMoveOrder(m_pKuriboVector[i]);
 	}
 
 	/*ノコノコの移動*/
 	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
-		/*行動範囲内にいるのかどうか*/
-		if (m_pNokonokoVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pNokonokoVector[i]->GetxPos() <= m_ObjMoveRightXPos)
-		{
-			/*移動*/
-			m_pNokonokoVector[i]->Move();
-		}
+		EnemyMoveOrder(m_pNokonokoVector[i]);
+	}
+}
+
+/// <summary>
+/// 敵の移動命令
+/// </summary>
+/// <param name="pEnemy">移動させる敵ポインタ</param>
+void PlayScene::EnemyMoveOrder(Enemy* pEnemy)
+{
+	/*行動範囲内にいるのかどうか*/
+	if (pEnemy->GetxPos() >= m_ObjMoveLeftXPos && pEnemy->GetxPos() <= m_ObjMoveRightXPos)
+	{
+		/*移動*/
+		pEnemy->Move();
 	}
 }
 
@@ -321,114 +308,83 @@ void PlayScene::MoveOrder()
 /// </summary>
 void PlayScene::ObjCheckOrder()
 {
+	CollisionCheckBlock(m_pBlocks);
+	CollisionCheckBlock(m_pBlockGrounds);
+	CollisionCheckClayPipe();
+	CollisionCheckKuribo  ();
+	CollisionCheckNokonoko();
+}
+
+/// <summary>
+/// //ゴールしたかのチェック
+/// </summary>
+void PlayScene::GoalCheckOrder()
+{
+	/*プレイヤーがゴールしているか*/
+	if (m_pGoal->GoalCheck(m_pPlayer))
+	{
+		/*ゴール演出が終わっているか*/
+		if (!m_pGoal->Play(m_pPlayer))
+		{
+			/*ステージのレベルを１上げる*/
+			m_NowStageLevel++;
+			/*ステージのレベルが１ワールド内にあるステージ数を上回っているかどうか*/
+			if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
+			{
+				/*ワールドのレベルを1上げる*/
+				m_NowWorldLevel++;
+				/*ステージのレベルを１に戻す*/
+				m_NowStageLevel = 1;
+			}
+
+			/*次に読み込むファイルパスを設定*/
+			std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+
+			/*ステージを変える*/
+			m_pStage->ChangeStage(filePas.data());
+			/*シーンをリスタート*/
+			ReStart();
+			/*次にリザルトシーンに飛ぶ*/
+			m_NextGameState = GameState::RESULT;
+		}
+	}
+}
+
+/// <summary>
+/// ブロックのコリジョンチェック
+/// </summary>
+/// <param name="pBlocks"></param>
+void PlayScene::CollisionCheckBlock(Characters<Block>* pBlocks)
+{
 	//ブロック群の衝突判定
-	for (int i = 0; i < m_pBlocks->m_ObjectVector.size(); i++)
+	for (int i = 0; i < pBlocks->m_ObjectVector.size(); i++)
 	{
 		/*判定可能範囲内にいるのかどうか*/
-		if (m_pBlocks->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pBlocks->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
+		if (pBlocks->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && pBlocks->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
 		{
 			/*プレイヤーに対してのチェック*/
-			m_pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
+			pBlocks->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
 
 			/*クリボーに対してのチェック*/
 			for (int j = 0; j < m_pKuriboVector.size(); j++)
 			{
-				m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
+				pBlocks->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
 			}
 
 			/*ノコノコに対してのチェック*/
 			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
-				m_pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+				pBlocks->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
 			}
 		}
 	}
+}
 
-	//ブロック群の衝突判定
-	for (int i = 0; i < m_pBlockGrounds->m_ObjectVector.size(); i++)
-	{
-		/*判定可能範囲内にいるのかどうか*/
-		if (m_pBlockGrounds->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pBlockGrounds->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
-		{
-			/*プレイヤーに対してのチェック*/
-			m_pBlockGrounds->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
-
-			/*クリボーに対してのチェック*/
-			for (int j = 0; j < m_pKuriboVector.size(); j++)
-			{
-				m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
-			}
-
-			/*ノコノコに対してのチェック*/
-			for (int j = 0; j < m_pNokonokoVector.size(); j++)
-			{
-				m_pBlockGrounds->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-			}
-		}
-	}
-
-	//土管群の対して衝突判定
-	for (int i = 0; i < m_pClayPipes->m_ObjectVector.size(); i++)
-	{
-		/*判定可能範囲内にいるのかどうか*/
-		if (m_pClayPipes->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pClayPipes->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
-		{
-			/*プレイヤーに対してのチェック*/
-			m_pClayPipes->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
-
-			/*クリボーに対してのチェック*/
-			for (int j = 0; j < m_pKuriboVector.size(); j++)
-			{
-				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
-			}
-
-			/*ノコノコに対してのチェック*/
-			for (int j = 0; j < m_pNokonokoVector.size(); j++)
-			{
-				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-			}
-		}
-	}
-
-	/*クリボーの衝突判定*/
-	for (int i = 0; i < m_pKuriboVector.size(); i++)
-	{
-		/*判定可能範囲にいるのかどうか*/
-		if (m_pKuriboVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pKuriboVector[i]->GetxPos() <= m_ObjMoveRightXPos)
-		{
-			/*プレイヤーに対してのチェック*/
-			m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
-
-			/*ノコノコに対してのチェック*/
-			for (int j = 0; j < m_pNokonokoVector.size(); j++)
-			{
-				/*ノコノコが生きているかどうか*/
-				if (m_pNokonokoVector[j]->GetLivingFlag())
-				{
-					/* クリボーとノコノコの比較 */
-					m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
-					m_pKuriboVector  [i]->CheckEnemy(m_pNokonokoVector[j]);
-				}
-			}
-
-			/*クリボーに対してのチェック*/
-			/*配列の最後尾かどうか*/
-			if (i + 1 < m_pKuriboVector.size())
-			{
-				/*クリボーとクリボーの比較*/
-				for (int c = i + 1; c < m_pKuriboVector.size(); c++)
-				{
-					/*対象のクリボーが生きているかどうか*/
-					if (m_pKuriboVector[c]->GetLivingFlag())
-					{
-						m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
-						m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
-					}
-				}
-			}
-		}
-	}
-
+/// <summary>
+/// ノコノコのコリジョンチェック
+/// </summary>
+void PlayScene::CollisionCheckNokonoko()
+{
 	/*ノコノコの衝突判定*/
 	for (int i = 0; i < m_pNokonokoVector.size(); i++)
 	{
@@ -464,7 +420,7 @@ void PlayScene::ObjCheckOrder()
 							m_pNokonokoVector[i]->StartStandardDie(true);
 							m_pNokonokoVector[j]->StartStandardDie(false);
 						}
-						
+
 						continue;
 					}
 				}
@@ -473,7 +429,7 @@ void PlayScene::ObjCheckOrder()
 				if (NokonokoRunStateFlagI && !NokonokoRunStateFlagJ)
 				{
 					m_pNokonokoVector[i]->CheckEnemy(m_pNokonokoVector[j]);
-				    m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
+					m_pNokonokoVector[j]->CheckEnemy(m_pNokonokoVector[i]);
 
 					continue;
 				}
@@ -496,36 +452,75 @@ void PlayScene::ObjCheckOrder()
 }
 
 /// <summary>
-/// //ゴールしたかのチェック
+/// クリボーのコリジョンチェック
 /// </summary>
-void PlayScene::GoalCheckOrder()
+void PlayScene::CollisionCheckKuribo()
 {
-	/*プレイヤーがゴールしているか*/
-	if (m_pGoal->GoalCheck(m_pPlayer))
+	/*クリボーの衝突判定*/
+	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
-		/*ゴール演出が終わっているか*/
-		if (!m_pGoal->Play(m_pPlayer))
+		/*判定可能範囲にいるのかどうか*/
+		if (m_pKuriboVector[i]->GetxPos() >= m_ObjMoveLeftXPos && m_pKuriboVector[i]->GetxPos() <= m_ObjMoveRightXPos)
 		{
-			/*ステージのレベルを１上げる*/
-			m_NowStageLevel++;
-			/*ステージのレベルが１ワールド内にあるステージ数を上回っているかどうか*/
-			if (m_NowStageLevel > M_IN_STAGE_AMOUNT)
+			/*プレイヤーに対してのチェック*/
+			m_pKuriboVector[i]->CheckPlayer(m_pPlayer);
+
+			/*ノコノコに対してのチェック*/
+			for (int j = 0; j < m_pNokonokoVector.size(); j++)
 			{
-				/*ワールドのレベルを1上げる*/
-				m_NowWorldLevel++;
-				/*ステージのレベルを１に戻す*/
-				m_NowStageLevel = 1;
+				/*ノコノコが生きているかどうか*/
+				if (m_pNokonokoVector[j]->GetLivingFlag())
+				{
+					/* クリボーとノコノコの比較 */
+					m_pNokonokoVector[j]->CheckEnemy(m_pKuriboVector[i]);
+					m_pKuriboVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+				}
 			}
 
-			/*次に読み込むファイルパスを設定*/
-			std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
+			/*クリボーに対してのチェック*/
+			/*配列の最後尾かどうか*/
+			if (i + 1 < m_pKuriboVector.size())
+			{
+				/*クリボーとクリボーの比較*/
+				for (int c = i + 1; c < m_pKuriboVector.size(); c++)
+				{
+					/*対象のクリボーが生きているかどうか*/
+					if (m_pKuriboVector[c]->GetLivingFlag())
+					{
+						m_pKuriboVector[i]->CheckEnemy(m_pKuriboVector[c]);
+						m_pKuriboVector[c]->CheckEnemy(m_pKuriboVector[i]);
+					}
+				}
+			}
+		}
+	}
+}
 
-			/*ステージを変える*/
-			m_pStage->ChangeStage(filePas.data());
-			/*シーンをリスタート*/
-			ReStart();
-			/*次にリザルトシーンに飛ぶ*/
-			m_NextGameState = GameState::RESULT;
+/// <summary>
+/// 土管のコリジョンチェック
+/// </summary>
+void PlayScene::CollisionCheckClayPipe()
+{
+	/*土管群の対して衝突判定*/
+	for (int i = 0; i < m_pClayPipes->m_ObjectVector.size(); i++)
+	{
+		/*判定可能範囲内にいるのかどうか*/
+		if (m_pClayPipes->m_ObjectVector[i]->GetxPos() >= m_BlockCheckLeftXPos && m_pClayPipes->m_ObjectVector[i]->GetxPos() <= m_BlockCheckRightXPos)
+		{
+			/*プレイヤーに対してのチェック*/
+			m_pClayPipes->m_ObjectVector[i]->CheckPlayer(m_pPlayer);
+
+			/*クリボーに対してのチェック*/
+			for (int j = 0; j < m_pKuriboVector.size(); j++)
+			{
+				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pKuriboVector[j]);
+			}
+
+			/*ノコノコに対してのチェック*/
+			for (int j = 0; j < m_pNokonokoVector.size(); j++)
+			{
+				m_pClayPipes->m_ObjectVector[i]->CheckEnemy(m_pNokonokoVector[j]);
+			}
 		}
 	}
 }

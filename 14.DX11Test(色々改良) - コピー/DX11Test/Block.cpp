@@ -26,6 +26,8 @@ Block::Block(Vector3 pos, Vector2 size) : NotPlayer(pos, size)
 /// <param name="pPlayer">対象のプレイヤーのポインタ</param>
 void Block::CheckPlayer(Player* pPlayer)
 {
+	if (!pPlayer->GetLivibgFlag()) { return; }
+
 	if (CollisionCheck(pPlayer))
 	{
 		//プレイヤーのインプットフラグの取得
@@ -37,6 +39,9 @@ void Block::CheckPlayer(Player* pPlayer)
 			//このプレイヤーがこのブロックの左側に衝突しているか
 			if (LeftCheck(pPlayer))
 			{
+				/*プレイヤーをこのブロックの左X座標に移動*/
+				float xAmount = m_pVertexArray[0].pos[0] - pPlayer->m_pVertexArray[1].pos[0];
+				pPlayer->VertexMove(xAmount, 0);
 				//もしそうなら右に進めなくする
 				playerInput.ReSet(InputFlagCode::INPUT_RIGHT);
 				pPlayer->SetNowWalkSpeed(0.0f);
@@ -49,6 +54,9 @@ void Block::CheckPlayer(Player* pPlayer)
 			//このプレイヤーがこのブロックの右側に衝突しているか
 			if (RightCheck(pPlayer))
 			{
+				/*プレイヤーをこのブロックの右X座標に移動*/
+				float xAmount = m_pVertexArray[1].pos[0] - pPlayer->m_pVertexArray[0].pos[0];
+				pPlayer->VertexMove(xAmount, 0);
 				//もしそうなら左に進めなくする
 				playerInput.ReSet(InputFlagCode::INPUT_LEFT);
 				pPlayer->SetNowWalkSpeed(0.0f);
@@ -73,6 +81,9 @@ void Block::CheckPlayer(Player* pPlayer)
 		{
 			if (UpCheck(pPlayer))
 			{
+				/*プレイヤーをこのブロックの上Y座標に移動*/
+				float yAmount = m_pVertexArray[0].pos[1] - pPlayer->m_pVertexArray[1].pos[1];
+				pPlayer->VertexMove(0, yAmount);
 				//もしそうならステートを接地中に変える
 				pPlayer->SetMoveObjState(MoveObjState::ON_THE_GROUND);
 
@@ -96,10 +107,10 @@ void Block::CheckEnemy(Enemy* pEnemy)
 		//エネミーのインプットフラグの取得
 		InputFlag enemyInput = pEnemy->GetInputFlag();
 
-		//プレイヤーが右に進もうとしているかどうか
+		//エネミーが右に進もうとしているかどうか
 		if (enemyInput.Check(InputFlagCode::INPUT_RIGHT))
 		{
-			//このプレイヤーがこのブロックの左側に衝突しているか
+			//このエネミーがこのブロックの左側に衝突しているか
 			if (LeftCheck(pEnemy))
 			{
 				//もしそうなら左に進ませる
@@ -108,10 +119,10 @@ void Block::CheckEnemy(Enemy* pEnemy)
 			}
 		}
 
-		//プレイヤーが左に進もうとしているかどうか
+		//エネミーが左に進もうとしているかどうか
 		if (enemyInput.Check(InputFlagCode::INPUT_LEFT))
 		{
-			//このプレイヤーがこのブロックの右側に衝突しているか
+			//このエネミーがこのブロックの右側に衝突しているか
 			if (RightCheck(pEnemy))
 			{
 				//もしそうなら右に進ませる
@@ -120,11 +131,14 @@ void Block::CheckEnemy(Enemy* pEnemy)
 			}
 		}
 
-		//プレイヤーがFALL中かどうか
+		//エネミーがFALL中かどうか
 		if (pEnemy->GetMoveObjState() == MoveObjState::FALL || pEnemy->GetMoveObjState() == MoveObjState::CHECK_GROUND)
 		{
 			if (UpCheck(pEnemy))
 			{
+				/*プレイヤーをこのブロックの上Y座標に移動*/
+				float yAmount = m_pVertexArray[0].pos[1] - pEnemy->m_pVertexArray[1].pos[1];
+				pEnemy->VertexMove(0, yAmount);
 				//もしそうならステートを接地中に変える
 				pEnemy->SetMoveObjState(MoveObjState::ON_THE_GROUND);
 

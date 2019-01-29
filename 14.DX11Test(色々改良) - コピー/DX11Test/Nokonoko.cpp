@@ -57,7 +57,6 @@ void Nokonoko::Move()
 			/*通常の死に方をしているかどうか*/
 			if (m_StanderdDieFlag)
 			{
-				OutputDebugString("AAAAAAAAAAAAAA");
 				/*通常死亡演出*/
 				StandardDie();
 
@@ -305,12 +304,16 @@ void Nokonoko::CheckEnemy(Enemy* pEnemy)
 /// </summary>
 void Nokonoko::ThisObjRender()
 {
+	/*描画してもよいかどうか*/
 	if (!m_RenderFlag) { return; }
 
+	/*生きているかどうか*/
 	if (m_LivingFlag)
 	{
+		/*ノコノコのステートがノーマル状態かどうか*/
 		if (m_NokonokoState == NokonokoState::NORMAL)
 		{
+			/*歩くアニメーションをさせる*/
 			m_pWalkAnimation->AnimPlay();
 			m_pMainTextureResource = m_pWalkAnimation->GetAnimTextureResource();
 			m_pMainTextureSRV = m_pWalkAnimation->GetAnimTextureSRV();
@@ -327,14 +330,20 @@ void Nokonoko::ThisObjRender()
 		}
 		else
 		{
+			/*テクスチャを甲羅にする*/
 			m_pMainTextureResource = TextureData::Instance()->GetKOURA1_TR();
 			m_pMainTextureSRV = TextureData::Instance()->GetKOURA1_TSRV();
 		}
 	}
 
+	/*描画*/
 	Render(m_pVertexArray, m_IndexArraySize);
 }
 
+/// <summary>
+/// 通常死亡処理演出の開始
+/// </summary>
+/// <param name="direction"></param>
 void Nokonoko::StartStandardDie(bool direction)
 {
 	/*死亡処理*/

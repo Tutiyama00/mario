@@ -6,10 +6,14 @@
 /*#####################################  PROTECTED  #####################################*/
 /*#####################################             #####################################*/
 
-
+/// <summary>
+/// 左側にあるかのチェック
+/// </summary>
+/// <param name="pSquare">調査対象</param>
+/// <returns>T：ある、F：ない</returns>
 bool NotPlayer::LeftCheck(Square* pSquare)
 {
-	//プレイヤーがこのブロックの左側にあるか
+	//調査対象がこのブロックの左側にあるか
 	if (pSquare->GetxPos() <= m_xPos)
 	{
 		//プレイヤーの右上か右下の頂点がこのブロックの左上、左下の間にあるか
@@ -26,6 +30,11 @@ bool NotPlayer::LeftCheck(Square* pSquare)
 	return false;
 }
 
+/// <summary>
+/// 右側にあるかのチェック
+/// </summary>
+/// <param name="pSquare">調査対象</param>
+/// <returns>T：ある、F：ない</returns>
 bool NotPlayer::RightCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの右側にあるか
@@ -45,6 +54,11 @@ bool NotPlayer::RightCheck(Square* pSquare)
 	return false;
 }
 
+/// <summary>
+/// 下側にあるかのチェック
+/// </summary>
+/// <param name="pSquare">調査対象</param>
+/// <returns>T：ある、F：ない</returns>
 bool NotPlayer::DownCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの下にあるか
@@ -64,6 +78,11 @@ bool NotPlayer::DownCheck(Square* pSquare)
 	return false;
 }
 
+/// <summary>
+/// 上側にあるかのチェック
+/// </summary>
+/// <param name="pSquare">調査対象</param>
+/// <returns>T：ある、F：ない</returns>
 bool NotPlayer::UpCheck(Square* pSquare)
 {
 	//プレイヤーがこのブロックの上にあるか

@@ -19,9 +19,12 @@ class Polygon
 {
 public:
 	virtual void Abstract() = 0;  //純粋仮想関数（これによってこのクラスはインスタンスできない)
-	virtual ~Polygon() {};           //デストラクタ←ここでカラ定義
+	virtual ~Polygon() {};        //デストラクタ←ここでカラ定義
+
+	void VertexMove(float xAmount, float yAmount);
 
 public:
+	/*getter*/
 	float GetxPos() { return m_xPos; }
 	float GetyPos() { return m_yPos; }
 	UINT GetVertexArraySize() { return m_VertexArraySize; }
@@ -30,9 +33,6 @@ public:
 public:
 	vertex* m_pVertexArray = nullptr;  //頂点配列
 	WORD*   m_pIndexArray  = nullptr;  //インデックス配列
-
-protected:
-	void VertexMove(float xAmount, float yAmount);
 
 protected:
 	UINT    m_VertexArraySize;         //頂点配列の要素数
