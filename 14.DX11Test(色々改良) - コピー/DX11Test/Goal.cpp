@@ -47,7 +47,7 @@ Goal::~Goal()
 /// <returns></returns>
 bool Goal::GoalCheck(Player* pPlayer)
 {
-	if (pPlayer->m_pVertexArray[1].pos[0] >= m_GoalLineXPos)
+	if (pPlayer->m_pVertexArray[1].pos.x >= m_GoalLineXPos)
 	{
 		if (!m_GoalFlag)
 		{

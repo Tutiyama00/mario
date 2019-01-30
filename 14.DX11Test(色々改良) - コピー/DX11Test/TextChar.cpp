@@ -47,14 +47,14 @@ void TextChar::CherTexSet(char setChar)
 	charNamber -= m_MinFontNamber;
 
 	/* texç¿ïWÇÃê›íË */
-	m_pVertexArray[0].tex[0] = (charNamber % m_FontWidth) * charWidth;
-	m_pVertexArray[0].tex[1] = (charNamber / m_FontWidth) * charHeight;
-	m_pVertexArray[1].tex[0] = m_pVertexArray[0].tex[0] + charWidth;
-	m_pVertexArray[1].tex[1] = m_pVertexArray[0].tex[1] + charHeight;
-	m_pVertexArray[2].tex[0] = m_pVertexArray[0].tex[0];
-	m_pVertexArray[2].tex[1] = m_pVertexArray[1].tex[1];
-	m_pVertexArray[3].tex[0] = m_pVertexArray[1].tex[0];
-	m_pVertexArray[3].tex[1] = m_pVertexArray[0].tex[1];
+	m_pVertexArray[0].tex.x = (charNamber % m_FontWidth) * charWidth;
+	m_pVertexArray[0].tex.y = (charNamber / m_FontWidth) * charHeight;
+	m_pVertexArray[1].tex.x = m_pVertexArray[0].tex.x + charWidth;
+	m_pVertexArray[1].tex.y = m_pVertexArray[0].tex.y + charHeight;
+	m_pVertexArray[2].tex.x = m_pVertexArray[0].tex.x;
+	m_pVertexArray[2].tex.y = m_pVertexArray[1].tex.y;
+	m_pVertexArray[3].tex.x = m_pVertexArray[1].tex.x;
+	m_pVertexArray[3].tex.y = m_pVertexArray[0].tex.y;
 }
 
 /*-------------------------------------             ----------------------------------*/

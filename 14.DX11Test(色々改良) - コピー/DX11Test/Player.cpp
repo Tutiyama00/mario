@@ -302,26 +302,26 @@ void Player::ThisObjRender()
 			{
 				m_pRunAnimation->AnimPlay();
 				m_pMainTextureResource = m_pRunAnimation->GetAnimTextureResource();
-				m_pMainTextureSRV = m_pRunAnimation->GetAnimTextureSRV();
+				m_pMainTextureSRV      = m_pRunAnimation->GetAnimTextureSRV();
 			}
 			else
 			{
 				m_pRunAnimation->AnimReset();
 				m_pMainTextureResource = TextureData::Instance()->GetMARIO_STAND_TR();
-				m_pMainTextureSRV = TextureData::Instance()->GetMARIO_STAND_TSRV();
+				m_pMainTextureSRV      = TextureData::Instance()->GetMARIO_STAND_TSRV();
 			}
 
 			break;
 
 		default:
 			m_pMainTextureResource = TextureData::Instance()->GetMARIO_JUMP_TR();
-			m_pMainTextureSRV = TextureData::Instance()->GetMARIO_JUMP_TSRV();
+			m_pMainTextureSRV      = TextureData::Instance()->GetMARIO_JUMP_TSRV();
 		}
 	}
 	else
 	{
 		m_pMainTextureResource = TextureData::Instance()->GetMARIO_DEAD_TR();
-		m_pMainTextureSRV = TextureData::Instance()->GetMARIO_DEAD_TSRV();
+		m_pMainTextureSRV      = TextureData::Instance()->GetMARIO_DEAD_TSRV();
 	}
 
 	Render(m_pVertexArray, m_IndexArraySize);

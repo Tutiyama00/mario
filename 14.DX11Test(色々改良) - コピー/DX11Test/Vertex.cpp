@@ -19,8 +19,8 @@ void Polygon::VertexMove(float xAmount, float yAmount)
 
 	for (int i = 0; i < m_VertexArraySize; i++)
 	{
-		m_pVertexArray[i].pos[0] += xAmount;
-		m_pVertexArray[i].pos[1] += yAmount;
+		m_pVertexArray[i].pos.x += xAmount;
+		m_pVertexArray[i].pos.y += yAmount;
 	}
 }
 
@@ -58,7 +58,7 @@ Square::Square(Vector3 pos, Vector2 size)
 	m_pIndexArray[4] = { 3 };
 	m_pIndexArray[5] = { 1 };
 
-	m_DiagonalLength = OriginalMath::Math::CosineTheorem90(m_pVertexArray[0].pos[0] - m_pVertexArray[1].pos[0], m_pVertexArray[0].pos[1] - m_pVertexArray[1].pos[1]);
+	m_DiagonalLength = OriginalMath::Math::CosineTheorem90(m_pVertexArray[0].pos.x - m_pVertexArray[1].pos.x, m_pVertexArray[0].pos.y - m_pVertexArray[1].pos.y);
 }
 
 //デストラクタ
@@ -76,23 +76,95 @@ bool Square::CollisionCheck(Polygon* checkPolygon)
 	{
 		for (int i = 0; i < checkPolygon->GetVertexArraySize(); i++)
 		{
-			//自分の内側に重なっていた場合
-			if (m_pVertexArray[0].pos[0] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[i].pos[0] && m_pVertexArray[1].pos[0] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[i].pos[0])
+			//自分の内側に重なっているかどうか
+			if(AABBCheck(m_pVertexArray[0].pos, m_pVertexArray[1].pos, checkPolygon->m_pVertexArray[i].pos, m_ColAdjustedValue))
 			{
-				if (m_pVertexArray[0].pos[1] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[i].pos[1] && m_pVertexArray[1].pos[1] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[i].pos[1])
-				{
-					return true;
-				}
-			}
-
-			if (m_pVertexArray[i].pos[0] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[0].pos[0] && m_pVertexArray[i].pos[0] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[1].pos[0])
-			{
-				if (m_pVertexArray[i].pos[1] - m_ColAdjustedValue <= checkPolygon->m_pVertexArray[0].pos[1] && m_pVertexArray[i].pos[1] + m_ColAdjustedValue >= checkPolygon->m_pVertexArray[1].pos[1])
-				{
-					return true;
-				}
+				return true;
 			}
 		}
+
+		Vector3 leftUpVertex    = m_pVertexArray[0].pos;
+		Vector3 rightDownVertex = m_pVertexArray[1].pos;
+		Vector3 leftDownVertex  = m_pVertexArray[2].pos;
+		Vector3 rightUpVertex   = m_pVertexArray[3].pos;
+
+		leftUpVertex.x    -= m_ColAdjustedValue;
+		leftUpVertex.y    += m_ColAdjustedValue;
+		rightDownVertex.x += m_ColAdjustedValue;
+		rightDownVertex.y -= m_ColAdjustedValue;
+		leftDownVertex.x  -= m_ColAdjustedValue;
+		leftDownVertex.y  -= m_ColAdjustedValue;
+		rightUpVertex.x   += m_ColAdjustedValue;
+		rightUpVertex.y   += m_ColAdjustedValue;
+
+		if (AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, leftUpVertex, 0.0f)
+			|| AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, rightDownVertex, 0.0f)
+			|| AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, leftDownVertex, 0.0f)
+			|| AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, rightUpVertex, 0.0f))
+		{
+			return true;
+		}
+
+	}
+
+	return false;
+}
+
+//衝突判定
+bool Square::CollisionCheck(Polygon* checkPolygon, float threshold)
+{
+	//調査対象と自分の距離を比較して衝突の可能性があるかどうか判断
+	if (OriginalMath::Math::CosineTheorem90(checkPolygon->GetxPos() - m_xPos, checkPolygon->GetyPos() - m_yPos) <= m_DiagonalLength)
+	{
+		for (int i = 0; i < checkPolygon->GetVertexArraySize(); i++)
+		{
+			//自分の内側に重なっているかどうか
+			if (AABBCheck(m_pVertexArray[0].pos, m_pVertexArray[1].pos, checkPolygon->m_pVertexArray[i].pos, threshold))
+			{
+				return true;
+			}
+		}
+
+		Vector3 leftUpVertex    = m_pVertexArray[0].pos;
+		Vector3 rightDownVertex = m_pVertexArray[1].pos;
+		Vector3 leftDownVertex  = m_pVertexArray[2].pos;
+		Vector3 rightUpVertex   = m_pVertexArray[3].pos;
+
+		leftUpVertex.x    -= threshold;
+		leftUpVertex.y    += threshold;
+		rightDownVertex.x += threshold;
+		rightDownVertex.y -= threshold;
+		leftDownVertex.x  -= threshold;
+		leftDownVertex.y  -= threshold;
+		rightUpVertex.x   += threshold;
+		rightUpVertex.y   += threshold;
+
+		if (AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, leftUpVertex, 0.0f)
+			|| AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, rightDownVertex, 0.0f)
+			|| AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, leftDownVertex, 0.0f)
+			|| AABBCheck(checkPolygon->m_pVertexArray[0].pos, checkPolygon->m_pVertexArray[1].pos, rightUpVertex, 0.0f))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/// <summary>
+/// AABB方式の衝突判定
+/// </summary>
+/// <param name="leftUpVertex">左上頂点</param>
+/// <param name="rightDownVertex">右上頂点</param>
+/// <param name="targetVertex">調査頂点</param>
+/// <param name="threshold">調整値（正＝判定大きく、負＝判定小さく）</param>
+/// <returns>T＝衝突している、F＝衝突していない</returns>
+bool Square::AABBCheck(Vector3 leftUpVertex, Vector3 rightDownVertex, Vector3 targetVertex, float threshold)
+{
+	if ((leftUpVertex.x - threshold) <= targetVertex.x && (rightDownVertex.x + threshold) >= targetVertex.x
+		&& (leftUpVertex.y + threshold) >= targetVertex.y && (rightDownVertex.y - threshold) <= targetVertex.y)
+	{
+		return true;
 	}
 
 	return false;
@@ -107,32 +179,32 @@ void Square::ParallelInverted()
 	{
 		m_ParallelInvertedFlag = false;
 		/* 元の状態に戻す */
-		m_pVertexArray[0].tex[0] = 0;
-		m_pVertexArray[0].tex[1] = 0;
+		m_pVertexArray[0].tex.x = 0;
+		m_pVertexArray[0].tex.y = 0;
 
-		m_pVertexArray[1].tex[0] = 1;
-		m_pVertexArray[1].tex[1] = 1;
+		m_pVertexArray[1].tex.x = 1;
+		m_pVertexArray[1].tex.y = 1;
 
-		m_pVertexArray[2].tex[0] = 0;
-		m_pVertexArray[2].tex[1] = 1;
+		m_pVertexArray[2].tex.x = 0;
+		m_pVertexArray[2].tex.y = 1;
 
-		m_pVertexArray[3].tex[0] = 1;
-		m_pVertexArray[3].tex[1] = 0;
+		m_pVertexArray[3].tex.x = 1;
+		m_pVertexArray[3].tex.y = 0;
 	}
 	else
 	{
 		m_ParallelInvertedFlag = true;
 		/* 反転させる */
-		m_pVertexArray[0].tex[0] = 1;
-		m_pVertexArray[0].tex[1] = 0;
+		m_pVertexArray[0].tex.x = 1;
+		m_pVertexArray[0].tex.y = 0;
 
-		m_pVertexArray[1].tex[0] = 0;
-		m_pVertexArray[1].tex[1] = 1;
+		m_pVertexArray[1].tex.x = 0;
+		m_pVertexArray[1].tex.y = 1;
 
-		m_pVertexArray[2].tex[0] = 1;
-		m_pVertexArray[2].tex[1] = 1;
+		m_pVertexArray[2].tex.x = 1;
+		m_pVertexArray[2].tex.y = 1;
 
-		m_pVertexArray[3].tex[0] = 0;
-		m_pVertexArray[3].tex[1] = 0;
+		m_pVertexArray[3].tex.x = 0;
+		m_pVertexArray[3].tex.y = 0;
 	}
 }

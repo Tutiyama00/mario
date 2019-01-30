@@ -40,7 +40,7 @@ void Block::CheckPlayer(Player* pPlayer)
 			if (LeftCheck(pPlayer))
 			{
 				/*プレイヤーをこのブロックの左X座標に移動*/
-				float xAmount = m_pVertexArray[0].pos[0] - pPlayer->m_pVertexArray[1].pos[0];
+				float xAmount = m_pVertexArray[0].pos.x - pPlayer->m_pVertexArray[1].pos.x;
 				pPlayer->VertexMove(xAmount, 0);
 				//もしそうなら右に進めなくする
 				playerInput.ReSet(InputFlagCode::INPUT_RIGHT);
@@ -55,7 +55,7 @@ void Block::CheckPlayer(Player* pPlayer)
 			if (RightCheck(pPlayer))
 			{
 				/*プレイヤーをこのブロックの右X座標に移動*/
-				float xAmount = m_pVertexArray[1].pos[0] - pPlayer->m_pVertexArray[0].pos[0];
+				float xAmount = m_pVertexArray[1].pos.x - pPlayer->m_pVertexArray[0].pos.x;
 				pPlayer->VertexMove(xAmount, 0);
 				//もしそうなら左に進めなくする
 				playerInput.ReSet(InputFlagCode::INPUT_LEFT);
@@ -82,7 +82,7 @@ void Block::CheckPlayer(Player* pPlayer)
 			if (UpCheck(pPlayer))
 			{
 				/*プレイヤーをこのブロックの上Y座標に移動*/
-				float yAmount = m_pVertexArray[0].pos[1] - pPlayer->m_pVertexArray[1].pos[1];
+				float yAmount = m_pVertexArray[0].pos.y - pPlayer->m_pVertexArray[1].pos.y;
 				pPlayer->VertexMove(0, yAmount);
 				//もしそうならステートを接地中に変える
 				pPlayer->SetMoveObjState(MoveObjState::ON_THE_GROUND);
@@ -137,7 +137,7 @@ void Block::CheckEnemy(Enemy* pEnemy)
 			if (UpCheck(pEnemy))
 			{
 				/*プレイヤーをこのブロックの上Y座標に移動*/
-				float yAmount = m_pVertexArray[0].pos[1] - pEnemy->m_pVertexArray[1].pos[1];
+				float yAmount = m_pVertexArray[0].pos.y - pEnemy->m_pVertexArray[1].pos.y;
 				pEnemy->VertexMove(0, yAmount);
 				//もしそうならステートを接地中に変える
 				pEnemy->SetMoveObjState(MoveObjState::ON_THE_GROUND);

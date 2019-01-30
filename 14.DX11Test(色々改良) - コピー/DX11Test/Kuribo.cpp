@@ -166,7 +166,7 @@ void Kuribo::CheckPlayer(Player* pPlayer)
 	if (!pPlayer->GetLivibgFlag()) { return; }
 
 	/* ƒvƒŒƒCƒ„[‚ÆÕ“Ë‚µ‚Ä‚¢‚½‚ç */
-	if (CollisionCheck(pPlayer))
+	if (CollisionCheck(pPlayer, -(pPlayer->GetxSize() / 3)))
 	{
 		if (UpCheck(pPlayer))
 		{

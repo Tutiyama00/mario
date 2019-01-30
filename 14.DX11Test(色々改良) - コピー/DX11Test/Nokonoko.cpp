@@ -139,7 +139,7 @@ void Nokonoko::CheckPlayer(Player* pPlayer)
 	if (!pPlayer->GetLivibgFlag()) { return; }
 
 	/* プレイヤーと衝突していたら */
-	if (CollisionCheck(pPlayer))
+	if (CollisionCheck(pPlayer, -(pPlayer->GetxSize() / 3)))
 	{
 		switch (m_NokonokoState)
 		{
@@ -363,10 +363,10 @@ void Nokonoko::StartStandardDie(bool direction)
 	m_pMainTextureSRV = TextureData::Instance()->GetKOURA1_TSRV();
 
 	/*テクスチャをさかさまにする*/
-	m_pVertexArray[0].tex[0] = 0;  m_pVertexArray[0].tex[1] = 1;
-	m_pVertexArray[1].tex[0] = 1;  m_pVertexArray[1].tex[1] = 0;
-	m_pVertexArray[2].tex[0] = 0;  m_pVertexArray[2].tex[1] = 0;
-	m_pVertexArray[3].tex[0] = 1;  m_pVertexArray[3].tex[1] = 1;
+	m_pVertexArray[0].tex.x = 0;  m_pVertexArray[0].tex.y = 1;
+	m_pVertexArray[1].tex.x = 1;  m_pVertexArray[1].tex.y = 0;
+	m_pVertexArray[2].tex.x = 0;  m_pVertexArray[2].tex.y = 0;
+	m_pVertexArray[3].tex.x = 1;  m_pVertexArray[3].tex.y = 1;
 }
 
 /*#####################################           #####################################*/
