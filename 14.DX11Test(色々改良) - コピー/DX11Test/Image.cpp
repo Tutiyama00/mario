@@ -36,16 +36,6 @@ Image::Image(Vector3 pos, Vector2 size, ID3D11Resource* pTR, ID3D11ShaderResourc
 void Image::Move(Vector3 amount)
 {
 	VertexMove(amount.x, amount.y);
-
-	/*m_xPos += amount.x;
-	m_yPos += amount.y;
-
-	for (int i = 0; i < m_VertexArraySize; i++)
-	{
-		m_pVertexArray[i].pos[0] += amount.x;
-		m_pVertexArray[i].pos[1] += amount.y;
-		m_pVertexArray[i].pos[2] += amount.z;
-	}*/
 }
 
 /*-------------------------------------             ----------------------------------*/

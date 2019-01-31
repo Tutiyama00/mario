@@ -36,6 +36,8 @@ void TextureData::Initialize()
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/GOAL_FLAG.png"   , &m_pGOAL_FLAG_TR   , &m_pGOAL_FLAG_TSRV   );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/GOAL_CASTLE.png" , &m_pGOAL_CASTLE_TR , &m_pGOAL_CASTLE_TSRV );
 	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/CLAY_PIPE.png"   , &m_pCLAY_PIPE_TR   , &m_pCLAY_PIPE_TSRV   );
+	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/BACK_GROUND_1.png", &m_pBACK_GROUND_1_TR, &m_pBACK_GROUND_1_TSRV);
+	DirectX::CreateWICTextureFromFile(Dx11::Instance()->m_pDevice, L"Texture/BACK_GROUND_2.png", &m_pBACK_GROUND_2_TR, &m_pBACK_GROUND_2_TSRV);
 
 	//CoInitialize‚µ‚½‚Ì‚ÅŒÄ‚Ô
 	CoUninitialize();
@@ -92,4 +94,8 @@ TextureData::~TextureData()
 	if (m_pGOAL_CASTLE_TSRV  != nullptr) { m_pGOAL_CASTLE_TSRV  -> Release(); m_pGOAL_CASTLE_TSRV  = nullptr; }
 	if (m_pCLAY_PIPE_TR      != nullptr) { m_pCLAY_PIPE_TR      -> Release(); m_pCLAY_PIPE_TR      = nullptr; }
 	if (m_pCLAY_PIPE_TSRV    != nullptr) { m_pCLAY_PIPE_TSRV    -> Release(); m_pCLAY_PIPE_TSRV    = nullptr; }
+	if (m_pBACK_GROUND_1_TR != nullptr) { m_pBACK_GROUND_1_TR->Release(); m_pBACK_GROUND_1_TR = nullptr; }
+	if (m_pBACK_GROUND_1_TSRV != nullptr) { m_pBACK_GROUND_1_TSRV->Release(); m_pBACK_GROUND_1_TSRV = nullptr; }
+	if (m_pBACK_GROUND_2_TR != nullptr) { m_pBACK_GROUND_2_TR->Release(); m_pBACK_GROUND_2_TR = nullptr; }
+	if (m_pBACK_GROUND_2_TSRV != nullptr) { m_pBACK_GROUND_2_TSRV->Release(); m_pBACK_GROUND_2_TSRV = nullptr; }
 }

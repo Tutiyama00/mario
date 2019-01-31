@@ -15,6 +15,7 @@
 #include"Image.h"
 #include"ClayPipe.h"
 #include"Enemy.h"
+#include"BackGround.h"
 
 using namespace OriginalMath;
 
@@ -109,7 +110,7 @@ void PlayScene::MakeStageObj()
 			Vector2 size = { m_StandardSize, m_StandardSize };
 
 			//スイッチ文で判別
-			switch (*(m_pStage->m_pStageDataArray + (height*m_pStage->GetStageWidth() + width)))
+			switch (*(m_pStage->m_pStageDataArray + (height * m_pStage->GetStageWidth() + width)))
 			{
 			case Object::MARIO:
 				m_pPlayer = new Player(pos, size);
@@ -157,6 +158,16 @@ void PlayScene::MakeStageObj()
 			}
 		}
 	}
+
+	float xPos = m_StandardSize * 11.5f;
+	float yPos = m_StandardSize * -((m_pStage->GetStageHeight() - 12.5f) - halfHeight);
+	m_pBackGround = new BackGround(Vector3{ xPos,yPos,m_StandardZpos }, 
+		                      Vector2{ m_StandardSize * 24, m_StandardSize * 24 }, 
+		                      TextureData::Instance()->GetBACK_GROUND_1_TR(), 
+		                      TextureData::Instance()->GetBACK_GROUND_1_TSRV()
+		                      );
+	m_pBackGround->AddBackGround(TextureData::Instance()->GetBACK_GROUND_2_TR(), TextureData::Instance()->GetBACK_GROUND_2_TSRV());
+	m_pBackGround->ThisObjCreateBuffer();
 
 	Vector3 pos  = { 1.75f,-0.115f,m_StandardZpos };
 	Vector2 size = { 0.75f,0.75f };
@@ -254,6 +265,7 @@ void PlayScene::StageObjDelete()
 	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
 	if (m_pClayPipes         != nullptr) { delete m_pClayPipes;         m_pClayPipes         = nullptr; }
 	if (m_pGoal              != nullptr) { delete m_pGoal;              m_pGoal              = nullptr; }
+	if (m_pBackGround != nullptr) { delete m_pBackGround;              m_pBackGround = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -576,6 +588,8 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 		m_BlockCheckLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust - m_BlockCheckXPosDiff;
 	}
 
+	m_pBackGround->NextCheck(m_ObjMoveLeftXPos);
+
 	/*プレイヤーが落下死しているかどうか*/
 	if (m_UnderDeathLine > m_pPlayer->GetyPos())
 	{
@@ -619,4 +633,5 @@ void PlayScene::Draw()
 	m_pBlockGrounds      -> ThisObjRender();
 	m_pBlockGroundDummys -> ThisObjRender();
 	m_pClayPipes         -> ThisObjRender();
+	m_pBackGround->ThisObjRender();
 }

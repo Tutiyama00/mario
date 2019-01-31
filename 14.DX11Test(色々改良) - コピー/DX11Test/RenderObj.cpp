@@ -1,7 +1,6 @@
 #include"RenderObj.h"
 #include<d3dcompiler.h>
 #include"WICTextureLoader.h"
-//#include "WICTextureLoader.cpp"
 #include"Vertex.h"
 #include"Math.h"
 #include"Dx11.h"

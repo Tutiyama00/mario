@@ -144,6 +144,9 @@
     <ClCompile Include="ClayPipe.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enum.h">
@@ -246,6 +249,9 @@
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="ClayPipe.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>

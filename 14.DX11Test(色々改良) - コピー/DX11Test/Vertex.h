@@ -27,6 +27,7 @@ public:
 	/*getter*/
 	float GetxPos() { return m_xPos; }
 	float GetyPos() { return m_yPos; }
+	float GetzPos() { return m_zPos; }
 	float GetxSize() { return m_xSize; }
 	float GetySize() { return m_ySize; }
 	UINT GetVertexArraySize() { return m_VertexArraySize; }

@@ -173,8 +173,8 @@ void Kuribo::CheckPlayer(Player* pPlayer)
 			SoundData::Instance()->GetSTOMPsoundBuffer()->SetCurrentPosition(0);
 			SoundData::Instance()->GetSTOMPsoundBuffer()->Play(0, 0, 0);
 			m_pMainTextureResource = TextureData::Instance()->GetKURIBO_DEAD_TR();
-			m_pMainTextureSRV = TextureData::Instance()->GetKURIBO_DEAD_TSRV();
-			m_StompDieFlag = true;
+			m_pMainTextureSRV      = TextureData::Instance()->GetKURIBO_DEAD_TSRV();
+			m_StompDieFlag         = true;
 			pPlayer->MiniJumpStart();
 			Die();
 		}

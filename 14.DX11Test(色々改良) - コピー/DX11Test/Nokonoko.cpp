@@ -20,7 +20,7 @@ Nokonoko::Nokonoko(Vector3 pos, Vector2 size) : Enemy(pos, size)
 	CreateBuffer(m_pVertexArray, m_VertexArraySize, m_pIndexArray, m_IndexArraySize);
 
 	m_pMainTextureResource = TextureData::Instance()->GetNOKONOKO1_TR();
-	m_pMainTextureSRV = TextureData::Instance()->GetNOKONOKO1_TSRV();
+	m_pMainTextureSRV      = TextureData::Instance()->GetNOKONOKO1_TSRV();
 
 	m_InputFlag.Set(InputFlagCode::INPUT_LEFT);
 

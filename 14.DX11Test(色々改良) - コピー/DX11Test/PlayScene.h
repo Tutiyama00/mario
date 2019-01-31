@@ -17,6 +17,7 @@ class Nokonoko;
 class Image;
 class ClayPipe;
 class Enemy;
+class BackGround;
 
 class PlayScene : public IGameScene
 {
@@ -34,19 +35,19 @@ public:
 	const DWORD    GetStageTime    ()const { return m_pStage->GetStageTime(); }
 
 private:
-	void MakeStageObj  ();  //ステージオブジェクトの生成
-	void ReStart       ();  //ゲームのリスタート
-	void ReSet         ();  //ゲームのリセット
-	void MoveScene     ();  //シーンの遷移
-	void StageObjDelete();  //ステージ上のオブジェクトのデリート
-	void MoveOrder     ();  //キャラ達の移動命令
-	void EnemyMoveOrder(Enemy* pEnemy);  //敵の移動命令
-	void ObjCheckOrder ();  //キャラ達のチェック命令
-	void GoalCheckOrder();  //ゴールしたかのチェック
-	void CollisionCheckNokonoko();  //ノコノコの衝突判定
-	void CollisionCheckKuribo();  //クリボーの衝突判定
-	void CollisionCheckBlock(Characters<Block>* pBlocks);  //ブロックの衝突判定
-	void CollisionCheckClayPipe();  //土管の衝突判定
+	void MakeStageObj          ();                            //ステージオブジェクトの生成
+	void ReStart               ();                            //ゲームのリスタート
+	void ReSet                 ();                            //ゲームのリセット
+	void MoveScene             ();                            //シーンの遷移
+	void StageObjDelete        ();                            //ステージ上のオブジェクトのデリート
+	void MoveOrder             ();                            //キャラ達の移動命令
+	void EnemyMoveOrder        (Enemy* pEnemy);               //敵の移動命令
+	void ObjCheckOrder         ();                            //キャラ達のチェック命令
+	void GoalCheckOrder        ();                            //ゴールしたかのチェック
+	void CollisionCheckNokonoko();                            //ノコノコの衝突判定
+	void CollisionCheckKuribo  ();                            //クリボーの衝突判定
+	void CollisionCheckBlock   (Characters<Block>* pBlocks);  //ブロックの衝突判定
+	void CollisionCheckClayPipe();                            //土管の衝突判定
 
 private:
 	Stage*                m_pStage             = nullptr;
@@ -58,8 +59,10 @@ private:
 	Characters<Image>*    m_pBlockGroundDummys = nullptr;
 	Characters<ClayPipe>* m_pClayPipes         = nullptr;
 	Goal*                 m_pGoal              = nullptr;
+	BackGround*           m_pBackGround        = nullptr;
 	vector<Kuribo*>       m_pKuriboVector;
 	vector<Nokonoko*>     m_pNokonokoVector;
+	
 
 	float     m_StandardSize          = 0.075f; //基準のサイズ
 	float     m_StandardZpos          = -0.5f;  //基準のオブジェクトZポジション
