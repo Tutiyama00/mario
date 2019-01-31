@@ -159,24 +159,22 @@ void PlayScene::MakeStageObj()
 		}
 	}
 
-	float xPos = m_StandardSize * 11.5f;
-	float yPos = m_StandardSize * -((m_pStage->GetStageHeight() - 12.5f) - halfHeight);
+	/*背景の生成*/
+	float xPos = m_StandardSize * m_BackGroundXPosAdjust;
+	float yPos = m_StandardSize * -((m_pStage->GetStageHeight() - m_BackGroundYPosAdjust) - halfHeight);
 	m_pBackGround = new BackGround(Vector3{ xPos,yPos,m_StandardZpos }, 
-		                      Vector2{ m_StandardSize * 24, m_StandardSize * 24 }, 
+		                      Vector2{ m_StandardSize * m_BackGroundBlockAmount, m_StandardSize * m_BackGroundBlockAmount }, 
 		                      TextureData::Instance()->GetBACK_GROUND_1_TR(), 
 		                      TextureData::Instance()->GetBACK_GROUND_1_TSRV()
 		                      );
 	m_pBackGround->AddBackGround(TextureData::Instance()->GetBACK_GROUND_2_TR(), TextureData::Instance()->GetBACK_GROUND_2_TSRV());
 	m_pBackGround->ThisObjCreateBuffer();
 
-	Vector3 pos  = { 1.75f,-0.115f,m_StandardZpos };
-	Vector2 size = { 0.75f,0.75f };
-
-	m_pBlocks->ThisObjCreateBuffer();
-	m_pBlockDummys->ThisObjCreateBuffer();
-	m_pBlockGrounds->ThisObjCreateBuffer();
-	m_pBlockGroundDummys->ThisObjCreateBuffer();
-	m_pClayPipes->ThisObjCreateBuffer();
+	m_pBlocks            -> ThisObjCreateBuffer();
+	m_pBlockDummys       -> ThisObjCreateBuffer();
+	m_pBlockGrounds      -> ThisObjCreateBuffer();
+	m_pBlockGroundDummys -> ThisObjCreateBuffer();
+	m_pClayPipes         -> ThisObjCreateBuffer();
 
 	/*下の死亡判定ラインの計算*/
 	m_UnderDeathLine = m_StandardSize * -(m_pStage->GetStageHeight() - halfHeight);
@@ -188,13 +186,13 @@ void PlayScene::MakeStageObj()
 	m_PlayerMoveEndXPos = m_CameraShootXPos - m_EndToShootXPosAmount;
 
 	/* オブジェクト右限界値の初期化 */
-	m_ObjMoveRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
+	m_ObjMoveRightXPos    = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
 	/* オブジェクト左限界値の初期化 */
-	m_ObjMoveLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
+	m_ObjMoveLeftXPos     = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
 	/* ブロック右限界値の初期化 */
 	m_BlockCheckRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust + m_BlockCheckXPosDiff;
 	/* ブロック左限界値の初期化 */
-	m_BlockCheckLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust - m_BlockCheckXPosDiff;
+	m_BlockCheckLeftXPos  = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust - m_BlockCheckXPosDiff;
 }
 
 
@@ -265,7 +263,7 @@ void PlayScene::StageObjDelete()
 	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
 	if (m_pClayPipes         != nullptr) { delete m_pClayPipes;         m_pClayPipes         = nullptr; }
 	if (m_pGoal              != nullptr) { delete m_pGoal;              m_pGoal              = nullptr; }
-	if (m_pBackGround != nullptr) { delete m_pBackGround;              m_pBackGround = nullptr; }
+	if (m_pBackGround        != nullptr) { delete m_pBackGround;        m_pBackGround        = nullptr; }
 
 	for (int i = 0; i < m_pKuriboVector.size(); i++)
 	{
@@ -320,8 +318,8 @@ void PlayScene::EnemyMoveOrder(Enemy* pEnemy)
 /// </summary>
 void PlayScene::ObjCheckOrder()
 {
-	CollisionCheckBlock(m_pBlocks);
-	CollisionCheckBlock(m_pBlockGrounds);
+	CollisionCheckBlock   (m_pBlocks);
+	CollisionCheckBlock   (m_pBlockGrounds);
 	CollisionCheckClayPipe();
 	CollisionCheckKuribo  ();
 	CollisionCheckNokonoko();
@@ -575,19 +573,20 @@ void PlayScene::UpDateGame(InputFlag inputFlag)
 	if (m_pPlayer->GetxPos() >= m_CameraShootXPos)
 	{
 		/*カメラのX座標をプレイヤーに合わせる*/
-		m_CameraShootXPos = m_pPlayer->GetxPos();
+		m_CameraShootXPos     = m_pPlayer->GetxPos();
 		/* プレイヤー左限界値の初期化 */
-		m_PlayerMoveEndXPos = m_CameraShootXPos - m_EndToShootXPosAmount;
+		m_PlayerMoveEndXPos   = m_CameraShootXPos - m_EndToShootXPosAmount;
 		/* オブジェクト右限界値の初期化 */
-		m_ObjMoveRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
+		m_ObjMoveRightXPos    = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust;
 		/* オブジェクト左限界値の初期化 */
-		m_ObjMoveLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
+		m_ObjMoveLeftXPos     = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust;
 		/* ブロック右限界値の初期化 */
 		m_BlockCheckRightXPos = m_CameraShootXPos + m_EndToShootXPosAmount + m_ObjMoveXPosAdjust + m_BlockCheckXPosDiff;
 		/* ブロック左限界値の初期化 */
-		m_BlockCheckLeftXPos = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust - m_BlockCheckXPosDiff;
+		m_BlockCheckLeftXPos  = m_CameraShootXPos - m_EndToShootXPosAmount - m_ObjMoveXPosAdjust - m_BlockCheckXPosDiff;
 	}
 
+	/*背景を入れ替えるかどうかチェックする*/
 	m_pBackGround->NextCheck(m_ObjMoveLeftXPos);
 
 	/*プレイヤーが落下死しているかどうか*/
@@ -633,5 +632,5 @@ void PlayScene::Draw()
 	m_pBlockGrounds      -> ThisObjRender();
 	m_pBlockGroundDummys -> ThisObjRender();
 	m_pClayPipes         -> ThisObjRender();
-	m_pBackGround->ThisObjRender();
+	m_pBackGround        -> ThisObjRender();
 }

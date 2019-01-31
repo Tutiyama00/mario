@@ -68,6 +68,9 @@ void Block::CheckPlayer(Player* pPlayer)
 		{
 			if (DownCheck(pPlayer))
 			{
+				/*プレイヤーをこのブロックの下Y座標に移動*/
+				float yAmount = m_pVertexArray[1].pos.y - pPlayer->m_pVertexArray[0].pos.y;
+				pPlayer->VertexMove(0, yAmount);
 				//もしそうならステートをFALLに変える
 				pPlayer->SetMoveObjState(MoveObjState::FALL);
 				pPlayer->SetJumpFlag(false);

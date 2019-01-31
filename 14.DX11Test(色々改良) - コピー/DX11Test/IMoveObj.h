@@ -26,21 +26,25 @@ public:
 
 protected:
 	virtual void Walk(float xAmount) = 0;  //歩く
-	virtual bool Jump()              = 0;  //ジャンプ
+	virtual bool Jump(const unsigned int MAX_FRAME)              = 0;  //ジャンプ
 	virtual void Fall()              = 0;  //落下
 
 protected:
-	bool         m_LivingFlag;             //生きているかのフラグ
-	MoveObjState m_MoveObjState;           //ステート
-	InputFlag    m_InputFlag;              //現在の入力状態
-	int          m_MaxJumpLevel;           //ジャンプのレベルカウントの上限
-	int          m_JumpLevelCount;         //ジャンプのレベルカウント（ジャンプボタン押してるときにカウントされる）
-	int          m_JumpAbjustPoint;        //ジャンプ力計算に使う調整値
-	bool         m_JumpFlag;               //ジャンプ可能かどうかのフラグ
-	float        m_JumpPower;              //ジャンプ量
-	float        m_MaxWalkSpeed;           //歩く最大スピード
-	float        m_WalkFluctuationAmount;  //歩くスピードを変える
-	float        m_NowWalkSpeed;           //今の歩く速度
-	float        m_SlipStopAmount;         //滑りを抑制する値
-	float        m_SlipStopThreshold;      //滑りを０にするしきい値
+	bool               m_LivingFlag;             //生きているかのフラグ
+	MoveObjState       m_MoveObjState;           //ステート
+	InputFlag          m_InputFlag;              //現在の入力状態
+	bool               m_CanJumpFlag       = true;                   //ジャンプ可能かどうかのフラグ
+	float              m_NowJumpFallPower  = 0.0005f;                //今のジャンプと落下の速度
+	const float        M_JUMP_POWER        = 0.01f;                  //基本速度
+	const float        M_JUMP_GRAVITY      = M_JUMP_POWER / 20;      //ジャンプ中の重力
+	const float        M_FALL_MAX_POWER    = 0.01f;                 //落下速度の上限
+	const float        M_FALL_GRAVITY      = M_FALL_MAX_POWER / 20;  //落下中の重力
+	const unsigned int M_MAX_JUMP_FRAME    = 25;                     //ジャンプのフレーム数の上限
+	const unsigned int M_MIN_JUMP_FRAME    = M_MAX_JUMP_FRAME / 4;   //最低ジャンプフレーム数
+	unsigned int       m_JumpFrameCount    = 0;                      //ジャンプのフレームカウンタ
+	float              m_MaxWalkSpeed;           //歩く最大スピード
+	float              m_WalkFluctuationAmount;  //歩くスピードを変える
+	float              m_NowWalkSpeed;           //今の歩く速度
+	float              m_SlipStopAmount;         //滑りを抑制する値
+	float              m_SlipStopThreshold;      //滑りを０にするしきい値
 };

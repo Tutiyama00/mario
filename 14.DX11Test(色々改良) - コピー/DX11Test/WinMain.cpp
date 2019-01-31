@@ -164,7 +164,7 @@ void FrameControl()
 #endif
 		stream << g_fps << " FPS" << std::endl;
 		//カウンタ付けて10回に1回出力、とかにしないと見づらいかもね
-		OutputDebugString(stream.str().c_str());
+		//OutputDebugString(stream.str().c_str());
 #endif  //_DEBUG
 	}
 

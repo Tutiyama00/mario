@@ -80,6 +80,9 @@ private:
 	float     m_BlockCheckLeftXPos    = 0.0f;   //ブロックがコリジョンチェックする範囲の左端のX座標
 	float     m_BlockCheckXPosDiff    = 0.3f;   //オブジェクトのMove範囲とブロックのコリジョン範囲の差（コリジョン範囲の方が広くなる）
 	float     m_ObjMoveXPosAdjust     = 0.2f;   //カメラで映っている範囲のしきい値
+	unsigned int m_BackGroundBlockAmount = 24;     //背景のブロック数
+	float m_BackGroundXPosAdjust = 11.5f;  //背景の初期先頭Xポジション調整値
+	float m_BackGroundYPosAdjust = 12.5f;  //背景の初期先頭Yポジション調整値
 
 /*------IGameScene------*/
 public:

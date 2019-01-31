@@ -215,7 +215,7 @@ void Enemy::Walk(float xAmount)
 /// ジャンプ(マリオ式)
 /// </summary>
 /// <returns>ジャンプできたかどうか　true=できた　false=できなかった</returns>
-bool Enemy::Jump()
+bool Enemy::Jump(const unsigned int MAX_FRAME)
 {
 	if (!m_LivingFlag) { return false; }
 

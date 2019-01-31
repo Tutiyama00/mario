@@ -60,7 +60,7 @@ public:
 
 protected:
 	virtual void Walk(float xAmount);  //歩く
-	virtual bool Jump();               //ジャンプ
+	virtual bool Jump(const unsigned int MAX_FRAME);               //ジャンプ
 	virtual void Fall();               //落下
 
 protected:

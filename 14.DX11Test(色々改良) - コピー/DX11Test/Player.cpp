@@ -45,6 +45,7 @@ Player::~Player()
 /// </summary>
 void Player::Die()
 {
+	OutputDebugString("DIE\n");
 	/* 無敵状態だったら返す */
 	if (m_InvincibleFlag) { return; }
 
@@ -145,44 +146,39 @@ void Player::PlayerMove()
 
 	case MoveObjState::ON_THE_GROUND:
 
-		if (m_JumpLevelCount != m_MaxJumpLevel)
-		{
-			m_JumpLevelCount = m_MaxJumpLevel;
-		}
-
 		if (m_InputFlag.Check(InputFlagCode::INPUT_SPACE))
 		{
-			if (m_JumpFlag)
+			if (m_CanJumpFlag)
 			{
 				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->SetCurrentPosition(0);
 				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->Play(0, 0, 0);
-				Jump();
+				m_NowJumpFallPower = M_JUMP_POWER;
+				m_JumpFrameCount = 0;
 				m_MoveObjState = MoveObjState::JUMP;
 				break;
 			}
 		}
-		else if (!m_JumpFlag)
+		else if (!m_CanJumpFlag)
 		{
-			m_JumpFlag = true;
+			m_CanJumpFlag = true;
 		}
 
 		break;
 
 	case MoveObjState::JUMP:
-
 		if (m_MiniJumpFlag)
 		{
 			if (!MiniJump())
 			{
-				m_JumpFlag = false;
+				m_CanJumpFlag  = false;
 				m_MoveObjState = MoveObjState::FALL;
 			}
 		}
-		else
+		else 
 		{
-			if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE) || !Jump())
+			if (!Jump(M_MAX_JUMP_FRAME))
 			{
-				m_JumpFlag = false;
+				m_CanJumpFlag = false;
 				m_MoveObjState = MoveObjState::FALL;
 			}
 		}
@@ -190,19 +186,20 @@ void Player::PlayerMove()
 		break;
 
 	case MoveObjState::FALL:
-
+		OutputDebugString("FALL\n");
 		if (m_MiniJumpFlag) { m_MiniJumpFlag = false; }
 
 		Fall();
 
-		if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE) && !m_JumpFlag)
+		if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE) && !m_CanJumpFlag)
 		{
-			m_JumpFlag = true;
+			m_CanJumpFlag = true;
 		}
 
 		break;
 	}
 
+	/*右に入力されているかどうか*/
 	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
 		if (m_NowWalkSpeed >= m_MaxWalkSpeed)
@@ -215,6 +212,7 @@ void Player::PlayerMove()
 		}
 	}
 
+	/*左に入力されているかどうか*/
 	if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
 	{
 		if (m_NowWalkSpeed <= -m_MaxWalkSpeed)
@@ -359,19 +357,31 @@ void Player::Walk(float xAmount)
 /// ジャンプ(マリオ式)
 /// </summary>
 /// <returns>ジャンプできたかどうか　true=できた　false=できなかった</returns>
-bool Player::Jump()
+bool Player::Jump(const unsigned int MAX_FRAME)
 {
-	if (m_JumpLevelCount > 0)
+	/*ジャンプ可能なフレーム数かどうか*/
+	if (m_JumpFrameCount < MAX_FRAME)
 	{
-		float jumpAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
+		m_NowJumpFallPower = M_JUMP_POWER;
+		VertexMove(0, M_JUMP_POWER);
 
-		VertexMove(0, jumpAmount);
+		m_JumpFrameCount++;
 
-		m_JumpLevelCount--;
+		return true;
+	}
+	/*速度が０かどうか*/
+	else if(m_NowJumpFallPower > 0)
+	{
+		/*緩やかに減速*/
+		m_NowJumpFallPower -= M_JUMP_GRAVITY;
+
+		VertexMove(0, m_NowJumpFallPower);
 
 		return true;
 	}
 
+	m_NowJumpFallPower = 0;
+	m_JumpFrameCount = 0;
 	return false;
 }
 
@@ -380,13 +390,19 @@ bool Player::Jump()
 /// </summary>
 void Player::Fall()
 {
-	float fallAmount = m_JumpPower * (m_JumpLevelCount / m_JumpAbjustPoint);
-
-	VertexMove(0, -fallAmount);
-
-	if (m_JumpLevelCount < m_MaxJumpLevel)
+	if (m_NowJumpFallPower >= 0)
 	{
-		m_JumpLevelCount++;
+		m_NowJumpFallPower = 0;
+	}
+
+	if (m_NowJumpFallPower >= -M_FALL_MAX_POWER)
+	{
+		VertexMove(0, m_NowJumpFallPower);
+		m_NowJumpFallPower -= M_FALL_GRAVITY;
+	}
+	else
+	{
+		VertexMove(0, -M_FALL_MAX_POWER);
 	}
 }
 
@@ -398,8 +414,6 @@ void Player::MiniJumpStart()
 	m_MiniJumpFlag   = true;
 	m_InvincibleFlag = true;
 	m_MoveObjState   = MoveObjState::JUMP;
-	m_MiniJumpCount  = 0;
-	m_JumpLevelCount = M_MINI_JUMP_COUNT_MAX;
 }
 
 /// <summary>
@@ -408,21 +422,14 @@ void Player::MiniJumpStart()
 /// <returns></returns>
 bool Player::MiniJump()
 {
-	if (m_MiniJumpCount <= M_MINI_JUMP_COUNT_MAX)
+	/* 指定したフレーム以上になったら */
+	if (m_JumpFrameCount >= M_MINI_JUMP_COUNT_INVINCIBLE_MAX)
 	{
-		m_MiniJumpCount++;
-
-		/* 指定したフレーム以上になったら */
-		if (m_MiniJumpCount > M_MINI_JUMP_COUNT_INVINCIBLE_MAX)
-		{
-			/* 無敵状態を解除する */
-			m_InvincibleFlag = false;
-		}
-
-		return Jump();
+		/* 無敵状態を解除する */
+		m_InvincibleFlag = false;
 	}
 
-	return false;
+	return Jump(M_MINI_JUMP_COUNT_MAX);
 }
 
 /// <summary>
