@@ -45,7 +45,6 @@ Player::~Player()
 /// </summary>
 void Player::Die()
 {
-	OutputDebugString("DIE\n");
 	/* 無敵状態だったら返す */
 	if (m_InvincibleFlag) { return; }
 
@@ -176,7 +175,37 @@ void Player::PlayerMove()
 		}
 		else 
 		{
-			if (!Jump(M_MAX_JUMP_FRAME))
+			/*ジャンプボタンが押されているかどうか*/
+			if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE))
+			{
+				/*追加ジャンプできないようにする*/
+				m_CanJumpFlag = false;
+			}
+
+			/*最低実行フレームに達していないかどうか*/
+			if (m_JumpFrameCount < M_MIN_JUMP_FRAME)
+			{
+				/*上限フレーム値を最低実行フレームにする*/
+				m_NowJumpMaxFrame = M_MIN_JUMP_FRAME;
+			}
+			/*追加ジャンプ可能かどうか*/
+			else if(m_CanJumpFlag)
+			{
+				/*ジャンプの最大実行フレームを変えているかどうか*/
+				if (m_JumpFrameCount >= M_MAX_JUMP_FRAME)
+				{
+					/*追加ジャンプできないようにする*/
+					m_CanJumpFlag = false;
+				}
+				else
+				{
+					/*今の最大実行フレームを更新する*/
+					m_NowJumpMaxFrame = m_JumpFrameCount + 1;
+				}
+			}
+
+			/*ジャンプ実行*/
+			if (!Jump(m_NowJumpMaxFrame))
 			{
 				m_CanJumpFlag = false;
 				m_MoveObjState = MoveObjState::FALL;
@@ -186,7 +215,6 @@ void Player::PlayerMove()
 		break;
 
 	case MoveObjState::FALL:
-		OutputDebugString("FALL\n");
 		if (m_MiniJumpFlag) { m_MiniJumpFlag = false; }
 
 		Fall();

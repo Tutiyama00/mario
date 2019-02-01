@@ -42,6 +42,7 @@ protected:
 	const unsigned int M_MAX_JUMP_FRAME    = 25;                     //ジャンプのフレーム数の上限
 	const unsigned int M_MIN_JUMP_FRAME    = M_MAX_JUMP_FRAME / 4;   //最低ジャンプフレーム数
 	unsigned int       m_JumpFrameCount    = 0;                      //ジャンプのフレームカウンタ
+	unsigned int       m_NowJumpMaxFrame   = 0;                      //ジャンプ処理のときにJump関数に代入する用の変数
 	float              m_MaxWalkSpeed;           //歩く最大スピード
 	float              m_WalkFluctuationAmount;  //歩くスピードを変える
 	float              m_NowWalkSpeed;           //今の歩く速度
