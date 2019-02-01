@@ -78,6 +78,7 @@ public:
 	/* getter */
 	MoveObjState GetMoveObjState()const { return m_MoveObjState; }
 	InputFlag    GetInputFlag   ()const { return m_InputFlag; }
+	float        GetNowWalkSpeed()const { return m_NowWalkSpeed; }
 	/* setter */
 	void         SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
 	void         SetInputFlag   (InputFlag    value) { if (!m_GoalPlayFlag) { m_InputFlag = value; } }

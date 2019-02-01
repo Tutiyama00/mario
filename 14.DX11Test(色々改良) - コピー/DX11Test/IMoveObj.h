@@ -19,6 +19,7 @@ public:
 	/* getter */
 	virtual MoveObjState GetMoveObjState()const { return m_MoveObjState; }
 	virtual InputFlag    GetInputFlag   ()const { return m_InputFlag;    }
+	virtual float        GetNowWalkSpeed()const { return m_NowWalkSpeed; }
 
 	/* setter */
 	virtual void SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
@@ -48,5 +49,7 @@ protected:
 	float              m_NowWalkSpeed;           //今の歩く速度
 	float              m_SlipStopAmount;         //滑りを抑制する値
 	float              m_SlipStopThreshold;      //滑りを０にするしきい値
-	const float        m_RunMagni = 1.7;  //走っているときの速度にかける値
+	const float        m_RunMagni = 1.7;         //走っているときの速度にかける値
+	bool               m_RunFlag  = false;       //走っているかどうかのフラグ
+	const float        m_RunAnimMagni = 1.5;     //走っているときのアニメーションのインターバル調整値
 };

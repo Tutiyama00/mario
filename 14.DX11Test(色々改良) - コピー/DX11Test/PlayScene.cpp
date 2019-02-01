@@ -228,6 +228,7 @@ void PlayScene::ReSet()
 	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
 	m_pStage->ChangeStage(filePas.data());
+
 	MakeStageObj();
 
 	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
@@ -351,7 +352,17 @@ void PlayScene::GoalCheckOrder()
 			std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
 			/*ステージを変える*/
-			m_pStage->ChangeStage(filePas.data());
+			bool loadFlag = m_pStage->ChangeStage(filePas.data());
+
+			/*ステージ切り替えに失敗しているかどうか*/
+			if (!loadFlag)
+			{
+				ReSet();
+				/*次のシーンをゲームオーバーにする*/
+				m_NextGameState = GameState::GAMEOVER;
+				return;
+			}
+
 			/*シーンをリスタート*/
 			ReStart();
 			/*次にリザルトシーンに飛ぶ*/

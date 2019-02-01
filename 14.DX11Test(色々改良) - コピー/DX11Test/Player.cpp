@@ -227,8 +227,17 @@ void Player::PlayerMove()
 		break;
 	}
 
-	/*右に入力されているかどうか*/
-	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
+	/*走っているかどうか*/
+	if (m_RunFlag)
+	{
+		/*速度を元に戻す*/
+		m_NowWalkSpeed /= m_RunMagni;
+		/*アニメーションのインターバルフレームを元に戻す*/
+		m_pRunAnimation->SetAnimIntervalFlame(m_pRunAnimation->GetAnimIntervalFlame() * m_RunAnimMagni);
+	}
+
+	/*右だけに入力されているかどうか*/
+	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT) && !m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
 	{
 		/*最大スピードを超えているかどうか*/
 		if (m_NowWalkSpeed >= m_MaxWalkSpeed)
@@ -242,9 +251,8 @@ void Player::PlayerMove()
 			m_NowWalkSpeed += m_WalkFluctuationAmount;
 		}
 	}
-
-	/*左に入力されているかどうか*/
-	if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
+	/*左だけ入力されているかどうか*/
+	else if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT) && !m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
 		/*最大スピードを超えているかどうか*/
 		if (m_NowWalkSpeed <= -m_MaxWalkSpeed)
@@ -260,9 +268,19 @@ void Player::PlayerMove()
 	}
 
 	/*ダッシュしているかどうか*/
-	if (m_InputFlag.Check(InputFlagCode::INPUT_SHIFT) && (m_InputFlag.Check(InputFlagCode::INPUT_LEFT) || m_InputFlag.Check(InputFlagCode::INPUT_RIGHT)))
+	if (m_InputFlag.Check(InputFlagCode::INPUT_SHIFT) 
+		&& (m_InputFlag.Check(InputFlagCode::INPUT_LEFT) || m_InputFlag.Check(InputFlagCode::INPUT_RIGHT)))
 	{
+		/*走っているフラグを立てる*/
+		m_RunFlag = true;
+		/*速度を設定数倍にする*/
 		m_NowWalkSpeed *= m_RunMagni;
+		/*アニメーションのインターバルフレームを短くする*/
+		m_pRunAnimation->SetAnimIntervalFlame(m_pRunAnimation->GetAnimIntervalFlame() / m_RunAnimMagni);
+	}
+	else
+	{
+		m_RunFlag = false;
 	}
 
 	//横入力されていないときに移動量の減衰をする

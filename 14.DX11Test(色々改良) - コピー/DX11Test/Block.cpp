@@ -34,7 +34,7 @@ void Block::CheckPlayer(Player* pPlayer)
 		InputFlag playerInput = pPlayer->GetInputFlag();
 
 		//プレイヤーが右に進もうとしているかどうか
-		if (playerInput.Check(InputFlagCode::INPUT_RIGHT))
+		if (pPlayer->GetNowWalkSpeed() >= 0)
 		{
 			//このプレイヤーがこのブロックの左側に衝突しているか
 			if (LeftCheck(pPlayer))
@@ -49,7 +49,7 @@ void Block::CheckPlayer(Player* pPlayer)
 		}
 
 		//プレイヤーが左に進もうとしているかどうか
-		if (playerInput.Check(InputFlagCode::INPUT_LEFT))
+		if (pPlayer->GetNowWalkSpeed() <= 0)
 		{
 			//このプレイヤーがこのブロックの右側に衝突しているか
 			if (RightCheck(pPlayer))
