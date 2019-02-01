@@ -152,8 +152,8 @@ void Player::PlayerMove()
 				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->SetCurrentPosition(0);
 				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->Play(0, 0, 0);
 				m_NowJumpFallPower = M_JUMP_POWER;
-				m_JumpFrameCount = 0;
-				m_MoveObjState = MoveObjState::JUMP;
+				m_JumpFrameCount   = 0;
+				m_MoveObjState     = MoveObjState::JUMP;
 				break;
 			}
 		}
