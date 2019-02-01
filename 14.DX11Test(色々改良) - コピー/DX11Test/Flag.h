@@ -5,7 +5,8 @@ enum class InputFlagCode :unsigned char
 	INPUT_ERRER = 1,
 	INPUT_SPACE = 2,
 	INPUT_LEFT  = 4,
-	INPUT_RIGHT = 8
+	INPUT_RIGHT = 8,
+	INPUT_SHIFT = 16
 };
 
 class InputFlag

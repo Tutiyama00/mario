@@ -71,6 +71,7 @@ void GameManager::InputGet()
 	if (GetAsyncKeyState(VK_SPACE)) { m_pFlag->Set(InputFlagCode::INPUT_SPACE); }
 	if (GetAsyncKeyState(VK_LEFT))  { m_pFlag->Set(InputFlagCode::INPUT_LEFT);  }
 	if (GetAsyncKeyState(VK_RIGHT)) { m_pFlag->Set(InputFlagCode::INPUT_RIGHT); }
+	if (GetAsyncKeyState(VK_SHIFT)) { m_pFlag->Set(InputFlagCode::INPUT_SHIFT); }
 }
 
 /// <summary>

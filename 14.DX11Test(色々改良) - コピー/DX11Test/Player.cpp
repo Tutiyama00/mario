@@ -1,9 +1,9 @@
+#include<string>
 #include"Player.h"
 #include"Block.h"
 #include"Enum.h"
 #include"Flag.h"
 #include"Animation.h"
-#include<string>
 #include"TextureData.h"
 #include"SoundData.h"
 
@@ -230,12 +230,15 @@ void Player::PlayerMove()
 	/*右に入力されているかどうか*/
 	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
+		/*最大スピードを超えているかどうか*/
 		if (m_NowWalkSpeed >= m_MaxWalkSpeed)
 		{
+			/*速度を最大値にする*/
 			m_NowWalkSpeed = m_MaxWalkSpeed;
 		}
 		else
 		{
+			/*移動速度を上げる*/
 			m_NowWalkSpeed += m_WalkFluctuationAmount;
 		}
 	}
@@ -243,29 +246,43 @@ void Player::PlayerMove()
 	/*左に入力されているかどうか*/
 	if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
 	{
+		/*最大スピードを超えているかどうか*/
 		if (m_NowWalkSpeed <= -m_MaxWalkSpeed)
 		{
+			/*速度を最大値にする*/
 			m_NowWalkSpeed = -m_MaxWalkSpeed;
 		}
 		else
 		{
+			/*移動速度を上げる*/
 			m_NowWalkSpeed -= m_WalkFluctuationAmount;
 		}
+	}
+
+	/*ダッシュしているかどうか*/
+	if (m_InputFlag.Check(InputFlagCode::INPUT_SHIFT) && (m_InputFlag.Check(InputFlagCode::INPUT_LEFT) || m_InputFlag.Check(InputFlagCode::INPUT_RIGHT)))
+	{
+		m_NowWalkSpeed *= m_RunMagni;
 	}
 
 	//横入力されていないときに移動量の減衰をする
 	if (!m_InputFlag.Check(InputFlagCode::INPUT_LEFT) && !m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
+		/*しきい値以上右に移動しているかどうか*/
 		if (m_NowWalkSpeed > m_SlipStopThreshold)
 		{
+			/*徐々に移動量を減衰する*/
 			m_NowWalkSpeed -= m_SlipStopAmount;
 		}
+		/*しきい値以上左に移動しているかどうか*/
 		else if (m_NowWalkSpeed < -m_SlipStopThreshold)
 		{
+			/*徐々に移動量を減衰する*/
 			m_NowWalkSpeed += m_SlipStopAmount;
 		}
 		else
 		{
+			/*移動量を０にする*/
 			m_NowWalkSpeed = 0;
 		}
 	}
