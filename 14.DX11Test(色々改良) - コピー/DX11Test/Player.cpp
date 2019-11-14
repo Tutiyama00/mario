@@ -1,9 +1,9 @@
+#include<string>
 #include"Player.h"
 #include"Block.h"
 #include"Enum.h"
 #include"Flag.h"
 #include"Animation.h"
-#include<string>
 #include"TextureData.h"
 #include"SoundData.h"
 
@@ -45,7 +45,6 @@ Player::~Player()
 /// </summary>
 void Player::Die()
 {
-	OutputDebugString("DIE\n");
 	/* 無敵状態だったら返す */
 	if (m_InvincibleFlag) { return; }
 
@@ -153,8 +152,8 @@ void Player::PlayerMove()
 				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->SetCurrentPosition(0);
 				SoundData::Instance()->GetMARIO_JUMP_SMALLsoundBuffer()->Play(0, 0, 0);
 				m_NowJumpFallPower = M_JUMP_POWER;
-				m_JumpFrameCount = 0;
-				m_MoveObjState = MoveObjState::JUMP;
+				m_JumpFrameCount   = 0;
+				m_MoveObjState     = MoveObjState::JUMP;
 				break;
 			}
 		}
@@ -176,7 +175,37 @@ void Player::PlayerMove()
 		}
 		else 
 		{
-			if (!Jump(M_MAX_JUMP_FRAME))
+			/*ジャンプボタンが押されているかどうか*/
+			if (!m_InputFlag.Check(InputFlagCode::INPUT_SPACE))
+			{
+				/*追加ジャンプできないようにする*/
+				m_CanJumpFlag = false;
+			}
+
+			/*最低実行フレームに達していないかどうか*/
+			if (m_JumpFrameCount < M_MIN_JUMP_FRAME)
+			{
+				/*上限フレーム値を最低実行フレームにする*/
+				m_NowJumpMaxFrame = M_MIN_JUMP_FRAME;
+			}
+			/*追加ジャンプ可能かどうか*/
+			else if(m_CanJumpFlag)
+			{
+				/*ジャンプの最大実行フレームを変えているかどうか*/
+				if (m_JumpFrameCount >= M_MAX_JUMP_FRAME)
+				{
+					/*追加ジャンプできないようにする*/
+					m_CanJumpFlag = false;
+				}
+				else
+				{
+					/*今の最大実行フレームを更新する*/
+					m_NowJumpMaxFrame = m_JumpFrameCount + 1;
+				}
+			}
+
+			/*ジャンプ実行*/
+			if (!Jump(m_NowJumpMaxFrame))
 			{
 				m_CanJumpFlag = false;
 				m_MoveObjState = MoveObjState::FALL;
@@ -186,7 +215,6 @@ void Player::PlayerMove()
 		break;
 
 	case MoveObjState::FALL:
-		OutputDebugString("FALL\n");
 		if (m_MiniJumpFlag) { m_MiniJumpFlag = false; }
 
 		Fall();
@@ -199,45 +227,80 @@ void Player::PlayerMove()
 		break;
 	}
 
-	/*右に入力されているかどうか*/
-	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
+	/*走っているかどうか*/
+	if (m_RunFlag)
 	{
+		/*速度を元に戻す*/
+		m_NowWalkSpeed /= m_RunMagni;
+		/*アニメーションのインターバルフレームを元に戻す*/
+		m_pRunAnimation->SetAnimIntervalFlame(m_pRunAnimation->GetAnimIntervalFlame() * m_RunAnimMagni);
+	}
+
+	/*右だけに入力されているかどうか*/
+	if (m_InputFlag.Check(InputFlagCode::INPUT_RIGHT) && !m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
+	{
+		/*最大スピードを超えているかどうか*/
 		if (m_NowWalkSpeed >= m_MaxWalkSpeed)
 		{
+			/*速度を最大値にする*/
 			m_NowWalkSpeed = m_MaxWalkSpeed;
 		}
 		else
 		{
+			/*移動速度を上げる*/
 			m_NowWalkSpeed += m_WalkFluctuationAmount;
 		}
 	}
-
-	/*左に入力されているかどうか*/
-	if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT))
+	/*左だけ入力されているかどうか*/
+	else if (m_InputFlag.Check(InputFlagCode::INPUT_LEFT) && !m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
+		/*最大スピードを超えているかどうか*/
 		if (m_NowWalkSpeed <= -m_MaxWalkSpeed)
 		{
+			/*速度を最大値にする*/
 			m_NowWalkSpeed = -m_MaxWalkSpeed;
 		}
 		else
 		{
+			/*移動速度を上げる*/
 			m_NowWalkSpeed -= m_WalkFluctuationAmount;
 		}
+	}
+
+	/*ダッシュしているかどうか*/
+	if (m_InputFlag.Check(InputFlagCode::INPUT_SHIFT) 
+		&& (m_InputFlag.Check(InputFlagCode::INPUT_LEFT) || m_InputFlag.Check(InputFlagCode::INPUT_RIGHT)))
+	{
+		/*走っているフラグを立てる*/
+		m_RunFlag = true;
+		/*速度を設定数倍にする*/
+		m_NowWalkSpeed *= m_RunMagni;
+		/*アニメーションのインターバルフレームを短くする*/
+		m_pRunAnimation->SetAnimIntervalFlame(m_pRunAnimation->GetAnimIntervalFlame() / m_RunAnimMagni);
+	}
+	else
+	{
+		m_RunFlag = false;
 	}
 
 	//横入力されていないときに移動量の減衰をする
 	if (!m_InputFlag.Check(InputFlagCode::INPUT_LEFT) && !m_InputFlag.Check(InputFlagCode::INPUT_RIGHT))
 	{
+		/*しきい値以上右に移動しているかどうか*/
 		if (m_NowWalkSpeed > m_SlipStopThreshold)
 		{
+			/*徐々に移動量を減衰する*/
 			m_NowWalkSpeed -= m_SlipStopAmount;
 		}
+		/*しきい値以上左に移動しているかどうか*/
 		else if (m_NowWalkSpeed < -m_SlipStopThreshold)
 		{
+			/*徐々に移動量を減衰する*/
 			m_NowWalkSpeed += m_SlipStopAmount;
 		}
 		else
 		{
+			/*移動量を０にする*/
 			m_NowWalkSpeed = 0;
 		}
 	}

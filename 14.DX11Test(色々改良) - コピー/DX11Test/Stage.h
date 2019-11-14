@@ -9,7 +9,7 @@ public:
 	Stage(const char* stageName);
 	~Stage();
 
-	void ChangeStage(const char* stageName);
+	bool ChangeStage(const char* stageName);
 
 public:
 	/* getter */
@@ -21,7 +21,7 @@ public:
 	Object* m_pStageDataArray; //ステージデータを保存する配列のポインタ
 
 private:
-	void LoadStage(const char* stageName); //ステージの読み込み
+	bool LoadStage(const char* stageName); //ステージの読み込み
 	void Delete();  //メンバ変数のdelete
 private:
 	int         m_StageSize    = 0;  //ステージ配列の長さ

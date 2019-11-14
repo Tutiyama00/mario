@@ -1,20 +1,20 @@
 300
 3
-213
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                     
-                                                                                  K  K                                                                                                                               
-                      B                                                         BBBBBBBB   BBBB              B           BBB    BBBB                                                         BB                      
-                                                                                                                                                                                            BbB                      
-                                                                                                                                                                                           BbbB                      
-                                                                                                                                                                                          BbbbB                      
-                B   BBBBB                                                    BBB              B     BB    B  B  B     B          BB      B  B           BB  B            BBBB            BbbbbB                      
-                                                                                                                                        BB  BB         BbB  BB                          BbbbbbB                      
-                                                                                                                                       BbB  BbB       BbbB  BbB                        BbbbbbbB        C             
-  M              N   K      p         P       i     KK   i                                      K K        N       K K    K K    K K  BbbB  BbbB     BbbbB  BbbB    p          K K  p BbbbbbbbB        B             
-GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGgggg
-ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggG  GgggggggggggggG   GgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggG  Ggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+217
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                         
+                                                                                  K  K                                                                                                                                   
+                      B                                                         BBBBBBBB   BBBB              B           BBB    BBBB                                                         HH                          
+                                                                                                                                                                                            HhH                          
+                                                                                                                                                                                           HhhH                          
+                                                                                                                                                                                          HhhhH                          
+                B   BBBBB                                                    BBB              B     BB    B  B  B     B          BB      H  H           HH  H            BBBB            HhhhhH                          
+                                                                                                                                        HH  HH         HhH  HH                          HhhhhhH                          
+                                                                                                                                       HhH  HhH       HhhH  HhH                        HhhhhhhH        C                 
+  M                  K      p         P   K   i     KK   i                                      K K        N       K K    K K    K K  HhhH  HhhH     HhhhH  HhhH    p          K K  p HhhhhhhhH        H                 
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGgggggggg
+ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggG  GgggggggggggggG   GgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggG  Ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg

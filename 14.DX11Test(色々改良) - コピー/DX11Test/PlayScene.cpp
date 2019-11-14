@@ -89,7 +89,8 @@ GameState PlayScene::UpDateScene(InputFlag inputFlag)
 void PlayScene::MakeStageObj()
 {
 	m_pBlocks            = new Characters<Block>(TextureData::Instance()->GetBLOCK_TR(),        TextureData::Instance()->GetBLOCK_TSRV(),        L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
-	m_pBlockDummys       = new Characters<Image>(TextureData::Instance()->GetBLOCK_TR(),        TextureData::Instance()->GetBLOCK_TSRV(),        L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pHardBlocks        = new Characters<Block>(TextureData::Instance()->GetHARD_BLOCK_TR(),   TextureData::Instance()->GetHARD_BLOCK_TSRV(),   L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
+	m_pHardBlockDummys   = new Characters<Image>(TextureData::Instance()->GetHARD_BLOCK_TR(),   TextureData::Instance()->GetHARD_BLOCK_TSRV(),   L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	m_pBlockGrounds      = new Characters<Block>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	m_pBlockGroundDummys = new Characters<Image>(TextureData::Instance()->GetBLOCK_GROUND_TR(), TextureData::Instance()->GetBLOCK_GROUND_TSRV(), L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
 	m_pClayPipes         = new Characters<ClayPipe>(TextureData::Instance()->GetCLAY_PIPE_TR(), TextureData::Instance()->GetCLAY_PIPE_TSRV(),    L"Shader/VertexShader.vsh", L"Shader/PixelShader.psh");
@@ -120,8 +121,12 @@ void PlayScene::MakeStageObj()
 				m_pBlocks->m_ObjectVector.push_back(new Block(pos, size));
 				break;
 
-			case Object::NORMAL_BLOCK_DUMMY:
-				m_pBlockDummys->m_ObjectVector.push_back(new Image(pos, size, TextureData::Instance()->GetBLOCK_TR(), TextureData::Instance()->GetBLOCK_TSRV(),false));
+			case Object::HARD_BLOCK:
+				m_pHardBlocks->m_ObjectVector.push_back(new Block(pos, size));
+				break;
+
+			case Object::HARD_BLOCK_DUMMY:
+				m_pHardBlockDummys->m_ObjectVector.push_back(new Image(pos, size, TextureData::Instance()->GetBLOCK_TR(), TextureData::Instance()->GetBLOCK_TSRV(),false));
 				break;
 
 			case Object::GROUND_BLOCK:
@@ -171,7 +176,8 @@ void PlayScene::MakeStageObj()
 	m_pBackGround->ThisObjCreateBuffer();
 
 	m_pBlocks            -> ThisObjCreateBuffer();
-	m_pBlockDummys       -> ThisObjCreateBuffer();
+	m_pHardBlocks        ->ThisObjCreateBuffer();
+	m_pHardBlockDummys   -> ThisObjCreateBuffer();
 	m_pBlockGrounds      -> ThisObjCreateBuffer();
 	m_pBlockGroundDummys -> ThisObjCreateBuffer();
 	m_pClayPipes         -> ThisObjCreateBuffer();
@@ -228,6 +234,7 @@ void PlayScene::ReSet()
 	std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
 	m_pStage->ChangeStage(filePas.data());
+
 	MakeStageObj();
 
 	m_pPlayer->SetLife(m_pPlayer->GetSTART_LIFE());
@@ -258,7 +265,8 @@ void PlayScene::StageObjDelete()
 {
 	if (m_pPlayer            != nullptr) { delete m_pPlayer;            m_pPlayer            = nullptr; }
 	if (m_pBlocks            != nullptr) { delete m_pBlocks;            m_pBlocks            = nullptr; }
-	if (m_pBlockDummys       != nullptr) { delete m_pBlockDummys;       m_pBlockDummys       = nullptr; }
+	if (m_pHardBlocks        != nullptr) { delete m_pHardBlocks;        m_pHardBlocks        = nullptr; }
+	if (m_pHardBlockDummys   != nullptr) { delete m_pHardBlockDummys;   m_pHardBlockDummys   = nullptr; }
 	if (m_pBlockGrounds      != nullptr) { delete m_pBlockGrounds;      m_pBlockGrounds      = nullptr; }
 	if (m_pBlockGroundDummys != nullptr) { delete m_pBlockGroundDummys; m_pBlockGroundDummys = nullptr; }
 	if (m_pClayPipes         != nullptr) { delete m_pClayPipes;         m_pClayPipes         = nullptr; }
@@ -319,6 +327,7 @@ void PlayScene::EnemyMoveOrder(Enemy* pEnemy)
 void PlayScene::ObjCheckOrder()
 {
 	CollisionCheckBlock   (m_pBlocks);
+	CollisionCheckBlock   (m_pHardBlocks);
 	CollisionCheckBlock   (m_pBlockGrounds);
 	CollisionCheckClayPipe();
 	CollisionCheckKuribo  ();
@@ -351,7 +360,17 @@ void PlayScene::GoalCheckOrder()
 			std::string filePas = "Stage/STAGE_" + std::to_string(m_NowWorldLevel) + "-" + std::to_string(m_NowStageLevel) + ".txt";  //ステージのファイルパス
 
 			/*ステージを変える*/
-			m_pStage->ChangeStage(filePas.data());
+			bool loadFlag = m_pStage->ChangeStage(filePas.data());
+
+			/*ステージ切り替えに失敗しているかどうか*/
+			if (!loadFlag)
+			{
+				ReSet();
+				/*次のシーンをゲームオーバーにする*/
+				m_NextGameState = GameState::GAMEOVER;
+				return;
+			}
+
 			/*シーンをリスタート*/
 			ReStart();
 			/*次にリザルトシーンに飛ぶ*/
@@ -628,7 +647,8 @@ void PlayScene::Draw()
 	}
 
 	m_pBlocks            -> ThisObjRender();
-	m_pBlockDummys       -> ThisObjRender();
+	m_pHardBlocks        ->ThisObjRender();
+	m_pHardBlockDummys   -> ThisObjRender();
 	m_pBlockGrounds      -> ThisObjRender();
 	m_pBlockGroundDummys -> ThisObjRender();
 	m_pClayPipes         -> ThisObjRender();

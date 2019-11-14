@@ -14,6 +14,8 @@ public:
 public:
 	ID3D11Resource*           GetBLOCK_TR          ()const { return m_pBLOCK_TR;           }
 	ID3D11ShaderResourceView* GetBLOCK_TSRV        ()const { return m_pBLOCK_TSRV;         }
+	ID3D11Resource*           GetHARD_BLOCK_TR     ()const { return m_pHARD_BLOCK_TR;      }
+	ID3D11ShaderResourceView* GetHARD_BLOCK_TSRV   ()const { return m_pHARD_BLOCK_TSRV;    }
 	ID3D11Resource*           GetDOT_FONT_TR       ()const { return m_pDOT_FONT_TR;        }
 	ID3D11ShaderResourceView* GetDOT_FONT_TSRV     ()const { return m_pDOT_FONT_TSRV;      }
 	ID3D11Resource*           GetCOIN1_TR          ()const { return m_pCOIN1_TR;           }
@@ -60,12 +62,14 @@ public:
 	ID3D11ShaderResourceView* GetCLAY_PIPE_TSRV    ()const { return m_pCLAY_PIPE_TSRV;     }
 	ID3D11Resource*           GetBACK_GROUND_1_TR  ()const { return m_pBACK_GROUND_1_TR;   }
 	ID3D11ShaderResourceView* GetBACK_GROUND_1_TSRV()const { return m_pBACK_GROUND_1_TSRV; }
-	ID3D11Resource*           GetBACK_GROUND_2_TR()const { return m_pBACK_GROUND_2_TR; }
+	ID3D11Resource*           GetBACK_GROUND_2_TR  ()const { return m_pBACK_GROUND_2_TR;   }
 	ID3D11ShaderResourceView* GetBACK_GROUND_2_TSRV()const { return m_pBACK_GROUND_2_TSRV; }
 
 private:
 	ID3D11Resource*           m_pBLOCK_TR           = nullptr;
     ID3D11ShaderResourceView* m_pBLOCK_TSRV         = nullptr;
+	ID3D11Resource*           m_pHARD_BLOCK_TR      = nullptr;
+	ID3D11ShaderResourceView* m_pHARD_BLOCK_TSRV    = nullptr;
 	ID3D11Resource*           m_pDOT_FONT_TR        = nullptr;
 	ID3D11ShaderResourceView* m_pDOT_FONT_TSRV      = nullptr;
 	ID3D11Resource*           m_pCOIN1_TR           = nullptr;
@@ -114,6 +118,7 @@ private:
 	ID3D11ShaderResourceView* m_pBACK_GROUND_1_TSRV = nullptr;
 	ID3D11Resource*           m_pBACK_GROUND_2_TR = nullptr;
 	ID3D11ShaderResourceView* m_pBACK_GROUND_2_TSRV = nullptr;
+
 
 private:
 	TextureData() {};

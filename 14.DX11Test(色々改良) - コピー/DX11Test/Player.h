@@ -43,7 +43,7 @@ private:
 	const UINT          M_START_LIFE                     = 3;       //ゲームスタート時のプレイヤーの残機
 	bool                m_InvincibleFlag                 = false;   //無敵状態フラグ　true=無敵、false=通常
 	unsigned char       m_MiniJumpCount                  = 0;       //ミニジャンプでのフレームカウンタ
-	const unsigned char M_MINI_JUMP_COUNT_MAX            = 3;      //ミニジャンプにかかるフレーム数
+	const unsigned char M_MINI_JUMP_COUNT_MAX            = 3;       //ミニジャンプにかかるフレーム数
 	bool                m_MiniJumpFlag                   = false;   //ミニジャンプをしているのかのフラグ
 	const unsigned char M_MINI_JUMP_COUNT_INVINCIBLE_MAX = 3;       //ミニジャンプ中の無敵時間（フレーム数）
 	unsigned char       m_Life                           = 0;       //残り残機
@@ -78,6 +78,7 @@ public:
 	/* getter */
 	MoveObjState GetMoveObjState()const { return m_MoveObjState; }
 	InputFlag    GetInputFlag   ()const { return m_InputFlag; }
+	float        GetNowWalkSpeed()const { return m_NowWalkSpeed; }
 	/* setter */
 	void         SetMoveObjState(MoveObjState value) { m_MoveObjState = value; }
 	void         SetInputFlag   (InputFlag    value) { if (!m_GoalPlayFlag) { m_InputFlag = value; } }

@@ -28,6 +28,7 @@ public:
 	/* getter */
 	 ID3D11Resource*           GetAnimTextureResource()const { return m_AnimRsrcVector[m_NowAnimNamber].m_pAnimTextureResource; }
 	 ID3D11ShaderResourceView* GetAnimTextureSRV     ()const { return m_AnimRsrcVector[m_NowAnimNamber].m_pAnimTextureSRV; }
+	 unsigned int              GetAnimIntervalFlame  ()const { return m_AnimIntervalFlame; }
 	/* setter */
 	void SetAnimIntervalFlame(unsigned int value) { m_AnimIntervalFlame = value; }
 

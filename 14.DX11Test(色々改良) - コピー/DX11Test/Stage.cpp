@@ -36,7 +36,7 @@ void Stage::Delete()
 /// ステージの読み込み
 /// </summary>
 /// <param name="stageName">ステージのファイル名</param>
-void Stage::LoadStage(const char* stageName)
+bool Stage::LoadStage(const char* stageName)
 {
 	//ファイルのデータを一時格納するローカル変数
 	char* loadStageData = nullptr;
@@ -49,7 +49,7 @@ void Stage::LoadStage(const char* stageName)
 
 	if (ifs.fail())
 	{
-		MessageBox(NULL, "ファイルのオープンに失敗しました。", "ERROR", MB_OK | MB_ICONERROR);
+		return false;
 	}
 
 	//ファイルの先頭位置
@@ -136,6 +136,8 @@ void Stage::LoadStage(const char* stageName)
 		case ' ':m_pStageDataArray[pt] = Object::SPACE;               pt++; break;
 		case 'B':m_pStageDataArray[pt] = Object::NORMAL_BLOCK;        pt++; break;
 		case 'b':m_pStageDataArray[pt] = Object::NORMAL_BLOCK_DUMMY;  pt++; break;
+		case 'H':m_pStageDataArray[pt] = Object::HARD_BLOCK;          pt++; break;
+		case 'h':m_pStageDataArray[pt] = Object::HARD_BLOCK_DUMMY;    pt++; break;
 		case 'K':m_pStageDataArray[pt] = Object::KURIBOU;             pt++; break;
 		case 'N':m_pStageDataArray[pt] = Object::NOKONOKO;            pt++; break;
 		case 'G':m_pStageDataArray[pt] = Object::GROUND_BLOCK;        pt++; break;
@@ -149,17 +151,19 @@ void Stage::LoadStage(const char* stageName)
 
 	//使い終わったloadStageDataのデリート（デリート後、すぐにNULLを入れて使用していないようにする）
 	if (loadStageData != nullptr) { delete[] loadStageData; loadStageData = nullptr; }
+
+	return true;
 }
 
 /// <summary>
 /// ステージ情報を変更する（指定したステージを再読み込み）
 /// </summary>
 /// <param name="stageName">ステージ名</param>
-void Stage::ChangeStage(const char* stageName)
+bool Stage::ChangeStage(const char* stageName)
 {
 	Delete();
 	m_StageSize  = 0;
 	m_StageWidth = 0;
 	m_StageTime  = 0;
-	LoadStage(stageName);
+	return LoadStage(stageName);
 }
