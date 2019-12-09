@@ -1,6 +1,5 @@
 #include"TextureData.h"
 #include"WICTextureLoader.h"
-#include"WICTextureLoader.cpp"
 #include"Dx11.h"
 
 /// <summary>

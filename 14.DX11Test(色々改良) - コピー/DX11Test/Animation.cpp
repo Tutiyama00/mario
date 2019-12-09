@@ -1,6 +1,5 @@
 #include"Animation.h"
 #include"Dx11.h"
-#include"WICTextureLoader.h"
 #include"Timer.h"
 
 /// <summary>

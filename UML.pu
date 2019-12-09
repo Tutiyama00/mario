@@ -1,0 +1,153 @@
+@startuml name
+
+package Interface <<Folder>>
+{
+  class IGameScene
+  class IMoveObj
+}
+
+package Abstruct <<Folder>>
+{
+  class Enemy
+  RenderObj<|-down--Enemy
+  NotPlayer<|-down--Enemy
+  IMoveObj<|.down.Enemy
+
+  class NotPlayer
+  Square<|-down-NotPlayer
+
+  class RenderObj
+
+  class Singleton << (T,orchid) template<class T> >>
+}
+
+package Character <<Folder>>
+{
+  class BackGround
+  RenderObj<|-down--BackGround
+
+  class Block
+  NotPlayer<|-down-Block
+
+  class Characters << (T,orchid) template<class T> >>
+  RenderObj<|-down--Characters
+
+  class ClayPine
+  Block<|-down--ClayPine
+
+  class Goal
+  RenderObj<|-down--Goal
+
+  class Image
+  Square<|-down-Image
+  RenderObj<|-down--Image
+
+  class Kuribo
+  Enemy<|-down-Kuribo
+
+  enum NokonokoState
+  class Nokonoko
+  Enemy<|-down-Nokonoko
+
+  class Player
+  Square<|-down--Player
+  RenderObj<|-down--Player
+  IMoveObj<|.down..Player
+
+  class TextChar
+  Square<|-down-TextChar
+  RenderObj<|-down-TextChar
+
+  class TextCharcters
+}
+
+package Scene <<Folder>>
+{
+  class GameOverScene
+  class ParameterScene
+  class PlayScene
+  class ResultScene
+  class TitleScene
+  IGameScene<|.down..GameOverScene 
+  IGameScene<|.down.ParameterScene 
+  IGameScene<|.down.PlayScene 
+  IGameScene<|.down.ResultScene 
+  IGameScene<|.down.TitleScene
+}
+
+class Timer
+ParameterScene*-down-Timer
+
+class Stage
+PlayScene*-down-Stage
+
+class Camera
+GameOverScene*-down-Camera
+PlayScene*-down-Camera
+TitleScene*-down-Camera
+
+package Flag.h <<Rectangle>>
+{
+  enum InputFlagCode
+  class InputFlag
+}
+
+package Enum.h <<Rectangle>>
+{
+  enum GameState
+  enum MoveObjState
+  enum Object
+}
+
+package Animation.h <<Rectangle>>
+{
+  class AnimResource<< (S,#FF7700) struct >>
+  class Animation
+  Nokonoko*-down-Animation
+  Kuribo*-down-Animation
+  Player*-down-Animation
+}
+
+package Static <<Folder>>
+{
+  package Math.h <<Rectangle>>
+  {
+    package OriginalMeth <<Frame>>
+    {
+      class Math
+      class Vector3<< (S,#FF7700) struct >>
+      class Vector2<< (S,#FF7700) struct >>
+    }
+  }
+}
+
+package Manager <<Folder>>
+{
+  class Dx11
+  class GameManager
+  class ScoreManager
+  Singleton<|-down-Dx11
+  Singleton<|-down-GameManager
+  Singleton<|-down-ScoreManager
+}
+
+package Data <<Folder>>
+{
+  class SoundData
+  class TextureData
+  Singleton<|-down-SoundData
+  Singleton<|-down-TextureData
+}
+
+package Vertex.h <<Rectangle>>
+{
+  class vertex<< (S,#FF7700) struct >>
+
+  class Polyogn
+
+  class Square
+
+  Polyogn <|-down- Square
+}
+
+@enduml

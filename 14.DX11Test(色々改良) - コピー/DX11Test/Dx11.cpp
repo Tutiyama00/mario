@@ -1,13 +1,10 @@
 #include<d3dcompiler.h>
 #include"Dx11.h"
-#include"DirectXTex.h"
 #include"Player.h"
 #include"Enum.h"
 #include"Camera.h"
 #include"Block.h"
 #include"Characters.h"
-
-using namespace DirectX;
 
 /*######################    Dx11   ###################################*/
 

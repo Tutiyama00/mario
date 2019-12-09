@@ -4,18 +4,11 @@
 //‘O•ûéŒ¾
 class InputFlag;
 enum class GameState : unsigned char;
-class Player;
-class Dx11;
-class SoundData;
-class Stage;
-class Camera;
-class CharacterManager;
 class TitleScene;
 class PlayScene;
 class GameOverScene;
 class ParameterScene;
 class ResultScene;
-class SoundData;
 
 class GameManager : public Singleton<GameManager>
 {

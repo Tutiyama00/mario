@@ -56,7 +56,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	g_hwnd = CreateWindowEx(
 		WS_EX_LEFT,             //拡張ウィンドウスタイル
 		g_baseClassName,        //登録されているウィンドウクラス名
-		"テスト",               //作成するウィンドウの名前
+		"マリオ",               //作成するウィンドウの名前
 		WS_OVERLAPPEDWINDOW,    //ウィンドウスタイル
 		0,                      //ウィンドウの横方向の位置
 		0,                      //ウィンドウの縦方向の位置
